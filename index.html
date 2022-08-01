@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Camagru</title>
-		<link rel="stylesheet" href="./style.css">
 
-	</head>
-	<body>
-		<div class="loginBox">
-			<h1>Camagru</h1> 
-			<form action="welcome.php" method="POST">
-				<input type="text" name="username" placeholder="Username">
-				<input type="password" name="password" placeholder="Password">
-				<input type="submit" id="submit" value="Login">
-			</form>
-			<div class="flex-container1">
-				<div class="subBoxLeft">
-					<a href="./create.php">Sign up</a>
-				</div>
-				<div class="subBoxRight">
-					<a href="./forgot.php">Forgot your password?</a>
-				</div>
-				
+<head>
+	<title>Camagru</title>
+	<link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+	<div class="loginBox">
+		<h1>Camagru</h1>
+		<form action="welcome.php" method="POST">
+			<input type="text" name="username" placeholder="Username">
+			<input type="password" name="password" placeholder="Password">
+			<input type="submit" id="submit" value="Login">
+		</form>
+		<div class="flex-container1">
+			<div class="subBoxLeft">
+				<a href="./signup.php">Sign up</a>
 			</div>
-			
-        </div>
-	</body>
+			<div class="subBoxRight">
+				<a href="./forgot.php">Forgot your password?</a>
+			</div>
+
+		</div>
+
+	</div>
+</body>
+
 </html>

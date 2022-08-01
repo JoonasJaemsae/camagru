@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>Camagru - Create an account</title>
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     <div class="accountCreationBox">
         <h1>Camagru</h1>
@@ -16,6 +18,13 @@
             <input type="password" name="passwordAgain" placeholder="Retype password">
             <input type="submit" id="submit" value="Register">
         </form>
+        <div class="flex-container1">
+            <div class="subBoxLeft">
+                <a href="./index.html">Back to login</a>
+            </div>           
+
+        </div>
     </div>
 </body>
+
 </html>
