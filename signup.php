@@ -57,3 +57,9 @@
 // if (isset($_POST['submit'])) {
 //     display();
 // }
+
+// INSERT INTO testusers (`login`, `password`, `email`)
+// VALUES ('jjamsa', 'root', 'jamsa.joonas@gmail.com'); INSERT INTO testusers (`login`, `password`, `email`)
+// VALUES (‘lsalmi’, ‘test123’, ‘lsalmi@geemail.com'); INSERT INTO testusers (`login`, `password`, `email`)
+// VALUES (‘mapostol’, ‘test1234’, ‘mapostol@geemail.com'); INSERT INTO testusers (`login`, `password`, `email`)
+// VALUES (‘plehtika’, ‘test12345’, ‘plehtika@geemail.com');
