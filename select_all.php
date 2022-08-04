@@ -1,24 +1,21 @@
 <?php
 
-$user = 'root';
-$password = 'root';
-$db = 'testusers';
-$host = 'localhost';
-$port = 8889;
+include_once './includes/dbh.php';
 
-$link = mysqli_init();
-$success = mysqli_real_connect(
-   $link,
-   $host,
-   $user,
-   $password,
-   $db,
-   $port
-);
+echo 'Site load successful. Your query results should appear below this line if the query was successful:' . '<br>';
 
-$sql = "select * from testusers";   
-$res = mysqli_query($link, $sql);
-$row = mysqli_fetch_assoc($res);
-print_r($row);
+$sql = "SELECT * FROM testusers;";
+$result = mysqli_query($link, $sql);
+$resultCheck = mysqli_num_rows($result);
+if ($resultCheck > 0) {
+   while ($row = mysqli_fetch_assoc($result)) {
+      print_r($row);
+      echo '<br>';
+      echo $row['login'] . '<br>';
+      echo $row['password'] . '<br>';
+      echo $row['email'] . '<br>';
+      echo '<br>';
+   }
+}
 
 ?>

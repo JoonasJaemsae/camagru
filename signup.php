@@ -12,7 +12,7 @@
 <body>
     <div class="accountCreationBox">
         <h1>Camagru</h1>
-        <form action="welcome.php" method="POST">
+        <form method="POST" action="signup.php">
             <input type="text" name="username" placeholder="Username">
             <input type="password" name="password" placeholder="Password">
             <input type="password" name="passwordAgain" placeholder="Retype password">
@@ -24,7 +24,26 @@
             </div>           
 
         </div>
+        
+            Hello!
     </div>
 </body>
 
 </html>
+
+
+<form method="post" action="yourFileName.php">
+    <input type="text" name="studentname">
+    <input type="submit" value="click" name="submit"> <!-- assign a name for the button -->
+</form>
+
+<?php
+function display()
+{
+    echo "hello ".$_POST["studentname"];
+}
+if(isset($_POST['submit']))
+{
+   display();
+} 
+?>

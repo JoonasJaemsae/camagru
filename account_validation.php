@@ -1,16 +1,18 @@
 <?php
 
+include_once './includes/dbh.php';
+
 $path = './data/';
 $file_path = $path."accounts";
 
 if ($_POST['password'] == $_POST['passwordAgain']) {
-    if ($_POST['username'] && $_POST['password'] && $_POST['password']) {
+    if ($_POST['username'] && $_POST['password'] && $_POST['passwordAgain']) {
         if (!file_exists($path) && !mkdir($path)) {
             // Mieti viela tata mkdiria.
             exit();
         }
         if (!file_exists($file_path)) {
-            file_put_contents($file_path, NULL);
+            file_put_contents($file_path, 'ankka');
         }
 
     } else {
