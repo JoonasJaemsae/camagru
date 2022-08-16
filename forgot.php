@@ -8,5 +8,6 @@
 </head>
 <body>
     Nothing here yet!
+    <a href="index.php">Back to login</a>
 </body>
 </html>

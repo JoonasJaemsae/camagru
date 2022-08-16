@@ -1,3 +1,62 @@
+<?php
+
+include_once './includes/dbh.php';
+session_start();
+
+function checkPasswords($password, $passwordAgain)
+{
+
+    if ($password === $passwordAgain)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+if ($_SESSION['signupSuccess'] === TRUE) {
+    header("Location: signup_success.php");
+    return;
+}
+
+// $_SESSION['message'] = FALSE;
+if (isset($_POST['submit'])) {
+    $_SESSION['submit'] = $_POST['submit'];
+    $_SESSION['signupSuccess'] = FALSE;
+
+    $_SESSION['username'] = $_POST['username'];
+    $_SESSION['password'] = $_POST['password'];
+    $_SESSION['passwordAgain'] = $_POST['passwordAgain'];
+    $_SESSION['email'] = $_POST['email'];
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $email = $_POST['email'];
+
+    $sql2 = "SELECT username FROM syottotesti WHERE username = '$username';";
+    $result2 = mysqli_query($link, $sql2);
+    $usernameAlreadyExists = mysqli_num_rows($result2);
+    echo $usernameAlreadyExists . ' <-- How many results were found.' .'<br>';
+    if (!checkPasswords($_POST['password'], $_POST['passwordAgain'])) {
+        $_SESSION['signupErrorMessage'] = 'Passwords don\'t match each other. Please check your password!';
+        // echo $_SESSION['message'] . '<br>' . 'Tamako nakyy tyhjalla sivulla?';
+        // header("Location: signup.php");
+    } else if ($usernameAlreadyExists != 0) {
+        $_SESSION['signupErrorMessage'] = 'This username is not available. Try another one. '
+        . $usernameAlreadyExists . ' <-- How many results were found.' .'<br>';
+    } else {
+        $_SESSION['signupSuccess'] = TRUE;
+
+        $sql = "INSERT INTO syottotesti (`username`, `password`, `email`)
+            VALUES ('$username', '$password', '$email');";
+        mysqli_query($link, $sql);
+        $_SESSION['signupErrorMessage'] = '';
+        echo '<p style="color: red; text-align: center">Succeeee!</p>';
+    }
+    header("Location: signup.php");
+    return;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,37 +69,38 @@
 </head>
 
 <body>
+    <?php
+    $message = isset($_SESSION['signupErrorMessage']) ? $_SESSION['signupErrorMessage'] : FALSE;
+    // if $_SESSION['signupErrorMessage'] is set, copy that to $message. Otherwise copy FALSE.
+    echo 'Yläkulman viesti alla:';
+    echo '<br>';
+    echo $message . ' <-- message vasemmalla.';
+    ?>
     <div class="accountCreationBox">
-        <h1>Camagru</h1>
-        <form method="POST" action="signup.php">
-            <input type="text" name="login" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
-            <input type="password" name="passwordAgain" placeholder="Retype password">
-            <input type="text" name="email" placeholder="Email">
-            <input type="submit" id="submit" name="submit" value="Register">
+        <div class="logo">Camagru</div>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="passwordAgain" placeholder="Confirm password" required>
+            <input type="text" name="email" placeholder="Email" required>
+            <input type="submit" id="submit" name="submit" value="OK">
         </form>
         <div class="flex-container1">
             <div class="subBoxLeft">
-                <a href="./index.html">Back to login</a>
+                <a href="./index.php">Back to login</a>
             </div>
 
         </div>
-        <div>
+        <div style="color: red;">
             <?php
-            if (isset($_POST['submit'])) {
-                if ($_POST['password'] == $_POST['passwordAgain']) {
-                    if ($_POST['login'] && $_POST['password']
-                        && $_POST['passwordAgain'] && $_POST['email']) {
-                            // header("Location: account_validation.php");
-                        echo '<p style="color: blue; text-align: center">Registration successful! Click the link above to return
-                        to login screen</p>';
-                    } else {
-                        echo '<p style="color: red; text-align: center">Please fill in all the fields!</p>';
-                    }
-                }
-                else {
-                    echo '<p style="color: red; text-align: center">Passwords don\'t match. Please check your password!</p>';
-                }
+            if ($message != FALSE) {
+                echo $message . ' samalla rivilla' . '<br>';
+            }
+            if ($message == TRUE) {
+                echo 'Message is TRUE';
+            }
+            if ($message == FALSE) {
+                echo 'Message is FALSE';
             }
             ?>
         </div>
@@ -58,8 +118,16 @@
 //     display();
 // }
 
-// INSERT INTO testusers (`login`, `password`, `email`)
-// VALUES ('jjamsa', 'root', 'jamsa.joonas@gmail.com'); INSERT INTO testusers (`login`, `password`, `email`)
-// VALUES (‘lsalmi’, ‘test123’, ‘lsalmi@geemail.com'); INSERT INTO testusers (`login`, `password`, `email`)
-// VALUES (‘mapostol’, ‘test1234’, ‘mapostol@geemail.com'); INSERT INTO testusers (`login`, `password`, `email`)
-// VALUES (‘plehtika’, ‘test12345’, ‘plehtika@geemail.com');
+// INSERT INTO testusers (`username`, `password`, `email`)
+// VALUES ('jjamsa', 'root', 'jjamsa@geemail.com');
+// INSERT INTO testusers (`username`, `password`, `email`)
+// VALUES ('lsalmi', 'test123', 'lsalmi@geemail.com');
+// INSERT INTO testusers (`username`, `password`, `email`)
+// VALUES ('mapostol', 'test1234', 'mapostol@geemail.com');
+// INSERT INTO testusers (`username`, `password`, `email`)
+// VALUES ('plehtika', 'test12345', 'plehtika@geemail.com');
+
+
+// } else {
+    // echo '<p style="color: red; text-align: center">Please fill in all the fields!</p>';
+// }

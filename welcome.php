@@ -7,7 +7,21 @@
 
 <?php
 
+session_start();
+
 include "style.css";
+include_once './includes/dbh.php';
+
+if ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE) {
+
+    header("Location: index.php");
+}
+if ($_SESSION['loginSuccess'] === TRUE) {
+
+    $_SESSION['loginSuccess'] = FALSE;
+    $_SESSION['loginPersist'] = TRUE;
+    $_SESSION['loginErrorMessage'] = FALSE;
+}
 
 ?>
 
@@ -19,7 +33,7 @@ include "style.css";
 
 <?php
 
-if ($_POST['username'] == 'jjamsa' && $_POST['password'] == 'jjamsa') {
+if (isset($_SESSION['loginPersist'])) {
     ?>
     <!DOCTYPE html>
     <html>
@@ -30,15 +44,13 @@ if ($_POST['username'] == 'jjamsa' && $_POST['password'] == 'jjamsa') {
           <img src="http://media2.s-nbcnews.com/i/streams/2013/June/130617/6C7911377-tdy-130617-leo-toasts-1.jpg"
           alt="Congrats!">
     </div>
+    <div style="text-align: center;">
+        <a href="logout.php" style>Click here to log out.</a>
+    </div>
     </body>
     </html>
 <?php
 
-}
-else {
-    echo "Incorrect login details. Click "
-    . '<a href="./index.html">here</a>'
-    . " to return to the login page.";
 }
 
 ?>
