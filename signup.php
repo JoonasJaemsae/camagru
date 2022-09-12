@@ -34,14 +34,14 @@ if (isset($_POST['submit'])) {
     $sql2 = "SELECT username FROM syottotesti WHERE username = '$username';";
     $result2 = mysqli_query($link, $sql2);
     $usernameAlreadyExists = mysqli_num_rows($result2);
-    echo $usernameAlreadyExists . ' <-- How many results were found.' .'<br>';
+    echo $usernameAlreadyExists . ' <-- How many results were found.' . '<br>';
     if (!checkPasswords($_POST['password'], $_POST['passwordAgain'])) {
         $_SESSION['signupErrorMessage'] = 'Passwords don\'t match each other. Please check your password!';
         // echo $_SESSION['message'] . '<br>' . 'Tamako nakyy tyhjalla sivulla?';
         // header("Location: signup.php");
     } else if ($usernameAlreadyExists != 0) {
         $_SESSION['signupErrorMessage'] = 'This username is not available. Try another one. '
-        . $usernameAlreadyExists . ' <-- How many results were found.' .'<br>';
+            . $usernameAlreadyExists . ' <-- How many results were found.' . '<br>';
     } else {
         $_SESSION['signupSuccess'] = TRUE;
 
@@ -68,28 +68,36 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="./style.css">
 </head>
 
-<body>
+<body id="index">
+    <!-- <-- If id is index, then background will be image. With signup it's linear gradient. -->
     <?php
     $message = isset($_SESSION['signupErrorMessage']) ? $_SESSION['signupErrorMessage'] : FALSE;
     // if $_SESSION['signupErrorMessage'] is set, copy that to $message. Otherwise copy FALSE.
-    echo 'Yläkulman viesti alla:';
-    echo '<br>';
-    echo $message . ' <-- message vasemmalla.';
+    // echo 'Yläkulman viesti alla:';
+    // echo '<br>';
+    // echo $message . ' <-- message vasemmalla.';
     ?>
     <div class="accountCreationBox">
         <div class="logo">Camagru</div>
-        <form method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="password" name="passwordAgain" placeholder="Confirm password" required>
-            <input type="text" name="email" placeholder="Email" required>
-            <input type="submit" id="submit" name="submit" value="OK">
+        <form method="POST" class="form">
+            <div class="form__input-group">
+                <input type="text" class="form__input" name="username" autofocus placeholder="Username" required>
+            </div>
+            <div class="form__input-group">
+                <input type="password" class="form__input" name="password" placeholder="Password" required>
+            </div>
+            <div class="form__input-group">
+                <input type="password" class="form__input" name="passwordAgain" placeholder="Confirm password" required>
+            </div>
+            <div class="form__input-group">
+                <input type="text" class="form__input" name="email" placeholder="Email" required>
+            </div>
+            <button class="form__button" id="submit" type="submit" name="submit">Sign up</button>
         </form>
         <div class="flex-container1">
-            <div class="subBoxLeft">
-                <a href="./index.php">Back to login</a>
+            <div class="subBoxLeft2">
+                <a href="./index.php" class="form__link">Back to the login</a>
             </div>
-
         </div>
         <div style="color: red;">
             <?php
@@ -98,8 +106,8 @@ if (isset($_POST['submit'])) {
             }
             if ($message == TRUE) {
                 echo 'Message is TRUE';
-            }
-            if ($message == FALSE) {
+                $_SESSION['signupErrorMessage'] = FALSE; // This is to make it so that the message doesn't show up again on reloading the page.
+            } else if ($message == FALSE) {
                 echo 'Message is FALSE';
             }
             ?>

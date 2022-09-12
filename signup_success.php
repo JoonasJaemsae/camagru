@@ -24,13 +24,13 @@ if ($_SESSION['signupSuccess'] === TRUE) {
     <link rel="stylesheet" href="./style.css">
 </head>
 
-<body>
+<body id="index">
     <div class="messageBox" style="text-align: center;">
         <?php
             echo '<p style="color: blue;">Registration successful! Click the link below to return
             to login screen</p>';
         ?> 
-        <a href="./index.php">Back to login</a>
+        <a href="./index.php" class="message__link">Back to login</a>
     </div>
     
 </body>

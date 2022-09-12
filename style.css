@@ -1,7 +1,42 @@
-body {
+body#index,
+body#gradient {
+    --color-primary: rgb(236, 209, 111);
+    --color-primary-dark: rgb(247, 206, 58);
+    --color-secondary: #252c6a;
+    --color-error: #cc3333;
+    --color-success: #4bb544;
+    --border-radius: 12px;
+    font-size: 16px;
+    height: 100vh; /* 1vh is 1% of viewports height. */
+}
+
+body#index {
+    display: flex;
+    background: url(./assets/img/pexels-adonyi-gabor-1416848_lesslightness.jpg) no-repeat center center fixed;
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body#gradient {
     background-image: linear-gradient(to bottom right, rgb(182, 224, 222), rgb(232, 216, 180));
     background-attachment: fixed;
 }
+
+/* body#index { */
+    /* background: url(./assets/img/pexels-adonyi-gabor-1416848_lesslightness.jpg) no-repeat center center fixed; */
+    /* background-repeat: no-repeat; */
+    /* position: center; */
+    /* background-size: cover; */
+    /* Image will take over entire width of the background with cover. */
+/* } */
+
+/* body#gradient { */
+    /* background-image: linear-gradient(to bottom right, rgb(182, 224, 222), rgb(232, 216, 180)); */
+    /* background-attachment: fixed; */
+/* } */
 
 h1 {
     text-align: center;
@@ -21,47 +56,71 @@ h1 {
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Quicksand';
+    src: url('Quicksand-Medium.eot');
+    src: url('Quicksand-Medium.eot?#iefix') format('embedded-opentype'),
+        url('Quicksand-Medium.woff2') format('woff2'),
+        url('Quicksand-Medium.woff') format('woff'),
+        url('Quicksand-Medium.ttf') format('truetype'),
+        url('Quicksand-Medium.svg#Quicksand-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
 .logo {
-    padding: 10px 0px 50px;
-    font-size: 48px;
+    padding: 10px 0px 40px; /* top is 10, left and right are both 0, bottom is 40 */
+    font-size: 3rem;
     text-align: center;
     font-family: 'Brush Script MT';
     font-style: bold;
 }
 
 .loginBox {
-    position: relative;
-    border: 1px solid rgb(255, 255, 255);
-    width: 300px;
     height: 400px;
-    background-color: rgb(255, 255, 255);
-    border-radius: 15px;
-    margin: 10% auto;
-    padding: 50px 50px 50px 50px;
+    max-height: 400px;
+    /* box-shadow: 50 50 400px rgba(0, 0, 0, 0.2); */
+    /* font-family: 'Quicksand', sans-serif; */
+    /* padding: 25px 50px 40px 50px; */
     /* 234, 224, 224 on harmaa box */
     /* 195, 190, 190 on border */
 }
 
 .accountCreationBox {
-    position: relative;
-    border: 1px solid rgb(255, 255, 255);
+    height: 450px;
+    max-height: 450px;
+}
+
+.loginBox,
+.accountCreationBox {
+    border: 1px solid rgb(255, 255, 255); /* This doesn't do much but is also harmless. */
     width: 300px;
-    height: 400px;
+    max-width: 300px;
+    margin: 1rem;
+    padding: 2rem;
     background-color: rgb(255, 255, 255);
-    border-radius: 15px;
-    margin: 10% auto;
-    padding: 50px 50px 50px 50px;
+    border-radius: var(--border-radius);
 }
 
 .messageBox {
-    position: relative;
-    border: 1px solid rgb(195, 190, 190);
-    width: 200px;
+    border: 1px solid rgb(255, 255, 255);
+    width: 250px;
+    max-width: 250px;
     height: 150px;
-    background-color: rgb(234, 224, 224);
-    border-radius: 15px;
-    margin: 10% auto;
-    padding: 50px 50px 50px 50px;
+    max-height: 150px;
+    padding: 20px 25px 5px 25px;
+    background-color: rgb(255, 255, 255);
+    border-radius: var(--border-radius);
+}
+
+.loginBox,
+.accountCreationBox,
+.messageBox,
+.navbar,
+.form__input,
+.form__button  {
+    font: 500 1rem 'Quicksand', sans-serif;
 }
 
 .flex-container1 {
@@ -70,20 +129,26 @@ h1 {
 }
 
 .subBoxLeft {
-    width: 35%;
+    width: 30%;
+    padding: 10px;
+    text-align: left;
+}
+
+.subBoxLeft2 {
+    width: 50%;
     padding: 10px;
     text-align: left;
 }
 
 .subBoxRight {
-    width: 65%;
+    width: 70%;
     padding: 10px;
     text-align: right;
 }
 
 .loginErrorMessageBox {
     width: 100%;
-    padding: 25px 10px;
+    padding: 25px 10px 10px 10px;
     text-align: center;
 }
 
@@ -91,21 +156,109 @@ h1 {
     color: red;
 }
 
-input[type='text'], input[type='password'] {
-    width: 288px;
-    height: 30px;
+/* input[type='text'], input[type='password'] { */
+    /* width: 288px; */
+    /* height: 30px; */
+    /* margin-bottom: 10px; */
+/* } */
+
+/* input[type='submit'] { */
+    /* width: 295px; */
+    /* height: 40px; */
+    /* margin-bottom: 10px; */
+    /* background-color: rgb(236, 209, 111) */
+/* } */
+
+.form__input-group {
     margin-bottom: 10px;
 }
 
-input[type='submit'] {
-    width: 295px;
-    height: 40px;
+.form__input {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+    border: 1px solid #dddddd;
+    outline: none;
+    background: #eeeeee;
+    transition: background 0.2s, border-color 0.2s;
+    /* Transition background determines how long it takes for the background color to gradually change into the specified color. */
+}
+
+.form__input:focus {
+    background: rgb(255, 255, 255);
+}
+
+.form__button {
+    width: 100%;
     margin-bottom: 10px;
-    background-color: rgb(236, 209, 111)
+    background-color: var(--color-primary);
+    color: #000000;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: var(--border-radius);
+    border: 1px solid #dddddd;
+    cursor: pointer;
+    padding: 0.75rem;
+}
+
+.form__button:hover {
+    background-color: var(--color-primary-dark);
+}
+
+.form__button:active {
+    transform: scale(0.98);
+}
+
+.form__link,
+.message__link,
+.nav__link {
+    color: var(--color-secondary);
+    text-decoration: none;
+}
+
+.form__link:hover,
+.message__link:hover,
+.nav__link:hover {
+    text-decoration: underline;
+}
+
+.navbar {
+    height: 10px;
+    width: 100%;
+    max-width: 100%;
+    box-shadow: 0 1px 1px 0 black;
+    background-color: white;
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.navbar > a:first-child { /* Fixed from navbar a:first-child. Not sure why this solved the problem of the second vertical border line. */
+    border-right: 1px solid rgb(0, 0, 0);
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-right: 2rem; /* The padding prints margin between text and border. Margin doesn't do that. */
+}
+
+.navbar a {
+    float: left;
+}
+
+.navbar-right {
+    float: right;
+}
+
+.nav__link {
+    padding: 0 1rem;
 }
 
 img {
     margin-top: 50px;
+    margin-bottom: 50px;
     display: block;
     margin-left: auto;
     margin-right: auto;

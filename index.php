@@ -8,20 +8,20 @@ $_SESSION['signupSuccessPersist'] = FALSE;
 // Currently the back button will return the user to the signup page, though. Not sure if that's good either.
 
 //  function findUser($user) {
-	// include_once './includes/dbh.php';
-	// $sql2 = "SELECT COUNT(username) FROM syottotesti WHERE username = 'bb';";
-	// $result2 = mysqli_query($link, $sql2);
-	// $resultCheck2 = mysqli_num_rows($result2);
-	// if ($resultCheck2 > 0) {
-   		// while ($row = mysqli_fetch_assoc($result2)) {
-    		// print_r($row);
-    		// echo '<br>';
-    		// echo $row['COUNT(username)'] . '<br>';
-			// echo $row['COUNT(username)'] . '<br>';
-		// }
-		// return TRUE;
-	// }
-	// return FALSE;
+// include_once './includes/dbh.php';
+// $sql2 = "SELECT COUNT(username) FROM syottotesti WHERE username = 'bb';";
+// $result2 = mysqli_query($link, $sql2);
+// $resultCheck2 = mysqli_num_rows($result2);
+// if ($resultCheck2 > 0) {
+// while ($row = mysqli_fetch_assoc($result2)) {
+// print_r($row);
+// echo '<br>';
+// echo $row['COUNT(username)'] . '<br>';
+// echo $row['COUNT(username)'] . '<br>';
+// }
+// return TRUE;
+// }
+// return FALSE;
 // }
 
 if ($_SESSION['loginSuccess'] === TRUE) {
@@ -33,11 +33,12 @@ if (isset($_POST['login'])) {
 	$_SESSION['login'] = $_POST['login'];
 
 	$user = $_POST['username'];
+	$_SESSION['username'] = $_POST['username'];
 
 	$sql2 = "SELECT password FROM syottotesti WHERE username = '$user';";
 	$result2 = mysqli_query($link, $sql2);
 	$resultCheck2 = mysqli_num_rows($result2);
-	echo $resultCheck2 . ' <-- How many results were found.' .'<br>';
+	echo $resultCheck2 . ' <-- How many results were found.' . '<br>';
 	$_SESSION['loginErrorMessage'] = 'Wrong username and/or password!' . '<br>';
 	if ($resultCheck2 == 0)
 		$_SESSION['loginErrorMessage'] = 'Wrong username and/or password!' . '<br>';
@@ -65,7 +66,6 @@ if (isset($_POST['login'])) {
 
 ?>
 
-<!DOCTYPE html>
 <html>
 
 <head>
@@ -74,30 +74,39 @@ if (isset($_POST['login'])) {
 
 </head>
 
-<body>
+<body id="index">
 	<div class="loginBox">
 		<div class="logo">Camagru</div>
-		<form action="index.php" method="POST">
-			<input type="text" name="username" placeholder="Username">
-			<input type="password" name="password" placeholder="Password">
-			<input type="submit" name="login" value="Log in">
+		<form action="index.php" method="POST" class="form">
+			<div class="form__input-group">
+				<input type="text" class="form__input" name="username" autofocus placeholder="Username">
+			</div>
+			<!-- 'autofocus' selects the field automatically on page load so you can input text without having to click on the field. -->
+			<div class="form__input-group">
+				<input type="password" class="form__input" name="password" placeholder="Password">
+			</div>
+			<button class="form__button" type="submit" name="login">Log in</button>
 		</form>
 		<div class="flex-container1">
 			<div class="subBoxLeft">
-				<a href="./signup.php">Sign up</a>
+				<a href="./signup.php" class="form__link">Sign up</a>
 			</div>
 			<div class="subBoxRight">
-				<a href="./forgot.php">Forgot your password?</a>
+				<a href="./forgot.php" class="form__link">Forgot your password?</a>
 			</div>
 
 		</div>
-		<div>
-			<a href="./select_all.php">Select All</a>
+		<div class="flex-container1">
+			<div class="subBoxLeft"></div>
+			<div class="subBoxRight">
+				<a href="./select_all.php" class="form__link">SQL retrieval test</a>
+			</div>
 		</div>
-		<div class="loginErrorMessageBox";>
+		<div class="loginErrorMessageBox" ;>
 			<span class="loginErrorText">
 				<?php
-					echo $_SESSION['loginErrorMessage'] . '<br>';
+				echo $_SESSION['loginErrorMessage'] . '<br>';
+				$_SESSION['loginErrorMessage'] = FALSE;
 				?>
 			</span>
 		</div>
