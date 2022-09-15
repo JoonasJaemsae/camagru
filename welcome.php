@@ -1,28 +1,34 @@
+<?php
+
+ini_set('display_errors', 'On');
+ini_set('html_errors', 0);
+error_reporting(-1);
+
+session_start();
+// ob_start(); // if logout redirection doesn't work.
+
+include_once './includes/new_conn.php';
+
+if ($_SESSION['loginSuccess'] === TRUE) {
+
+    $_SESSION['loginSuccess'] = FALSE;
+    $_SESSION['loginPersist'] = TRUE;
+    $_SESSION['loginErrorMessage'] = FALSE;
+}
+if ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE) {
+
+    header("Location: index.php");
+    exit();
+}
+
+?>
 <html>
 
 <head>
     <title>Camagru</title>
 
     <style>
-        <?php
-
-        session_start();
-
-        include "style.css";
-        include_once './includes/dbh.php';
-
-        if ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE) {
-
-            header("Location: index.php");
-        }
-        if ($_SESSION['loginSuccess'] === TRUE) {
-
-            $_SESSION['loginSuccess'] = FALSE;
-            $_SESSION['loginPersist'] = TRUE;
-            $_SESSION['loginErrorMessage'] = FALSE;
-        }
-
-        ?>
+        <?php include "style.css"; ?>
     </style>
 </head>
 
@@ -35,17 +41,11 @@ if (isset($_SESSION['loginPersist'])) {
     <html>
 
     <body id="gradient">
-        <div class="navbar">
-            <a style="font-size: 1.4rem; font-family: 'Brush Script MT'; font-style: bold; border-right: 1px solid black;">Camagru</a>
-            <a><?php
-                echo 'Welcome, ' . $_SESSION["username"] . '!';
-                ?></a>
-            <a href="logout.php" class="nav__link">Upload a picture</a>
-            <div class="navbar-right" style="border-right: none;">
-                <a href="logout.php" class="nav__link">Profile</a>
-                <a href="logout.php" class="nav__link" style="text-align: right;">Log out</a>
-            </div>
-        </div>
+        <?php
+
+            include_once 'navbar.php';
+
+        ?>
         <h1 style="margin-top: 100px">
             Welcome, master!
         </h1>
@@ -54,6 +54,26 @@ if (isset($_SESSION['loginPersist'])) {
         </div>
         <div style="text-align: center;">
             <a href="logout.php">Click here to log out.</a>
+        </div>
+
+        <div style="text-align: center;">
+            <?php
+            if ($_SESSION['loginPersist'] == TRUE) {
+                echo '$_SESSION["loginPersist"] is TRUE' . '<br>';
+            } else if ($_SESSION['loginPersist'] == FALSE) {
+                echo '$_SESSION["loginPersist"] is FALSE' . '<br>';
+            }
+
+            if ($_SESSION['loginSuccess'] == TRUE) {
+                echo '$_SESSION["loginSuccess"] is TRUE' . '<br>';
+            } else if ($_SESSION['loginSuccess'] == FALSE) {
+                echo '$_SESSION["loginSuccess"] is FALSE' . '<br>';
+            }
+            // if ($_SESSION['loginSuccess'] == FALSE && $_SESSION['loginPersist'] == FALSE) {
+
+            //     header("Location: index.php");
+            // }
+            ?>
         </div>
     </body>
 

@@ -2,7 +2,7 @@
 
 session_start();
 
-if ($_SESSION['signupSuccess'] === FALSE && $_SESSION['signupSuccessPersist'] === FALSE) {
+if ($_SESSION['signupSuccess'] === FALSE && $_SESSION['signupSuccessPersist'] === FALSE) { // Seems to be working properly even without ob_start.
 
     header("Location: signup.php");
 }

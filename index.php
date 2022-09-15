@@ -1,56 +1,32 @@
 <?php
 
-include_once './includes/dbh.php';
+include_once './includes/new_conn.php';
+
 session_start();
 
 $_SESSION['signupSuccessPersist'] = FALSE;
 // ^ If you want to make it so that the user cannot return to the signup success page after returning to login screen.
 // Currently the back button will return the user to the signup page, though. Not sure if that's good either.
 
-//  function findUser($user) {
-// include_once './includes/dbh.php';
-// $sql2 = "SELECT COUNT(username) FROM syottotesti WHERE username = 'bb';";
-// $result2 = mysqli_query($link, $sql2);
-// $resultCheck2 = mysqli_num_rows($result2);
-// if ($resultCheck2 > 0) {
-// while ($row = mysqli_fetch_assoc($result2)) {
-// print_r($row);
-// echo '<br>';
-// echo $row['COUNT(username)'] . '<br>';
-// echo $row['COUNT(username)'] . '<br>';
-// }
-// return TRUE;
-// }
-// return FALSE;
-// }
-
 if ($_SESSION['loginSuccess'] === TRUE) {
 	header('Location: welcome.php');
 	return;
 }
 
-if (isset($_POST['login'])) {
+if (isset($_POST['login'])) {	
 	$_SESSION['login'] = $_POST['login'];
 
 	$user = $_POST['username'];
 	$_SESSION['username'] = $_POST['username'];
 
-	$sql2 = "SELECT password FROM syottotesti WHERE username = '$user';";
-	$result2 = mysqli_query($link, $sql2);
-	$resultCheck2 = mysqli_num_rows($result2);
-	echo $resultCheck2 . ' <-- How many results were found.' . '<br>';
+	$sql = "SELECT password FROM syottotesti WHERE username='$user';";
+	$stmt = $dbConn->query($sql);
 	$_SESSION['loginErrorMessage'] = 'Wrong username and/or password!' . '<br>';
-	if ($resultCheck2 == 0)
-		$_SESSION['loginErrorMessage'] = 'Wrong username and/or password!' . '<br>';
-	if ($resultCheck2 > 0) {
-		while ($row = mysqli_fetch_assoc($result2)) {
-			print_r($row);
-			echo '<br>';
-			echo $row['password'] . ' <-- Password that was fetched with sql' . '<br>';
-			$pass = $row['password'];
-			echo 'End of Loop' . '<br>';
+	if ($stmt->rowCount() > 0) {
+		$_SESSION['loginErrorMessage'] = 'Correct username and/or password!' . '<br>';
+		while ($array = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			$pass = $array['password'];
 		}
-
 		if ($_POST['password'] != $pass) {
 			$_SESSION['loginErrorMessage'] = 'Wrong username and/or password!' . '<br>';
 			echo $_SESSION['loginErrorMessage'];

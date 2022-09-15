@@ -1,23 +1,27 @@
 <?php
 
-include_once './includes/dbh.php';
 session_start();
 
-function checkPasswords($password, $passwordAgain)
-{
+ini_set('display_errors', 'On');
+ini_set('html_errors', 0);
+error_reporting(-1);
 
-    if ($password === $passwordAgain)
-        return TRUE;
-    else
-        return FALSE;
-}
+include_once './includes/new_conn.php';
+// ob_start();
 
 if ($_SESSION['signupSuccess'] === TRUE) {
     header("Location: signup_success.php");
     return;
 }
 
-// $_SESSION['message'] = FALSE;
+function checkPasswords($password, $passwordAgain)
+{
+    if ($password === $passwordAgain)
+        return TRUE;
+    else
+        return FALSE;
+}
+
 if (isset($_POST['submit'])) {
     $_SESSION['submit'] = $_POST['submit'];
     $_SESSION['signupSuccess'] = FALSE;
@@ -31,15 +35,15 @@ if (isset($_POST['submit'])) {
     $password = $_POST['password'];
     $email = $_POST['email'];
 
-    $sql2 = "SELECT username FROM syottotesti WHERE username = '$username';";
-    $result2 = mysqli_query($link, $sql2);
-    $usernameAlreadyExists = mysqli_num_rows($result2);
-    echo $usernameAlreadyExists . ' <-- How many results were found.' . '<br>';
+    $sql = "SELECT username FROM syottotesti WHERE username = ?;";
+    $stmt = $dbConn->prepare($sql);
+    $stmt->execute([$username]);
+    $user = $stmt->fetch(); // If fetch takes as a parameter PDO::FETCH_COLUMN, we will get a blank screen with an araror message.
+    $_SESSION['signupErrorMessage'] = $user['username'];
     if (!checkPasswords($_POST['password'], $_POST['passwordAgain'])) {
         $_SESSION['signupErrorMessage'] = 'Passwords don\'t match each other. Please check your password!';
         // echo $_SESSION['message'] . '<br>' . 'Tamako nakyy tyhjalla sivulla?';
-        // header("Location: signup.php");
-    } else if ($usernameAlreadyExists != 0) {
+    } else if ($user['username'] != FALSE) {    // $user['username'] is not FALSE if it was found with the SQL query i.e. it exist in the database.
         $_SESSION['signupErrorMessage'] = 'This username is not available. Try another one. '
             . $usernameAlreadyExists . ' <-- How many results were found.' . '<br>';
     } else {
@@ -47,9 +51,8 @@ if (isset($_POST['submit'])) {
 
         $sql = "INSERT INTO syottotesti (`username`, `password`, `email`)
             VALUES ('$username', '$password', '$email');";
-        mysqli_query($link, $sql);
+        $dbConn->exec($sql);
         $_SESSION['signupErrorMessage'] = '';
-        echo '<p style="color: red; text-align: center">Succeeee!</p>';
     }
     header("Location: signup.php");
     return;
@@ -57,7 +60,6 @@ if (isset($_POST['submit'])) {
 
 ?>
 
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -102,12 +104,13 @@ if (isset($_POST['submit'])) {
         <div style="color: red;">
             <?php
             if ($message != FALSE) {
-                echo $message . ' samalla rivilla' . '<br>';
+                echo $message . ' on the same row' . '<br>';
             }
             if ($message == TRUE) {
                 echo 'Message is TRUE';
                 $_SESSION['signupErrorMessage'] = FALSE; // This is to make it so that the message doesn't show up again on reloading the page.
             } else if ($message == FALSE) {
+                // echo "Falsehan se lopuksikin." . '<br>';
                 echo 'Message is FALSE';
             }
             ?>
