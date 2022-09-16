@@ -5,16 +5,7 @@ ini_set('html_errors', 0);
 error_reporting(-1);
 
 session_start();
-// ob_start(); // if logout redirection doesn't work.
 
-include_once './includes/new_conn.php';
-
-if ($_SESSION['loginSuccess'] === TRUE) {
-
-    $_SESSION['loginSuccess'] = FALSE;
-    $_SESSION['loginPersist'] = TRUE;
-    $_SESSION['loginErrorMessage'] = FALSE;
-}
 if ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE) {
 
     header("Location: index.php");
@@ -22,35 +13,43 @@ if ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE) 
 }
 
 ?>
+
 <html>
 
 <head>
-    <title>Camagru - Upload a picture</title>
+    <title>Camagru</title>
 
     <style>
         <?php include "style.css"; ?>
     </style>
 </head>
+
+</html>
+
 <?php
 
 if (isset($_SESSION['loginPersist'])) {
 ?>
+    <html>
 
     <body id="gradient">
         <?php
 
-            include_once 'navbar.php';
+        include_once 'navbar.php';
 
         ?>
-        <h1 style="margin-top: 100px">
-            Welcome, master!
-        </h1>
-        <div>
-            <img src="http://media2.s-nbcnews.com/i/streams/2013/June/130617/6C7911377-tdy-130617-leo-toasts-1.jpg" alt="Congrats!">
+        <h1 style="margin-top: 100px"> Take a picture of yourself</h1>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+
+            <!-- The below is needed if we want to toggle the camera on with a button press. -->
+            <!-- <button id="start-camera">Start Camera</button> -->
+            <video id="video" width="640" height="480" autoplay></video>
+            <button id="snap">Let's Snap Time!</button>
+            <canvas id="canvas" width="640" height="480"></canvas>
+
         </div>
-        <div style="text-align: center;">
-            <a href="logout.php">Click here to log out.</a>
-        </div>
+
+        <script src="camera_app.js"></script>
 
         <div style="text-align: center;">
             <?php
@@ -65,10 +64,6 @@ if (isset($_SESSION['loginPersist'])) {
             } else if ($_SESSION['loginSuccess'] == FALSE) {
                 echo '$_SESSION["loginSuccess"] is FALSE' . '<br>';
             }
-            // if ($_SESSION['loginSuccess'] == FALSE && $_SESSION['loginPersist'] == FALSE) {
-
-            //     header("Location: index.php");
-            // }
             ?>
         </div>
     </body>

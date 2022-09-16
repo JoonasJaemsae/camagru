@@ -7,13 +7,14 @@
 <body>
 
     <div class="navbar">
-        <a style="font-size: 1.4rem; font-family: 'Brush Script MT'; font-style: bold; border-right: 1px solid black;">Camagru</a>
+        <a href="welcome.php"
+        style="font-size: 1.4rem; font-family: 'Brush Script MT'; font-style: bold; border-right: 1px solid black; text-decoration: none; color: black;">Camagru</a>
         <a>
             <?php
             echo 'Welcome, ' . $_SESSION["username"] . '!';
             ?>
         </a>
-        <a href="logout.php" class="nav__link">Upload a picture</a>
+        <a href="webcam.php" class="nav__link">Upload a picture</a>
         <div class="navbar-right" style="border-right: none;">
             <a href="logout.php" class="nav__link">Profile</a>
             <a href="logout.php" class="nav__link" style="text-align: right;">Log out</a>

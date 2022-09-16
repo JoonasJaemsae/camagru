@@ -8,12 +8,12 @@ $_SESSION['signupSuccessPersist'] = FALSE;
 // ^ If you want to make it so that the user cannot return to the signup success page after returning to login screen.
 // Currently the back button will return the user to the signup page, though. Not sure if that's good either.
 
-if ($_SESSION['loginSuccess'] === TRUE) {
+if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
 	header('Location: welcome.php');
 	return;
 }
 
-if (isset($_POST['login'])) {	
+if (isset($_POST['login'])) {
 	$_SESSION['login'] = $_POST['login'];
 
 	$user = $_POST['username'];
@@ -73,7 +73,9 @@ if (isset($_POST['login'])) {
 
 		</div>
 		<div class="flex-container1">
-			<div class="subBoxLeft"></div>
+			<div class="subBoxLeft">
+				<a href="./setup.php" class="form__link">Set up DB</a>
+			</div>
 			<div class="subBoxRight">
 				<a href="./select_all.php" class="form__link">SQL retrieval test</a>
 			</div>
