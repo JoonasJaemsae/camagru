@@ -39,11 +39,13 @@ if (isset($_SESSION['loginPersist'])) {
     <body id="gradient">
         <?php
 
-            include_once 'navbar.php';
+        include_once 'navbar.php';
 
         ?>
         <h1 style="margin-top: 100px">
-            Welcome, master!
+            <?php
+            echo 'Welcome, ' .  $_SESSION["username"] . '!';
+            ?>
         </h1>
         <div>
             <img src="http://media2.s-nbcnews.com/i/streams/2013/June/130617/6C7911377-tdy-130617-leo-toasts-1.jpg" alt="Congrats!">
@@ -65,15 +67,11 @@ if (isset($_SESSION['loginPersist'])) {
             } else if ($_SESSION['loginSuccess'] == FALSE) {
                 echo '$_SESSION["loginSuccess"] is FALSE' . '<br>';
             }
-            // if ($_SESSION['loginSuccess'] == FALSE && $_SESSION['loginPersist'] == FALSE) {
-
-            //     header("Location: index.php");
-            // }
             ?>
         </div>
     </body>
 
-    </html>
+</html>
 <?php
 
 }

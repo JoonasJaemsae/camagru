@@ -13,7 +13,7 @@
 
 <?php
 
-include_once './includes/new_conn.php';   
+include_once './config/new_conn.php';   
 
 echo 'Site load successful.' . '<br>';
 // echo 'Your query results should appear below this line if the query was successful:' . '<br>';
@@ -64,11 +64,19 @@ $stmt = $dbConn->query($sql4);
 $i = 0;
 while ($array = $stmt->fetch(PDO::FETCH_ASSOC)) {
    echo $array['password'] . '<br>';
-   echo $array . '<br>';
+   echo $array . '<br>' . '<br>';;
    $i++;
 }
 if ($array['username'] == FALSE && $i == 0) {   // Try looking for a user that doesn't exist, and this if statement should come true.
-   echo '$array["username"] is FALSE.';
+   echo '$array["username"] is FALSE.' . '<br>';;
 }
+
+$sql5 = "SELECT id FROM syottotesti WHERE username=?;";
+$user = 'bb';
+$stmt = $dbConn->prepare($sql5);
+$stmt->execute([$user]);
+$i = 0;
+$logged_in_user_id = $stmt->fetch(PDO::FETCH_COLUMN);
+echo $logged_in_user_id . '<br>';
 
 ?>

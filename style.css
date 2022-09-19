@@ -277,3 +277,16 @@ img {
     font-size: 1.1em;
     /* line-height: 150px; Apparently the purpose of this is to center the text vertically, but I don't know if that's what it does really. */
 }
+
+#save {
+    height: 50px;
+    width: 75px;
+    border-radius: 10%;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    background-color: gainsboro;
+    margin: 20px;
+    font-size: 1.1em;
+    /* line-height: 150px; Apparently the purpose of this is to center the text vertically, but I don't know if that's what it does really. */
+}

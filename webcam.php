@@ -46,27 +46,28 @@ if (isset($_SESSION['loginPersist'])) {
             <video id="video" width="640" height="480" autoplay></video>
             <button id="snap">Let's Snap Time!</button>
             <canvas id="canvas" width="640" height="480"></canvas>
+            <button id="save">Save photo</button>
 
         </div>
-
-        <script src="camera_app.js"></script>
 
         <div style="text-align: center;">
             <?php
-            if ($_SESSION['loginPersist'] == TRUE) {
-                echo '$_SESSION["loginPersist"] is TRUE' . '<br>';
-            } else if ($_SESSION['loginPersist'] == FALSE) {
-                echo '$_SESSION["loginPersist"] is FALSE' . '<br>';
-            }
+            // if ($_SESSION['loginPersist'] == TRUE) {
+            //     echo '$_    SESSION["loginPersist"] is TRUE' . '<br>';
+            // } else if ($_SESSION['loginPersist'] == FALSE) {
+            //     echo '$_SESSION["loginPersist"] is FALSE' . '<br>';
+            // }
 
-            if ($_SESSION['loginSuccess'] == TRUE) {
-                echo '$_SESSION["loginSuccess"] is TRUE' . '<br>';
-            } else if ($_SESSION['loginSuccess'] == FALSE) {
-                echo '$_SESSION["loginSuccess"] is FALSE' . '<br>';
-            }
+            // if ($_SESSION['loginSuccess'] == TRUE) {
+            //     echo '$_SESSION["loginSuccess"] is TRUE' . '<br>';
+            // } else if ($_SESSION['loginSuccess'] == FALSE) {
+            //     echo '$_SESSION["loginSuccess"] is FALSE' . '<br>';
+            // }
             ?>
         </div>
     </body>
+
+    <script src="camera_app.js"></script>
 
     </html>
 <?php

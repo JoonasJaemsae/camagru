@@ -1,6 +1,6 @@
 <?php
 
-include_once './includes/dbh.php';
+include_once './config/new_conn.php';
 
 echo 'Site load successful. Your query results should appear below this line if the query was successful:' . '<br>';
 

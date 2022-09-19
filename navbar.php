@@ -11,7 +11,7 @@
         style="font-size: 1.4rem; font-family: 'Brush Script MT'; font-style: bold; border-right: 1px solid black; text-decoration: none; color: black;">Camagru</a>
         <a>
             <?php
-            echo 'Welcome, ' . $_SESSION["username"] . '!';
+            echo 'Welcome, ' . $_SESSION["username"] . " " . $_SESSION["logged_in_user_id"] . '!';
             ?>
         </a>
         <a href="webcam.php" class="nav__link">Upload a picture</a>

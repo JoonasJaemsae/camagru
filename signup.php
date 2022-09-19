@@ -6,7 +6,7 @@ ini_set('display_errors', 'On');
 ini_set('html_errors', 0);
 error_reporting(-1);
 
-include_once './includes/new_conn.php';
+include_once './config/new_conn.php';
 // ob_start();
 
 if ($_SESSION['signupSuccess'] === TRUE) {
@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
     $sql = "SELECT username FROM syottotesti WHERE username = ?;";
     $stmt = $dbConn->prepare($sql);
     $stmt->execute([$username]);
-    $user = $stmt->fetch(); // If fetch takes as a parameter PDO::FETCH_COLUMN, we will get a blank screen with an araror message.
+    $user = $stmt->fetch(); // If fetch takes as a parameter PDO::FETCH_COLUMN, we will get a blank screen with an error message.
     $_SESSION['signupErrorMessage'] = $user['username'];
     if (!checkPasswords($_POST['password'], $_POST['passwordAgain'])) {
         $_SESSION['signupErrorMessage'] = 'Passwords don\'t match each other. Please check your password!';
