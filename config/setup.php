@@ -1,9 +1,9 @@
 <?php
 
-require_once 'dbh.inc.php';
+require_once 'database.php';
 
 try {
-    $dbConn = new PDO($dsn, $username, $password);
+    $dbConn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
     $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     echo "Connection from new_conn.php successful!" . "<br>";
 } catch (PDOException $errorMessage) {
