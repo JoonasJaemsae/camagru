@@ -32,7 +32,7 @@ echo 'Site load successful.' . '<br>';
 //    }
 // }
 
-// echo 'Second query should appear below:' . '<br>';
+// echo 'Second query result should appear below:' . '<br>';
 
 // "SELECT * FROM testusers;"
 // "SELECT COUNT(username) FROM syottotesti WHERE username = 'bb';"
@@ -48,7 +48,7 @@ echo 'Site load successful.' . '<br>';
 //    }
 // }
 
-echo 'Third query should appear below:' . '<br>';
+echo 'Third query result should appear below:' . '<br>';
 
 $sql3 = "SELECT * FROM syottotesti;";
 $stmt = $dbConn->query($sql3);
@@ -57,7 +57,7 @@ while ($array = $stmt->fetch(PDO::FETCH_ASSOC)) {
    echo $array . '<br>';
 }
 
-echo '<br>' . 'Fourth query should appear below:' . '<br>';
+echo '<br>' . 'Fourth query result should appear below:' . '<br>';
 
 $sql4 = "SELECT password FROM syottotesti WHERE username='jjamsa';";
 $stmt = $dbConn->query($sql4);
@@ -71,12 +71,22 @@ if ($array['username'] == FALSE && $i == 0) {   // Try looking for a user that d
    echo '$array["username"] is FALSE.' . '<br>';;
 }
 
+echo '<br>' . 'Fifth query result should appear below:' . '<br>';
+
 $sql5 = "SELECT id FROM syottotesti WHERE username=?;";
 $user = 'bb';
 $stmt = $dbConn->prepare($sql5);
 $stmt->execute([$user]);
-$i = 0;
 $logged_in_user_id = $stmt->fetch(PDO::FETCH_COLUMN);
 echo $logged_in_user_id . '<br>';
+
+echo '<br>' . 'Sixth query result should appear below:' . '<br>';
+
+$sql6 = "SELECT image_data FROM images WHERE image_id=?;";
+$image_id = 2;
+$stmt = $dbConn->prepare($sql6);
+$stmt->execute([$image_id]);
+$image_data = $stmt->fetch(PDO::FETCH_COLUMN);
+echo $image_data . '<br>';
 
 ?>

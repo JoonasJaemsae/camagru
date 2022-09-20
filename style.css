@@ -266,9 +266,20 @@ img {
 }
 
 #snap {
-    height: 150px;
-    width: 150px;
+    height: 125px;
+    width: 125px;
     border-radius: 50%;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    background-color: gainsboro;
+    margin: 20px;
+    font-size: 1.1em;
+    /* line-height: 150px; Apparently the purpose of this is to center the text vertically, but I don't know if that's what it does really. */
+}
+
+#save, #upload {
+    border-radius: 10%;
     cursor: pointer;
     font-family: 'Courier New', monospace;
     text-align: center;
@@ -281,12 +292,88 @@ img {
 #save {
     height: 50px;
     width: 75px;
-    border-radius: 10%;
-    cursor: pointer;
-    font-family: 'Courier New', monospace;
-    text-align: center;
-    background-color: gainsboro;
-    margin: 20px;
-    font-size: 1.1em;
-    /* line-height: 150px; Apparently the purpose of this is to center the text vertically, but I don't know if that's what it does really. */
+}
+
+#upload {
+    height: 80px;
+    width: 85px;
+}
+
+.captureElements {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.editables {
+    width: 65%;
+}
+
+.photoDisplayBar {
+    position: relative;
+    width: 400px;
+    height: 1000px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 2px 5px 20px 4px;
+}
+
+/* .displayBar {   
+    width: 20%;
+    background-color: white;
+    border-radius: 5%;
+} */
+
+.videoAndCanvas {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.photoButtons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.stickerBar {
+    width: 1000px;
+    height: 150px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 2px 5px 20px 4px;
+}
+
+.stickerSlot {
+    width: 16%;
+    height: 90%;
+    background-color: white;
+    border: 1px solid coral;
+}
+
+.video {
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: white;
+    border-radius: 5%;
+    padding: 20px;
+    box-shadow: 2px 5px 20px 4px;
+}
+
+.canvas {
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: white;
+    border-radius: 5%;
+    padding: 20px;
+    box-shadow: 2px 5px 20px 4px;
 }

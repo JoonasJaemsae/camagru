@@ -17,37 +17,6 @@ if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
 	return;
 }
 
-// if (isset($_POST['login'])) {
-// 	$_SESSION['login'] = $_POST['login'];
-
-// 	$user = $_POST['username'];
-// 	$_SESSION['username'] = $_POST['username'];
-
-// 	$sql = "SELECT password FROM syottotesti WHERE username='$user';";
-// 	$stmt = $dbConn->query($sql);
-
-// 	if ($stmt->rowCount() > 0) {
-// 		$_SESSION['loginErrorMessage'] = 'Correct username and/or password!' . '<br>';
-// 		while ($array = $stmt->fetch(PDO::FETCH_ASSOC)) {
-// 			$pass = $array['password'];
-// 		}
-// 		if ($_POST['password'] != $pass) {
-// 			$_SESSION['loginErrorMessage'] = 'Wrong username and/or password!' . '<br>';
-// 			echo $_SESSION['loginErrorMessage'];
-// 		} else {
-// 			echo 'Correctamundo!' . '<br>';
-// 			$sql = "SELECT id FROM syottotesti WHERE username='$user';";
-// 			$stmt = $dbConn->query($sql);
-// 			$_SESSION['logged_in_user_id'] = $stmt->fetch(PDO::FETCH_COLUMN);
-// 			$_SESSION['loginSuccess'] = TRUE;
-// 		}
-// 	}
-
-// 	echo 'End of if (isset) ' . '<br>';
-// 	header('Location: index.php');
-// 	return;
-// }
-
 if (isset($_POST['login'])) {
 	$_SESSION['login'] = $_POST['login'];
 	$_SESSION['username'] = $_POST['username'];
@@ -78,40 +47,6 @@ if (isset($_POST['login'])) {
 	return;
 }
 
-// if (isset($_POST['login'])) {
-// 	$_SESSION['login'] = $_POST['login'];
-
-// 	$user = $_POST['username'];
-// 	$_SESSION['username'] = $_POST['username'];
-
-// 	$sql = "SELECT * FROM syottotesti WHERE username=?;";
-// 	$stmt = $dbConn->prepare($sql);
-// 	$stmt->execute(array($user, $password));
-
-// 	$_SESSION['loginErrorMessage'] = 'Wrong username and/or password!' . '<br>';
-// 	if ($stmt->rowCount() > 0) {
-// 		$_SESSION['loginErrorMessage'] = 'Correct username and/or password!' . '<br>';
-// 		$pass = $stmt->fetch(PDO::FETCH_COLUMN);
-// 		// while ($array = $stmt->fetch(PDO::FETCH_ASSOC)) {
-// 		//  	$pass = $array['password'];
-// 		// }
-// 		if ($_POST['password'] != $pass) {
-// 			$_SESSION['loginErrorMessage'] = 'Wrong username and/or password!' . '<br>';
-// 			echo $_SESSION['loginErrorMessage'];
-// 		} else {
-// 			echo 'Correctamundo!' . '<br>';
-// 			$sql = "SELECT id FROM syottotesti WHERE username=?;";
-// 			$stmt = $dbConn->prepare($sql);
-// 			$stmt->execute(array($user));
-// 			$_SESSION['logged_in_user_id'] = $stmt->fetch(PDO::FETCH_COLUMN);
-// 			$_SESSION['loginSuccess'] = TRUE;
-// 		}
-// 	}
-// 	echo 'End of if (isset) ' . '<br>';
-// 	header('Location: index.php');
-// 	return;
-// }
-
 ?>
 
 <html>
@@ -140,7 +75,7 @@ if (isset($_POST['login'])) {
 				<a href="./signup.php" class="form__link">Sign up</a>
 			</div>
 			<div class="subBoxRight">
-				<a href="./forgot.php" class="form__link">Forgot your password?</a>
+				<a href="./forgot.html" class="form__link">Forgot your password?</a>
 			</div>
 
 		</div>
