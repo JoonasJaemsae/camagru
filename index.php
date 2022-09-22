@@ -20,19 +20,19 @@ if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
 if (isset($_POST['login'])) {
 	$_SESSION['login'] = $_POST['login'];
 	$_SESSION['username'] = $_POST['username'];
+	$password = hash('whirlpool', $_POST['password']);
 
 	$sql = "SELECT * FROM syottotesti WHERE username=:username AND password=:password;";
 	$stmt = $dbConn->prepare($sql);
 	$stmt->execute(
 		array(
 			'username' => $_POST['username'],
-			'password' => $_POST['password']
+			'password' => $password
 		)
 	);
 	$_SESSION['loginErrorMessage'] = 'Wrong username and/or password!' . '<br>';
 	if ($stmt->rowCount() > 0) {
 		$_SESSION['loginErrorMessage'] = 'Correct username and/or password!' . '<br>';
-		echo 'Correctamundo!' . '<br>';
 		$sql = "SELECT id FROM syottotesti WHERE username=?;";
 		$stmt = $dbConn->prepare($sql);
 		$stmt->execute(array($_POST['username']));
@@ -77,7 +77,6 @@ if (isset($_POST['login'])) {
 			<div class="subBoxRight">
 				<a href="./forgot.html" class="form__link">Forgot your password?</a>
 			</div>
-
 		</div>
 		<div class="flex-container1">
 			<div class="subBoxLeft">

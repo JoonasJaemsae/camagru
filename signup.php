@@ -49,9 +49,9 @@ if (isset($_POST['submit'])) {
             . $usernameAlreadyExists . ' <-- How many results were found.' . '<br>';
     } else {
         $_SESSION['signupSuccess'] = TRUE;
-
+        $password = hash('whirlpool', $password);
         $sql = "INSERT INTO syottotesti (`username`, `password`, `email`)
-            VALUES ('$username', '$password', '$email');";
+                VALUES ('$username', '$password', '$email');";
         $dbConn->exec($sql);
         $_SESSION['signupErrorMessage'] = '';
     }
