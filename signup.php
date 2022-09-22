@@ -22,6 +22,7 @@ function checkPasswords($password, $passwordAgain)
         return FALSE;
 }
 
+
 if (isset($_POST['submit'])) {
     $_SESSION['submit'] = $_POST['submit'];
     $_SESSION['signupSuccess'] = FALSE;

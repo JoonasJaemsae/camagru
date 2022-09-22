@@ -48,7 +48,13 @@ if (isset($_SESSION['loginPersist'])) {
             ?>
         </h1>
         <div>
-            <img src="http://media2.s-nbcnews.com/i/streams/2013/June/130617/6C7911377-tdy-130617-leo-toasts-1.jpg" alt="Congrats!">
+            <img src="http://media2.s-nbcnews.com/i/streams/2013/June/130617/6C7911377-tdy-130617-leo-toasts-1.jpg" alt="Congrats!" style="
+            margin-top: 50px;
+            margin-bottom: 50px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 25%;">
         </div>
         <div style="text-align: center;">
             <a href="logout.php">Click here to log out.</a>

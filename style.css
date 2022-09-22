@@ -60,9 +60,9 @@ h1 {
     font-family: 'Quicksand';
     src: url('Quicksand-Medium.eot');
     src: url('Quicksand-Medium.eot?#iefix') format('embedded-opentype'),
-        url('Quicksand-Medium.woff2') format('woff2'),
+        /* url('Quicksand-Medium.woff2') format('woff2'),
         url('Quicksand-Medium.woff') format('woff'),
-        url('Quicksand-Medium.ttf') format('truetype'),
+        url('Quicksand-Medium.ttf') format('truetype'), */
         url('Quicksand-Medium.svg#Quicksand-Medium') format('svg');
     font-weight: 500;
     font-style: normal;
@@ -235,6 +235,7 @@ h1 {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 2;
 }
 
 .navbar > a:first-child { /* Fixed from navbar a:first-child. Not sure why this solved the problem of the second vertical border line. */
@@ -254,67 +255,101 @@ h1 {
 
 .nav__link {
     padding: 0 1rem;
-}
-
-img {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 25%;
+    /* 1 rem equals the font size of the html element */
 }
 
 #snap {
-    height: 125px;
-    width: 125px;
+    width: 10vw;
+    height: 10vw;
+    max-width: 125px;
+    max-height: 125px;
     border-radius: 50%;
     cursor: pointer;
     font-family: 'Courier New', monospace;
     text-align: center;
     background-color: gainsboro;
     margin: 20px;
-    font-size: 1.1em;
-    /* line-height: 150px; Apparently the purpose of this is to center the text vertically, but I don't know if that's what it does really. */
-}
-
-#save, #upload {
-    border-radius: 10%;
-    cursor: pointer;
-    font-family: 'Courier New', monospace;
-    text-align: center;
-    background-color: gainsboro;
-    margin: 20px;
-    font-size: 1.1em;
+    font-size: min(max(10px, 2vw), 18px)
     /* line-height: 150px; Apparently the purpose of this is to center the text vertically, but I don't know if that's what it does really. */
 }
 
 #save {
-    height: 50px;
-    width: 75px;
+    width: 7vw;
+    height: 7vw;
+    max-width: 85px;
+    max-height: 60px;
+    cursor: pointer;
+    border-radius: 10%;
+    font-size: min(max(7px, 1.5vw), 18px)
+}
+
+#save, #upload {
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    background-color: gainsboro;
+    margin: 20px;
+    /* line-height: 150px; Apparently the purpose of this is to center the text vertically, but I don't know if that's what it does really. */
 }
 
 #upload {
-    height: 80px;
-    width: 85px;
+    font-size: 1.1em;
 }
 
 .captureElements {
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.captureElementsLeftSide {
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.captureElementsRightSide {
+    width: 25%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .editables {
-    width: 65%;
+    width: 80vw;
+    display: flex;
+    /* flex-direction: row; */
+    flex-wrap: wrap;
+    /* justify-content: left; */
+}
+
+.videoArea {
+    width: 50%;
+    height: 50%;
+}
+
+.canvasArea {
+    width: 50%;
+    height: 50%;
+}
+
+.snapArea {
+    margin-top: 25vw;
+    margin-left: 10vw;
+}
+
+.buttonArea {
+    margin-top: 25vw;
+    margin-left: 10vw;
 }
 
 .photoDisplayBar {
-    position: relative;
-    width: 400px;
-    height: 1000px;
+    position: absolute;
+    width: 20vw;
+    max-width: 400px;
+    height: 60vw;
+    max-height: 1000px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 2px 5px 20px 4px;
@@ -326,31 +361,76 @@ img {
     border-radius: 5%;
 } */
 
-.videoAndCanvas {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
+.video {
+    position: absolute;
+    width: 28vw;
+    height: 21vw;
+    min-width: 320px;
+    min-height: 240px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: white;
+    border-radius: 5%;
+    padding: 20px;
+    box-shadow: 7px 5px 20px 4px;
 }
 
-.photoButtons {
+.canvas {
+    position: absolute;
+    width: 28vw;
+    height: 21vw;
+    min-width: 320px;
+    min-height: 240px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: white;
+    border-radius: 5%;
+    padding: 20px;
+    box-shadow: 7px 5px 20px 4px;
+}
+
+#video, #canvas {
+    position: absolute;
+    width: 28vw;
+    height: 21vw;
+    min-width: 320px;
+    min-height: 240px;
+}
+
+#stickerPreview {
+    /* Dimensions must be changed to 28 and 21, respectively. */
+    width: 28vw;
+	height: 21vw;
+	min-width: 320px;
+	min-height: 240px;
+	position: absolute;
+	z-index: 1; /* Determines if the layer is on top or below. */
+    /* background-color: greenyellow; */
+}
+
+.stickerBarArea {
+    /* width: 65vw;
+    height: 10vw; */
+    /* max-height: 150px; */
+    margin-top: 100px;
+    margin-left: 30px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .stickerBar {
-    width: 1000px;
-    height: 150px;
-    margin: auto;
+    width: 65vw;
+    height: 10vw;
+    max-height: 150px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
     background-color: white;
     border-radius: 5px;
-    box-shadow: 2px 5px 20px 4px;
+    box-shadow: 7px 5px 20px 4px;
 }
 
 .stickerSlot {
@@ -360,20 +440,9 @@ img {
     border: 1px solid coral;
 }
 
-.video {
-    margin-left: 10px;
-    margin-right: 10px;
+.sticker {
+    max-width: 10vw;
+    max-height: 10vw;
     background-color: white;
-    border-radius: 5%;
-    padding: 20px;
-    box-shadow: 2px 5px 20px 4px;
-}
-
-.canvas {
-    margin-left: 10px;
-    margin-right: 10px;
-    background-color: white;
-    border-radius: 5%;
-    padding: 20px;
-    box-shadow: 2px 5px 20px 4px;
+    border: 1px solid coral;
 }

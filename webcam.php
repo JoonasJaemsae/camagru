@@ -40,55 +40,44 @@ if (isset($_SESSION['loginPersist'])) {
         ?>
         <h1 style="margin-top: 100px"> Take a picture of yourself</h1>
         <div class="captureElements">
-            <div class="editables">
-                <div class="videoAndCanvas">
-                    <div class="video">
-                        <video id="video" width="640" height="480" autoplay></video>
+            <div class="captureElementsLeftSide">
+                <div class="editables">
+                    <div class="videoArea">
+                        <div class="video">
+                            <video id="video" autoplay></video>
+                            <canvas id="stickerPreview" width="640" height="480"></canvas>
+                        </div>
+                        <div class="snapArea">
+                            <button id="snap">Let's Snap Time!</button>
+                        </div>
                     </div>
-                    <div class="canvas">
-                        <canvas id="canvas" width="640" height="480"></canvas>
+                    <div class="canvasArea">
+                        <div class="canvas">
+                            <canvas id="canvas"></canvas>
+                        </div>
+                        <div class="buttonArea">
+                            <button id="save">Save photo</button>
+                            <input type="file" id="upload" accept="image/png, image/jpg"></button>
+                        </div>
                     </div>
-                </div>
-                <div class="photoButtons">
-                    <button id="snap">Let's Snap Time!</button>
-                    <button id="save">Save photo</button>
-                    <input type="file" id="image_input" accept="image/png, image/jpg">Upload a photo</button>
-                </div>
-                <div class="stickerBar">
-                    <div class="stickerSlot">
-
-                    </div>
-                    <div class="stickerSlot">
-                        
+                    <div class="stickerBarArea">
+                        <div class="stickerBar">
+                            <img class="sticker" src="stickers/crown.png" onclick="drawSticker(this, 30, 30, 128, 95)">
+                            <img class="sticker" src="stickers/42.png" onclick="drawSticker(this, 60, 60, 128, 78)">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="photoDisplayBar">
-            
+            <div class="captureElementsRightSide">
+                <div class="photoDisplayBar">
+
+                </div>
             </div>
-
-            <!-- The below is needed if we want to toggle the camera on with a button press. -->
-            <!-- <button id="start-camera">Start Camera</button> -->
-
-
-
         </div>
 
-        <div style="text-align: center;">
-            <?php
-            // if ($_SESSION['loginPersist'] == TRUE) {
-            //     echo '$_SESSION["loginPersist"] is TRUE' . '<br>';
-            // } else if ($_SESSION['loginPersist'] == FALSE) {
-            //     echo '$_SESSION["loginPersist"] is FALSE' . '<br>';
-            // }
 
-            // if ($_SESSION['loginSuccess'] == TRUE) {
-            //     echo '$_SESSION["loginSuccess"] is TRUE' . '<br>';
-            // } else if ($_SESSION['loginSuccess'] == FALSE) {
-            //     echo '$_SESSION["loginSuccess"] is FALSE' . '<br>';
-            // }
-            ?>
-        </div>
+        <!-- The below is needed if we want to toggle the camera on with a button press. -->
+        <!-- <button id="start-camera">Start Camera</button> -->
     </body>
 
     <script src="camera_app.js"></script>
