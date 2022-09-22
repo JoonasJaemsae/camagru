@@ -4,9 +4,12 @@ let video = document.querySelector("#video");
 let snap = document.querySelector("#snap");
 let canvas = document.querySelector("#canvas");
 let save = document.querySelector("#save");
-let preview1 = document.querySelector('#stickerPreview');
+let preview1 = document.querySelector('#stickerPreview1');
+let preview2 = document.querySelector('#stickerPreview2');
+var selected_sticker = "empty";
 const upload = document.querySelector("#upload");
 var uploaded_image = "";
+let draggable = false;
 
 const constraints = { audio: false, video: true }      // CHANGE THIS TO TRUE TO SEE VIDEO!!!
 
@@ -82,11 +85,43 @@ function draw() {
     ctx.drawImage(this, 0, 0);
 }
 function failed() {
-    console.error("The provided file couldn't be loaded as an Image media");
+    console.error("The provided file couldn't be loaded as an Image media"); // Think about removing this.
 }
 
-function drawSticker(sticker, h_offset, v_offset, width, height) {
-    preview1.getContext('2d').drawImage(sticker, h_offset, v_offset, width, height);
+function drawSticker(sticker, h_offset, v_offset, width, height, flag) {
+    if (flag == 'empty') {
+        preview1.getContext('2d').clearRect(0, 0, preview1.width, preview1.height);
+        preview2.getContext('2d').clearRect(0, 0, preview2.width, preview2.height);
+    } else {
+        preview1.getContext('2d').drawImage(sticker, h_offset, v_offset, width, height);
+        preview2.getContext('2d').drawImage(sticker, h_offset, v_offset, width, height);
+        var selected_sticker = "other";
+    }
+
+}
+
+preview1.mousedown = (e) => {
+    if (e.layerX <= (currentX + stickerImg.width/2) &&
+    e.layerX >= (currentX + stickerImg.width/2) &&
+    e.layerX <= (currentY + stickerImg.height/2) &&
+    e.layerX >= (currentY + stickerImg.height/2)) {
+        draggable = TRUE;
+    }
+}
+
+preview1.onmousemove = (e) => {
+    if (draggable == TRUE) {
+        currentX = e.layerX
+        currentY = e.layerY
+    }
+}
+
+preview1.onmouseup = (e) => {
+    draggable = FALSE;
+}
+
+preview1.onmouseout = (e) => {
+    draggable = FALSE;
 }
 
 startWebCam();

@@ -397,7 +397,7 @@ h1 {
     min-height: 240px;
 }
 
-#stickerPreview {
+#stickerPreview1 {
     /* Dimensions must be changed to 28 and 21, respectively. */
     width: 28vw;
 	height: 21vw;
@@ -406,6 +406,31 @@ h1 {
 	position: absolute;
 	z-index: 1; /* Determines if the layer is on top or below. */
     /* background-color: greenyellow; */
+    /* The above is to keep track of where the canvas is. */
+}
+
+#stickerPreview2 {
+    /* Dimensions must be changed to 28 and 21, respectively. */
+    width: 28vw;
+	height: 21vw;
+	min-width: 320px;
+	min-height: 240px;
+	position: absolute;
+	z-index: 1; /* Determines if the layer is on top or below. */
+    /* background-color: greenyellow; */
+    /* The above is to keep track of where the canvas is. */
+}
+
+#lockedStickerCanvas {
+    /* Dimensions must be changed to 28 and 21, respectively. */
+    width: 28vw;
+	height: 21vw;
+	min-width: 320px;
+	min-height: 240px;
+	position: absolute;
+	z-index: 1; /* Determines if the layer is on top or below. */
+    background-color: greenyellow;
+    /* The above is to keep track of where the canvas is. */
 }
 
 .stickerBarArea {

@@ -7,7 +7,7 @@ error_reporting(-1);
 session_start();
 // ob_start(); // if logout redirection doesn't work.
 
-include_once './includes/new_conn.php';
+include_once './config/new_conn.php';
 
 if ($_SESSION['loginSuccess'] === TRUE) {
 
