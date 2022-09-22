@@ -100,6 +100,7 @@ function drawSticker(sticker, h_offset, v_offset, width, height, flag) {
 
 }
 
+// There is no variable called stickerImg. Replace with your own one.
 preview1.mousedown = (e) => {
     if (e.layerX <= (currentX + stickerImg.width/2) &&
     e.layerX >= (currentX + stickerImg.width/2) &&
