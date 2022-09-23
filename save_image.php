@@ -5,6 +5,7 @@ session_start();
 require_once './config/new_conn.php';
 
 $image_url = $_POST['new_image'];
+$stickerArray = $_POST['stickers'];
 $image_url = preg_replace('/^data:image\/jpeg;base64,/', '', $image_url);
 $image_url = str_replace(' ','+', $image_url);
 // For some reason, the dataURL is littered with spaces, and they need to be filled in with +'s in order
@@ -24,5 +25,7 @@ $sql = "INSERT INTO syottotesti (`username`, `password`, `email`)
     VALUES ('testi', 'testi', 'testi');";
 $dbConn->exec($sql);
 
-echo 'data:image/jpeg;base64,' . $image_url;
+// echo 'data:image/jpeg;base64,' . $image_url;
+// echo 'Sticker Array: ' . $stickerArray;
+print_r($stickerArray);
 // echo $image_base64_decoded;
