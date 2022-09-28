@@ -235,7 +235,7 @@ h1 {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 3;
+    z-index: 5;
 }
 
 .navbar > a:first-child { /* Fixed from navbar a:first-child. Not sure why this solved the problem of the second vertical border line. */
@@ -346,12 +346,17 @@ h1 {
 
 .photoDisplayBar {
     position: absolute;
-    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    width: 15vw;
+    min-width: 100px;
     max-width: 400px;
     height: 60vw;
+    min-height: 300px;
     max-height: 1000px;
     background-color: white;
     border-radius: 10px;
+    overflow-y: scroll;
     box-shadow: 2px 5px 20px 4px;
 }
 
@@ -360,6 +365,12 @@ h1 {
     background-color: white;
     border-radius: 5%;
 } */
+
+#barPhoto {
+	width: 12vw;
+    height: 9vw;
+	margin: 0.5vw;
+}
 
 .video {
     position: absolute;
@@ -404,7 +415,7 @@ h1 {
 	min-width: 320px;
 	min-height: 240px;
 	position: absolute;
-	z-index: 1; /* Determines if the layer is on top or below. */
+	z-index: 3; /* Determines if the layer is on top or below. */
     /* background-color: greenyellow; */
     /* The above is to keep track of where the canvas is. */
 }
@@ -416,7 +427,7 @@ h1 {
 	min-width: 320px;
 	min-height: 240px;
 	position: absolute;
-	z-index: 1; /* Determines if the layer is on top or below. */
+	z-index: 3; /* Determines if the layer is on top or below. */
     /* background-color: greenyellow; */
     /* The above is to keep track of where the canvas is. */
 }
@@ -429,7 +440,7 @@ h1 {
 	min-height: 240px;
 	position: absolute;
 	z-index: 2; /* Determines if the layer is on top or below. */
-    background-color: greenyellow;
+    /* background-color: greenyellow; */
     /* The above is to keep track of where the canvas is. */
 }
 
@@ -459,20 +470,21 @@ h1 {
 
 .stickerBar {
     width: 65vw;
-    height: 10vw;
-    max-height: 150px;
+    height: 12vw;
+    max-height: 180px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: left;
     background-color: white;
     border-radius: 5px;
+    overflow-x: scroll;
+    overflow-y: hidden;
     box-shadow: 7px 5px 20px 4px;
 }
 
 .stickerSlot {
-    width: 16%;
-    height: 90%;
+    /* width: 10vw; */
     background-color: white;
     border: 1px solid coral;
 }
@@ -482,4 +494,17 @@ h1 {
     max-height: 10vw;
     background-color: white;
     border: 1px solid coral;
+}
+
+.galleryPhotos {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 20px 10px 10px 20px;    
+}
+
+#galleryPhoto {
+    width: 24vw;
 }

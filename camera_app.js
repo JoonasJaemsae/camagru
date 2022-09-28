@@ -16,8 +16,15 @@ let draggable = false;
 var rect = preview1.getBoundingClientRect();
 var x_width = rect.right - rect.left;
 var y_height = rect.bottom - rect.top;
-let currentX = x_width / 2;
-let currentY = y_height / 2;
+// let currentX = x_width / 2;
+// let currentY = y_height / 2;
+let currentX = 0;
+let currentY = 0;
+var positionX = 0;
+var positionY = 0;
+// var hori_offset = 0;
+// var vert_offset = 0;
+
 
 var stickerArray = '';
 
@@ -43,9 +50,15 @@ snap.addEventListener('click', function () {
     // let image_base64 = document.querySelector("#canvas").toDataURL().replace(/^data:image\/png;base64,/, "");
 
     console.log(image_data_url); // You can find the image data in Inspect -> Console
+    save.disabled = false;
 });
 
 save.addEventListener('click', function () {
+
+    stickerArray += selected.src + ',' + finalPositionX + ',' + finalPositionY + ',';
+    lockedPreview1.getContext('2d').drawImage(selected, finalPositionX, finalPositionY);
+    lockedPreview2.getContext('2d').drawImage(selected, finalPositionX, finalPositionY);
+
     let image_data_url = canvas.toDataURL('image/jpeg');
     let xml = new XMLHttpRequest();
     var url = './test_save.php';
@@ -53,10 +66,10 @@ save.addEventListener('click', function () {
     xml.open('POST', url, true);
     xml.onload = function () {
         alert("Image saved successfully!");
-        console.log("PHP Response: ", this.response);
+        // console.log("PHP Response: ", this.response);
+        appendPhoto(this.response);
     }
     xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    // xml.send('new_image=' + image_data_url + '&stickers' + stickerArray);
     xml.send('new_image=' + image_data_url + '&stickerData=' + stickerArray);
 });
 
@@ -99,39 +112,34 @@ function failed() {
     console.error("The provided file couldn't be loaded as an Image media"); // Think about removing this.
 }
 
-function drawSticker(sticker, h_offset, v_offset, width, height, flag) {
+function drawSticker(sticker, hori_offset, vert_offset, width, height, flag) {
+
+    x_width = rect.right - rect.left;
+    y_height = rect.bottom - rect.top;
+
+    scaleX = x_width / 640;
+    scaleY = y_height / 480;
     if (flag == "new") {
+        snap.disabled = false;
         if (selected != '') {
-            lockedPreview1.getContext('2d').drawImage(selected, currentX - selected.width / 2, currentY - selected.height / 2);
-            lockedPreview2.getContext('2d').drawImage(selected, currentX - selected.width / 2, currentY - selected.height / 2);
+            positionX = currentX - final_width / 2;
+            positionY = currentY - final_height / 2;
+            finalPositionX = positionX * (640 / x_width)
+            finalPositionY = positionY * (480 / y_height)
+            lockedPreview1.getContext('2d').drawImage(selected, finalPositionX, finalPositionY);
+            lockedPreview2.getContext('2d').drawImage(selected, finalPositionX, finalPositionY);
             // You're always looking for the one below.
             //
-            offset_w = currentX - selected.width / 2;
-            offset_h = currentY - selected.height / 2;
-            stickerArray += selected.src + ',' +  offset_w + ',' +  offset_h + ',';
+            stickerArray += selected.src + ',' + finalPositionX + ',' + finalPositionY + ',';
             //
             // ^ This way.
             console.log("selected.src on ", selected.src);
             console.log("selected.width on ", selected.width);
-            console.log("selected.height on ",selected.height);
+            console.log("selected.height on ", selected.height);
             console.log("Mitas tasta tulostuu: ", stickerArray[0]);
             console.log("Mitas tasta tulostuu: ", stickerArray[1]);
             console.log("Entas tasta: ", stickerArray);
         }
-        console.log("Selected Sticker at first:", selected);
-        selected = document.getElementById(sticker.id);
-        console.log("Selected Sticker:", selected);
-        console.log("Selected Sticker src:", selected.src);
-
-        rect = preview1.getBoundingClientRect();
-        // x_width = rect.right - rect.left / 640;
-        // y_height = rect.bottom - rect.top / 480;
-
-        x_width = rect.right - rect.left;
-        y_height = rect.bottom - rect.top;
-
-        scaleX = x_width / 640;
-        scaleY = y_height / 480;
 
         console.log("x_width:", x_width);
         console.log("y_height:", y_height);
@@ -139,45 +147,78 @@ function drawSticker(sticker, h_offset, v_offset, width, height, flag) {
         console.log("scaleX:", scaleX);
         console.log("scaleY:", scaleY);
 
+        console.log("Selected Sticker at first:", selected);
+        selected = document.getElementById(sticker.id);
+        console.log("Selected Sticker:", selected);
+        console.log("Selected Sticker src:", selected.src);
+
         console.log("Selected Sticker width:", selected.width);
         console.log("Selected Sticker height:", selected.height);
 
-        currentX = x_width / 2;
-        currentY = y_height / 2;
+        final_width = selected.width * scaleX;
+        final_height = selected.height * scaleY;
+
+        currentX = final_width / 2;
+        currentY = final_height / 2;
+
+        rect = preview1.getBoundingClientRect();
+
+        positionX = 0;
+        positionY = 0;
+        finalPositionX = positionX * (640 / x_width)
+        finalPositionY = positionY * (480 / y_height)
 
         // preview1.getContext('2d').drawImage(sticker, currentX - (selected.width * scaleX / 2), currentY - (selected.height * scaleY / 2));
         // preview1.getContext('2d').drawImage(sticker, currentX - (selected.width / 2), currentY - (selected.height / 2));
-        preview1.getContext('2d').drawImage(sticker, 0, 0);
+        preview1.getContext('2d').drawImage(sticker, finalPositionX, finalPositionY);
+        preview2.getContext('2d').drawImage(sticker, finalPositionX, finalPositionY);
 
     }
     if (flag == "move") {
+        final_width = selected.width * scaleX;
+        final_height = selected.height * scaleY;
         preview1.getContext('2d').clearRect(0, 0, preview1.width, preview1.height);
         preview2.getContext('2d').clearRect(0, 0, preview2.width, preview2.height);
-        preview1.getContext('2d').drawImage(selected, h_offset - selected.width / 2, v_offset - selected.height / 2);
-        preview2.getContext('2d').drawImage(selected, h_offset - selected.width / 2, v_offset - selected.height / 2);
+        console.log("hori_offset:", hori_offset);
+        console.log("vert_offset:", vert_offset);
+        console.log("final_width / 2:", final_width / 2);
+        console.log("final_height / 2:", final_height / 2);
+        positionX = hori_offset - final_width / 2;
+        positionY = vert_offset - final_height / 2;
+        console.log("positionX:", positionX);
+        console.log("positionY:", positionY);
+        finalPositionX = positionX * (640 / x_width)
+        finalPositionY = positionY * (480 / y_height)
+        preview1.getContext('2d').drawImage(selected, finalPositionX, finalPositionY);
+        preview2.getContext('2d').drawImage(selected, finalPositionX, finalPositionY);
     }
     if (flag == 'empty') {
         preview1.getContext('2d').clearRect(0, 0, preview1.width, preview1.height);
         preview2.getContext('2d').clearRect(0, 0, preview2.width, preview2.height);
         lockedPreview1.getContext('2d').clearRect(0, 0, lockedPreview1.width, lockedPreview1.height);
         lockedPreview2.getContext('2d').clearRect(0, 0, lockedPreview2.width, lockedPreview2.height);
+        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); // Reflect on this one still.
         selected = '';
+        stickerArray = '';
+        save.disabled = true;
+        snap.disabled = true;
     }
 }
 
 preview1.onmousedown = (e) => {
 
-    var rect = preview1.getBoundingClientRect();  // get element's abs. position
-    var x = e.clientX - rect.left;              // get mouse x and adjust for el.
-    var y = e.clientY - rect.top;               // get mouse y and adjust for el.
+    rect = preview1.getBoundingClientRect();  // get element's abs. position
 
-    // var x_width = rect.right - rect.left;
-    // var y_height = rect.bottom - rect.top;
+    var x_width = rect.right - rect.left;
+    var y_height = rect.bottom - rect.top;
 
-    var x_width = rect.right - rect.left / (rect.right - rect.left) * 640 - selected.width / 2;
-    var y_height = rect.bottom - rect.top / (rect.bottom - rect.top) * 480 - selected.height / 2;
+    final_width = selected.width * scaleX;
+    final_height = selected.height * scaleY;
 
     console.log("selected.width", selected.width);
+    console.log("selected.height", selected.height);
+    console.log("final_width", final_width);
+    console.log("final_height", final_height);
     console.log("e.layerX", e.layerX);
     console.log("e.layerY", e.layerY);
     console.log("currentX", currentX);
@@ -186,15 +227,14 @@ preview1.onmousedown = (e) => {
     console.log("y_height", y_height);
     console.log("e.clientX", e.clientX);
     console.log("e.clientY", e.clientY);
-    console.log("x_width / 2 + selected.width / 2", x_width / 2 + selected.width / 2);
-    console.log("x_width / 2 - selected.width / 2", x_width / 2 - selected.width / 2);
-    console.log("y_height / 2 + selected.height / 2", y_height / 2 + selected.height / 2);
-    console.log("y_height / 2 - selected.height / 2", y_height / 2 - selected.height / 2);
-
-    if (e.layerX <= (currentX + selected.width / 2) &&
-        e.layerX >= (currentX - selected.width / 2) &&
-        e.layerY <= (currentY + selected.height / 2) &&
-        e.layerY >= (currentY - selected.height / 2)) {
+    console.log("currentX + final_width / 2", currentX + final_width / 2);
+    console.log("currentX + final_width / 2", currentX - final_width / 2);
+    console.log("currentY + final_height / 2", currentY + final_height / 2);
+    console.log("currentY - final_height / 2", currentY - final_height / 2);
+    if (e.layerX <= (currentX + final_width / 2) &&
+        e.layerX >= (currentX - final_width / 2) &&
+        e.layerY <= (currentY + final_height / 2) &&
+        e.layerY >= (currentY - final_height / 2)) {
         draggable = true;
         console.log("The image was clicked.");
     } else {
@@ -204,11 +244,8 @@ preview1.onmousedown = (e) => {
 
 preview1.onmousemove = (e) => {
     if (draggable == true) {
-        rect = preview1.getBoundingClientRect();
-        currentX = (e.clientX - rect.left) / (rect.right - rect.left) * 640 - selected.width / 2;
-		currentY = (e.clientY - rect.top) / (rect.bottom - rect.top) * 480 - selected.height / 2;
-        // currentX = e.layerX
-        // currentY = e.layerY
+        currentX = e.layerX;
+        currentY = e.layerY;
         drawSticker(selected, currentX, currentY, 0, 0, "move");
     }
 }
@@ -221,6 +258,47 @@ preview1.onmouseup = (e) => {
 preview1.onmouseout = (e) => {
     draggable = false;
     // console.log("Mouse out!");
+}
+
+// adjustParamsOnResize();
+// window.addEventListener('resize', adjustParamsOnResize());
+window.addEventListener('resize', function(e) {
+    if (selected == '') {
+        return ;
+    } else {
+        adjustParamsOnResize(selected, preview1, preview2);
+    }
+    
+});
+
+function adjustParamsOnResize(selected, preview1, preview2) {
+    rect = preview1.getBoundingClientRect();
+    x_width = rect.right - rect.left;
+    y_height = rect.bottom - rect.top;
+
+    scaleX = x_width / 640;
+    scaleY = y_height / 480;
+
+    final_width = selected.width * scaleX;
+    final_height = selected.height * scaleY;
+
+    currentX = 0 + final_width / 2;
+    currentY = 0 + final_height / 2;
+
+    preview1.getContext('2d').clearRect(0, 0, preview1.width, preview1.height);
+    preview2.getContext('2d').clearRect(0, 0, preview2.width, preview2.height);
+    drawSticker(selected, currentX, currentY, 0, 0, "move");
+    drawSticker(selected, currentX, currentY, 0, 0, "move");
+}
+
+function appendPhoto(savedImage) {
+
+    let display = document.getElementById('photoDisplayBar');
+    let add = document.createElement('img');
+
+    add.id = 'barPhoto';
+    add.src = savedImage;
+    display.appendChild(add);
 }
 
 startWebCam();

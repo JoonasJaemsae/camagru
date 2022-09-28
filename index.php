@@ -13,7 +13,7 @@ $_SESSION['signupSuccessPersist'] = FALSE;
 // Currently the back button will return the user to the signup page, though. Not sure if that's good either.
 
 if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
-	header('Location: welcome.php');
+	header('Location: gallery.php');
 	return;
 }
 

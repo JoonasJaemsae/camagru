@@ -9,7 +9,7 @@
 <body>
 
     <div class="navbar">
-        <a href="welcome.php" style="font-size: 1.4rem; font-family: 'Brush Script MT'; font-style: bold; border-right: 1px solid black; text-decoration: none; color: black;">
+        <a href="gallery.php" style="font-size: 1.4rem; font-family: 'Brush Script MT'; font-style: bold; border-right: 1px solid black; text-decoration: none; color: black;">
             Camagru
         </a>
         

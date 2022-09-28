@@ -29,9 +29,9 @@ while ($stickerData[$i] != "") {
     $i = $i + 3;
 }
 
-ob_start(); // Think about the necessity of these.
+ob_start(); // Think about the necessity of these. Harmless.
 imagejpeg($image_php);
-$image_php = ob_get_clean(); // Think about the necessity of these.
+$image_php = ob_get_clean(); // Think about the necessity of these. Harmless.
 $image = base64_encode($image_php);
 
 $sql = "USE `rex`";
@@ -46,7 +46,8 @@ $dbConn->exec($sql);
 //     VALUES ('testi', 'testi', 'testi');";
 // $dbConn->exec($sql);
 
-echo "Data that came through to PHP: " . $_POST['stickerData'];
+echo "data:image/jpeg;base64," . $image;
+// echo "Data that came through to PHP: " . $_POST['stickerData'];
 // echo 'data:image/jpeg;base64,' . $image_url;
 
 

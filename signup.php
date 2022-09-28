@@ -9,6 +9,10 @@ error_reporting(-1);
 include_once './config/new_conn.php';
 // ob_start();
 
+if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
+	header('Location: gallery.php');
+	return;
+}
 if ($_SESSION['signupSuccess'] === TRUE) {
     header("Location: signup_success.php");
     return;
@@ -21,7 +25,6 @@ function checkPasswords($password, $passwordAgain)
     else
         return FALSE;
 }
-
 
 if (isset($_POST['submit'])) {
     $_SESSION['submit'] = $_POST['submit'];

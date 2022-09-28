@@ -2,9 +2,14 @@
 
 session_start();
 
+if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
+	header('Location: gallery.php');
+	return;
+}
 if ($_SESSION['signupSuccess'] === FALSE && $_SESSION['signupSuccessPersist'] === FALSE) { // Seems to be working properly even without ob_start.
 
     header("Location: signup.php");
+    return ;
 }
 if ($_SESSION['signupSuccess'] === TRUE) {
 

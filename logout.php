@@ -8,6 +8,6 @@ if (isset($_SESSION['loginPersist'])) {
     $_SESSION['loginSuccess'] = FALSE;
 }
 
-header('Location: welcome.php');
+header('Location: gallery.php');
 
 ?>
