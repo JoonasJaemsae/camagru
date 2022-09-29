@@ -8,6 +8,7 @@ session_start();
 // ob_start(); // if logout redirection doesn't work.
 
 include_once './config/new_conn.php';
+require 'gallery_functions.php';
 
 if ($_SESSION['loginSuccess'] === TRUE) {
 
@@ -42,13 +43,40 @@ if (isset($_SESSION['loginPersist'])) {
         include_once 'navbar.php';
 
         ?>
-        <h1 style="margin-top: 100px">
+        <h1 style="margin-top: 100px; font: 700 2rem 'Quicksand', sans-serif;">
             <?php
             echo 'Welcome, ' .  $_SESSION["username"] . '!';
             ?>
         </h1>
-        <div class="galleryPhotos" id="galleryPhotos">
+        <div class="galleryPhotoArea">
+            <div class="galleryPhotos" id="galleryPhotos">
+                <?php
+                foreach ($images as $key => $value) {
+                    $base64 = $value['image_data'];
+                    $image = 'data:image/jpeg;base64,' . $base64;
+                ?>
+                    <div class="galleryElement">
+                        <div class="handleElement"><?php echo $value['username']; ?></div>
+                        <img class="photoElement" src="<?php echo $image; ?>"></img>
+                        <div class="iconElement">
+                            <a href="delete_photo.php" class="nav__icon">
+                                <img src="./icons/trash32.png" title="Delete picture"></img>
+                            </a>
+                            <a href="like.php" class="nav__icon">
+                                <img src="./icons/heartempty32.png" title="Like"></img>
+                            </a>
+                        </div>
+                        <div class="commentElement">
+                            
+                        </div>
+                    </div>
+                    <!-- <?php echo $value['image_id']; ?> -->
+                <?php
+                }
+                // <?php echo $value['image_id'];
+                ?>
 
+            </div>
         </div>
         <div style="text-align: center;">
             <a href="logout.php">Click here to log out.</a>
@@ -79,11 +107,3 @@ if (isset($_SESSION['loginPersist'])) {
 }
 
 ?>
-
-<!-- <img src="http://media2.s-nbcnews.com/i/streams/2013/June/130617/6C7911377-tdy-130617-leo-toasts-1.jpg" alt="Congrats!" style="
-            margin-top: 50px;
-            margin-bottom: 50px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 25%;"> -->

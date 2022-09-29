@@ -21,7 +21,9 @@ body#index {
 }
 
 body#gradient {
-    background-image: linear-gradient(to bottom right, rgb(182, 224, 222), rgb(232, 216, 180));
+    /* background-image: linear-gradient(to bottom right, rgb(251, 248, 224), rgb(229, 191, 103)); */
+    background-image: linear-gradient(to bottom right, rgb(248, 242, 200), rgb(237, 207, 135));
+    /* background-image: linear-gradient(to bottom right, rgb(182, 224, 222), rgb(232, 216, 180)); */
     background-attachment: fixed;
 }
 
@@ -225,37 +227,79 @@ h1 {
 }
 
 .navbar {
-    height: 10px;
+    height: 45px;
     width: 100%;
     max-width: 100%;
     box-shadow: 0 1px 1px 0 black;
     background-color: white;
-    padding-top: 1rem;
-    padding-bottom: 1.5rem;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 5;
 }
 
-.navbar > a:first-child { /* Fixed from navbar a:first-child. Not sure why this solved the problem of the second vertical border line. */
+.navbarElements {
+    height: 10px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+/* Fixed from navbar a:first-child. Not sure why this solved the problem of the second vertical border line. */
+/* The padding prints margin between text and border. Margin doesn't do that. */
+.navbar-left > a:first-child {
     border-right: 1px solid rgb(0, 0, 0);
     margin-left: 1rem;
     margin-right: 1rem;
-    padding-right: 2rem; /* The padding prints margin between text and border. Margin doesn't do that. */
+    padding-right: 2rem;
 }
 
-.navbar a {
+/* .navbar a {
     float: left;
+} */
+
+.navbar-left {
+    width: 368px;
+    min-width: 16px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    /* background-color: greenyellow; */
 }
 
 .navbar-right {
-    float: right;
+    width: 128px;
+    min-width: 16px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    /* background-color: cyan; */
 }
 
-.nav__link {
+/* 1 rem equals the font size of the html element */
+/* .nav__link {
     padding: 0 1rem;
-    /* 1 rem equals the font size of the html element */
+} */
+
+.nav__icon {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.nav__iconText {
+    font-size: 1.6rem;
+    font-family: 'Brush Script MT';
+    font-style: bold;
+    border-right: 1px solid black;
+    text-decoration: none;
+    color: black;
+}
+
+.nav__welcomeText {
+    font-size: min(max(10px, 2vw), 18px);
 }
 
 #snap {
@@ -496,15 +540,51 @@ h1 {
     border: 1px solid coral;
 }
 
+.galleryPhotoArea {
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    margin: 50px 100px 100px 100px;
+}
+
 .galleryPhotos {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-wrap: wrap;
-    margin: 20px 10px 10px 20px;    
 }
 
-#galleryPhoto {
-    width: 24vw;
+.galleryElement {
+    width: 25%;
+    min-width: 320px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 70px;
+    background: white;
+    padding: 15px;
+    box-shadow: 1px 1px 1px 1.5px rgb(50, 49, 49);
+    border-radius: 2px;
+}
+
+.handleElement {
+    margin-bottom: 10px;
+}
+
+.photoElement {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.iconElement {
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.commentElement {
+    display: flex;
+    align-items: center;
 }
