@@ -59,18 +59,27 @@ if (isset($_SESSION['loginPersist'])) {
                         <div class="handleElement"><?php echo $value['username']; ?></div>
                         <img class="photoElement" src="<?php echo $image; ?>"></img>
                         <div class="iconElement">
-                            <a href="delete_photo.php" class="nav__icon">
-                                <img src="./icons/trash32.png" title="Delete picture"></img>
-                            </a>
-                            <a href="like.php" class="nav__icon">
-                                <img src="./icons/heartempty32.png" title="Like"></img>
-                            </a>
-                        </div>
-                        <div class="commentElement">
-                            
+                            <div class="iconElementLeft">
+                                <div id="likeAmount<?php echo $value['image_id'] ?>">Likes:
+                                    <?php 
+                                        echo getImageLikeCount($value['image_id'], $dbConn);
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="iconElementRight">
+                                <a href="delete_photo.php" class="nav__icon">
+                                    <img src="./icons/trash32.png" title="Delete picture"></img>
+                                </a>
+                                <?php if (checkUsersLike($value['image_id'], $dbConn) == true) { ?>
+                                    <img class="likeIcon" id="like<?php echo $value['image_id'] ?>" src="./icons/heartfull32.png" title="Like" onclick=adjustLikeStatus(this.id)></img>
+                                <?php } else { ?>
+                                    <img class="likeIcon" id="like<?php echo $value['image_id'] ?>" src="./icons/heartempty32.png" title="Like" onclick=adjustLikeStatus(this.id)></img>
+                                <?php } ?>
+                            </div>
+                            <div class="commentElement">
+                            </div>
                         </div>
                     </div>
-                    <!-- <?php echo $value['image_id']; ?> -->
                 <?php
                 }
                 // <?php echo $value['image_id'];
@@ -97,9 +106,10 @@ if (isset($_SESSION['loginPersist'])) {
             }
             ?>
         </div>
+        <script src="gallery_features.js"></script>
     </body>
 
-    <script src="gallery_features.js"></script>
+
 
 </html>
 <?php

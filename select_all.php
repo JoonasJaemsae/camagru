@@ -74,7 +74,7 @@ if ($array['username'] == FALSE && $i == 0) {   // Try looking for a user that d
 echo '<br>' . 'Fifth query result should appear below:' . '<br>';
 
 $sql5 = "SELECT id FROM syottotesti WHERE username=?;";
-$user = 'bb';
+$user = 'gg';
 $stmt = $dbConn->prepare($sql5);
 $stmt->execute([$user]);
 $logged_in_user_id = $stmt->fetch(PDO::FETCH_COLUMN);
@@ -83,10 +83,74 @@ echo $logged_in_user_id . '<br>';
 echo '<br>' . 'Sixth query result should appear below:' . '<br>';
 
 $sql6 = "SELECT image_data FROM images WHERE image_id=?;";
-$image_id = 2;
+$image_id = 187;
 $stmt = $dbConn->prepare($sql6);
 $stmt->execute([$image_id]);
 $image_data = $stmt->fetch(PDO::FETCH_COLUMN);
 echo $image_data . '<br>';
+
+echo '<br>' . 'Seventh query result should appear below:' . '<br>';
+
+// The below returns seven rows with three liked pictures
+$sql7 = "SELECT `likes`.`like_id`, `likes`.`user_id`, `likes`.`image_id`, `images`.`image_id` as toinen
+FROM likes
+INNER JOIN syottotesti
+ON likes.user_id = syottotesti.id
+INNER JOIN images
+ON syottotesti.id = images.user_id;
+";
+
+// $sql7 = "SELECT *
+// FROM likes
+// INNER JOIN syottotesti
+// ON likes.user_id = syottotesti.id
+// INNER JOIN images
+// ON syottotesti.id = images.user_id;
+// ";
+
+$stmt = $dbConn->prepare($sql7);
+$stmt->execute();
+$likes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($likes as $key => $value) {
+   echo $value['like_id'] . '<br>';
+   echo $value['user_id'] . '<br>';
+   echo $value['image_id'] . '<br>';
+   echo $value['toinen'] . '<br>';
+}
+
+echo '<br>' . '<br>';
+
+// while ($likes) {
+//    echo $likes['like_id'] . '<br>';
+//    echo $likes . '<br>';
+// }
+
+// The below returns three rows with three liked pictures
+$sql8 = "SELECT `likes`.`like_id`, `likes`.`user_id`, `likes`.`image_id`
+FROM likes
+INNER JOIN syottotesti
+ON likes.user_id = syottotesti.id
+INNER JOIN images
+ON likes.image_id = images.image_id;
+";
+
+// The below returns three rows with three liked pictures and all other data on the user and image on the same row if with star.
+$sql9 = "SELECT `likes`.`like_id`, `likes`.`user_id`, `likes`.`image_id`, `syottotesti`.`username`
+FROM likes
+INNER JOIN syottotesti
+ON likes.user_id = syottotesti.id
+INNER JOIN images
+ON likes.image_id = images.image_id;
+";
+
+// The below returns three rows with three liked pictures and all other data on the user and image on the same row if with star.
+$sql10 = "SELECT *
+FROM likes
+INNER JOIN syottotesti
+ON likes.user_id = syottotesti.id
+INNER JOIN images
+ON likes.image_id = images.image_id;
+";
 
 ?>

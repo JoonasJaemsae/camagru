@@ -33,6 +33,13 @@ $sql = "CREATE TABLE IF NOT EXISTS `images` (
 )";
 $dbConn->exec($sql);
 
+$sql = "CREATE TABLE IF NOT EXISTS `likes` (
+	`like_id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`user_id` INT(11) NOT NULL,
+    `image_id` INT(11) NOT NULL
+)";
+$dbConn->exec($sql);
+
 echo "Setup has finished running. See above message to learn if the setup was successful or not." . "<br>";
 
 ?>

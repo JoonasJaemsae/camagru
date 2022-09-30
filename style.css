@@ -581,7 +581,39 @@ h1 {
     margin-bottom: 15px;
     display: flex;
     align-items: center;
-    justify-content: right;
+    justify-content: space-between;
+}
+
+.iconElementLeft {
+    width: 70%;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.iconElementRight {
+    width: 30%;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.likeIcon:hover {
+    cursor: pointer;
+}
+
+.heartEmptyIcon {
+    width: 32px;
+    height: 32px;
+    /* background: url('./icons/heartempty32.png'); */
+}
+
+.heartFullIcon {
+    width: 32px;
+    height: 32px;
+    background: url('./icons/heartfull32.png');
 }
 
 .commentElement {
