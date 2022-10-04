@@ -16,11 +16,11 @@ if ($_SESSION['loginSuccess'] === TRUE) {
     $_SESSION['loginPersist'] = TRUE;
     $_SESSION['loginErrorMessage'] = FALSE;
 }
-if ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE) {
+// if ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE) {
 
-    header("Location: index.php");
-    exit();
-}
+//     header("Location: index.php");
+//     exit();
+// }
 
 ?>
 <html>
@@ -34,6 +34,10 @@ if ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE) 
 </head>
 <?php
 
+if ($_GET['page'] < 0 || $_GET['page'] > $number_of_pages) {
+    header("Location: ./gallery.php?page=1");
+} 
+
 if (isset($_SESSION['loginPersist'])) {
 ?>
 
@@ -45,7 +49,10 @@ if (isset($_SESSION['loginPersist'])) {
         ?>
         <h1 style="margin-top: 100px; font: 700 2rem 'Quicksand', sans-serif;">
             <?php
-            echo 'Welcome, ' .  $_SESSION["username"] . '!';
+            if ($_SESSION['logged_in_user_id'] == TRUE) {
+                echo 'Welcome, ' .  $_SESSION["username"] . ' ' . $_SESSION['logged_in_user_id'];
+                '!';
+            }
             ?>
         </h1>
         <div class="galleryPhotoArea">
@@ -56,36 +63,52 @@ if (isset($_SESSION['loginPersist'])) {
                     $image = 'data:image/jpeg;base64,' . $base64;
                 ?>
                     <div class="galleryElement">
-                        <div class="handleElement"><?php echo $value['username']; ?></div>
+                        <div class="handleElement"><?php echo $value['username'] .  ' ' . $value['image_id'] ?></div>
                         <img class="photoElement" src="<?php echo $image; ?>"></img>
                         <div class="iconElement">
                             <div class="iconElementLeft">
-                                <div id="likeAmount<?php echo $value['image_id'] ?>">Likes:
-                                    <?php 
-                                        echo getImageLikeCount($value['image_id'], $dbConn);
-                                    ?>
-                                </div>
+                                <div id="likeAmount<?php echo $value['image_id'] ?>">Likes: <?php echo getImageLikeCount($value['image_id'], $dbConn); ?></div>
                             </div>
                             <div class="iconElementRight">
-                                <a href="delete_photo.php" class="nav__icon">
-                                    <img src="./icons/trash32.png" title="Delete picture"></img>
-                                </a>
-                                <?php if (checkUsersLike($value['image_id'], $dbConn) == true) { ?>
-                                    <img class="likeIcon" id="like<?php echo $value['image_id'] ?>" src="./icons/heartfull32.png" title="Like" onclick=adjustLikeStatus(this.id)></img>
+                                <?php if ($value['userid'] == $_SESSION['logged_in_user_id']) { ?>
+                                    <img class="likeIcon" id="delete<?php echo $value['image_id'] ?>" src="./icons/trash32.png" title="Delete the picture" onclick=confirmDelete(<?php echo $value['image_id'] ?>)></img>
                                 <?php } else { ?>
-                                    <img class="likeIcon" id="like<?php echo $value['image_id'] ?>" src="./icons/heartempty32.png" title="Like" onclick=adjustLikeStatus(this.id)></img>
+
+                                <?php } ?>
+                                <?php if (checkUsersLike($value['image_id'], $dbConn) == true) { ?>
+                                    <img class="likeIcon" id="like<?php echo $value['image_id'] ?>" src="./icons/heartfull32.png" title="Like the picture" onclick="adjustLikeStatus(this.id, <?php echo $_SESSION['logged_in_user_id'] ?> )"></img>
+                                <?php } else { ?>
+                                    <img class="likeIcon" id="like<?php echo $value['image_id'] ?>" src="./icons/heartempty32.png" title="Like the picture" onclick="adjustLikeStatus(this.id, <?php echo $_SESSION['logged_in_user_id'] ?> )""></img>
                                 <?php } ?>
                             </div>
-                            <div class="commentElement">
+                            <div class=" commentElement">
+
                             </div>
                         </div>
                     </div>
                 <?php
                 }
-                // <?php echo $value['image_id'];
                 ?>
-
             </div>
+        </div>
+        <div class="pageArea">
+            <?php
+            if ($page > 1) {
+            ?>
+                <a href="gallery.php?page=<?php echo ($page - 1); ?>"><</a>
+            <?php
+            }
+            for ($page = 1; $page <= $number_of_pages; $page++) {
+            ?>
+                <a href="gallery.php?page=<?php echo $page; ?>"><?php echo $page; ?></a>
+            <?php
+            }
+            if ($_GET['page'] < $number_of_pages) {
+            ?>
+                <a href="gallery.php?page=<?php echo ($_GET['page'] + 1); ?>">></a>
+            <?php
+            }
+            ?>
         </div>
         <div style="text-align: center;">
             <a href="logout.php">Click here to log out.</a>
@@ -93,6 +116,7 @@ if (isset($_SESSION['loginPersist'])) {
 
         <div style="text-align: center;">
             <?php
+
             if ($_SESSION['loginPersist'] == TRUE) {
                 echo '$_SESSION["loginPersist"] is TRUE' . '<br>';
             } else if ($_SESSION['loginPersist'] == FALSE) {
@@ -103,6 +127,18 @@ if (isset($_SESSION['loginPersist'])) {
                 echo '$_SESSION["loginSuccess"] is TRUE' . '<br>';
             } else if ($_SESSION['loginSuccess'] == FALSE) {
                 echo '$_SESSION["loginSuccess"] is FALSE' . '<br>';
+            }
+
+            if ($_SESSION['signupSuccess'] == TRUE) {
+                echo '$_SESSION["signupSuccess"] is TRUE' . '<br>';
+            } else if ($_SESSION['signupSuccess'] == FALSE) {
+                echo '$_SESSION["signupSuccess"] is FALSE' . '<br>';
+            }
+
+            if ($_SESSION['signupSuccessPersist'] == TRUE) {
+                echo '$_SESSION["signupSuccessPersist"] is TRUE' . '<br>';
+            } else if ($_SESSION['signupSuccessPersist'] == FALSE) {
+                echo '$_SESSION["signupSuccessPersist"] is FALSE' . '<br>';
             }
             ?>
         </div>
@@ -117,3 +153,9 @@ if (isset($_SESSION['loginPersist'])) {
 }
 
 ?>
+
+<!-- <form method="POST" id="delete<?php echo $value['image_id'] ?>"  action="gallery.php">
+                                        <input type="text" name="image_to_delete" value="<?php echo $value['image_id']; ?>" hidden>
+                                        <input type="text" name="delete_action" value="delete" hidden>
+                                        <img class="likeIcon" id="delete<?php echo $value['image_id'] ?>" src="./icons/trash32.png" title="Delete picture" onclick=deleteImageConfirm(<?php echo $value['image_id'] ?>)></img>
+                                    </form> -->

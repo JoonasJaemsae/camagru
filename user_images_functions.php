@@ -17,7 +17,7 @@ if (!isset($_GET['page'])) {
 } else {
     if ($_GET['page'] <= 0 || $_GET['page'] > $number_of_pages) {
         $page = 1;
-        header('Location: ./gallery.php?page=1');
+        header('Location: ./user_images.php?page=1');
         return;
     } else {
         $page = $_GET['page'];
@@ -27,16 +27,6 @@ if (!isset($_GET['page'])) {
 $page_first_result = ($page - 1) * $results_per_page;
 
 // LIMIT: Starting from page_first_result, a total of results_per_page images per page.
-$sql = "SELECT image_id, image_data, username, users.id AS userid
-    FROM images
-    INNER JOIN users
-    ON images.user_id = users.id
-    ORDER BY image_id DESC
-    LIMIT " . $page_first_result . "," . $results_per_page;
-
-$stmt = $dbConn->prepare($sql);
-$stmt->execute();
-$images = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (isset($_SESSION['logged_in_user_id'])) {
     $user_id = $_SESSION['logged_in_user_id'];
@@ -46,7 +36,7 @@ if (isset($_SESSION['logged_in_user_id'])) {
     ON images.user_id = users.id
     WHERE `users`.`id` = ?
     ORDER BY image_id DESC;
-    ";
+    LIMIT " . $page_first_result . "," . $results_per_page;
 
     $stmt = $dbConn->prepare($sql2);
     $stmt->execute([$user_id]);
@@ -79,16 +69,19 @@ function checkUsersLike($image_id, $dbConn)
     }
 }
 
-function getImageLikeCount($image_id, $dbConn)
+function getImageLikeCountUI($image_id, $dbConn)
 {
     $sql = "SELECT COUNT(likes.image_id) as total
         FROM likes
         WHERE image_id=?;
         ";
 
+echo "Hehee!" . '<br>';
     $stmt = $dbConn->prepare($sql);
     $stmt->execute([$image_id]);
+    echo "Hohoo!" . '<br>';echo "Hohoo!" . '<br>';
     $count = $stmt->fetch();
+    
     // echo $count['total'];
     if ($count['total']) {
         return $count['total'];

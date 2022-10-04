@@ -61,7 +61,7 @@ save.addEventListener('click', function () {
 
     let image_data_url = canvas.toDataURL('image/jpeg');
     let xml = new XMLHttpRequest();
-    var url = './test_save.php';
+    var url = './save_image.php';
     // console.log(image_data_url);
     xml.open('POST', url, true);
     xml.onload = function () {

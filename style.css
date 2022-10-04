@@ -5,6 +5,7 @@ body#gradient {
     --color-secondary: #252c6a;
     --color-error: #cc3333;
     --color-success: #4bb544;
+    --color-highlight: rgb(234, 234, 234);
     --border-radius: 12px;
     font-size: 16px;
     height: 100vh; /* 1vh is 1% of viewports height. */
@@ -22,23 +23,12 @@ body#index {
 
 body#gradient {
     /* background-image: linear-gradient(to bottom right, rgb(251, 248, 224), rgb(229, 191, 103)); */
-    background-image: linear-gradient(to bottom right, rgb(248, 242, 200), rgb(237, 207, 135));
+    background-image: linear-gradient(to bottom right, rgb(248, 242, 200), rgb(232, 220, 192));
+    /* background-image: linear-gradient(to bottom right, rgb(244, 242, 234), rgb(232, 220, 192)); */
+    /* background-image: linear-gradient(to bottom right, rgb(248, 242, 200), rgb(237, 207, 135)); */
     /* background-image: linear-gradient(to bottom right, rgb(182, 224, 222), rgb(232, 216, 180)); */
     background-attachment: fixed;
 }
-
-/* body#index { */
-    /* background: url(./assets/img/pexels-adonyi-gabor-1416848_lesslightness.jpg) no-repeat center center fixed; */
-    /* background-repeat: no-repeat; */
-    /* position: center; */
-    /* background-size: cover; */
-    /* Image will take over entire width of the background with cover. */
-/* } */
-
-/* body#gradient { */
-    /* background-image: linear-gradient(to bottom right, rgb(182, 224, 222), rgb(232, 216, 180)); */
-    /* background-attachment: fixed; */
-/* } */
 
 h1 {
     text-align: center;
@@ -157,19 +147,6 @@ h1 {
 .loginErrorText {
     color: red;
 }
-
-/* input[type='text'], input[type='password'] { */
-    /* width: 288px; */
-    /* height: 30px; */
-    /* margin-bottom: 10px; */
-/* } */
-
-/* input[type='submit'] { */
-    /* width: 295px; */
-    /* height: 40px; */
-    /* margin-bottom: 10px; */
-    /* background-color: rgb(236, 209, 111) */
-/* } */
 
 .form__input-group {
     margin-bottom: 10px;
@@ -540,14 +517,53 @@ h1 {
     border: 1px solid coral;
 }
 
-.galleryPhotoArea {
+.galleryPhotoArea,
+.profileMasterContainer {
     margin: auto;
     align-items: center;
     justify-content: center;
     margin: 50px 100px 100px 100px;
 }
 
-.galleryPhotos {
+.profileMenuArea {
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.profileMenu {
+    padding: 10px;
+    max-width: 300px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.optionElement:hover {
+    background-color: var(--color-highlight);
+    border-radius: 10px;
+    transition: background-color 0.2s;
+}
+
+.profileLeftSubContainer {
+    width: 60px;
+    height: 50vh;
+    min-height: 350px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px;
+}
+
+.galleryPhotos,
+.profileRightSubContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -597,7 +613,11 @@ h1 {
     margin-bottom: 15px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: right;
+}
+
+.likeIcon {
+    margin-left: 15px;
 }
 
 .likeIcon:hover {
@@ -619,4 +639,17 @@ h1 {
 .commentElement {
     display: flex;
     align-items: center;
+}
+
+.pageArea {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.pageArea > a {
+    text-decoration: none;
+    margin: 1em;
 }

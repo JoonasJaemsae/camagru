@@ -2,9 +2,12 @@
 //     likeButton.target.classList.toggle('heartFilledIcon');
 // });
 
-
-
-function adjustLikeStatus(likeId) {
+function adjustLikeStatus(likeId, isUserLoggedIn) {
+    console.log("User ID that got passed onto the function: ", isUserLoggedIn);
+    if (!isUserLoggedIn) {
+        alert("You need to log in first to be able to like pictures!");
+        return;
+    }
     var likeIcon = document.getElementById(likeId);
     console.log(likeIcon);
     var imageId = likeId.replace("like", "");
@@ -36,5 +39,19 @@ function adjustLikeStatus(likeId) {
     }
     xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xml.send('likedImage=' + imageId);
+}
+
+function confirmDelete(image_id) {
+    if (confirm("Confirm you want to proceed with deleting the picture.") == true) {
+        let xml = new XMLHttpRequest();
+        var url = './delete_image.php';
+        xml.open('POST', url, true);
+        xml.onload = function () {
+            console.log("PHP Response: ", this.response);
+            document.location.reload();
+        }
+        xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xml.send('imageId=' + image_id);
+    }
 }
 

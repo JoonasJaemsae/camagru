@@ -35,8 +35,8 @@ echo 'Site load successful.' . '<br>';
 // echo 'Second query result should appear below:' . '<br>';
 
 // "SELECT * FROM testusers;"
-// "SELECT COUNT(username) FROM syottotesti WHERE username = 'bb';"
-// $sql2 = "SELECT username FROM syottotesti WHERE username = 'asdf';";
+// "SELECT COUNT(username) FROM users WHERE username = 'bb';"
+// $sql2 = "SELECT username FROM users WHERE username = 'asdf';";
 // $result2 = mysqli_query($link, $sql2); 
 // $resultCheck2 = mysqli_num_rows($result2);
 // echo $resultCheck2 . ' <-- How many results were found.' .'<br>';
@@ -50,7 +50,7 @@ echo 'Site load successful.' . '<br>';
 
 echo 'Third query result should appear below:' . '<br>';
 
-$sql3 = "SELECT * FROM syottotesti;";
+$sql3 = "SELECT * FROM users;";
 $stmt = $dbConn->query($sql3);
 while ($array = $stmt->fetch(PDO::FETCH_ASSOC)) {
    echo $array['username'] . '<br>';
@@ -59,7 +59,7 @@ while ($array = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 echo '<br>' . 'Fourth query result should appear below:' . '<br>';
 
-$sql4 = "SELECT password FROM syottotesti WHERE username='jjamsa';";
+$sql4 = "SELECT password FROM users WHERE username='jjamsa';";
 $stmt = $dbConn->query($sql4);
 $i = 0;
 while ($array = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -73,7 +73,7 @@ if ($array['username'] == FALSE && $i == 0) {   // Try looking for a user that d
 
 echo '<br>' . 'Fifth query result should appear below:' . '<br>';
 
-$sql5 = "SELECT id FROM syottotesti WHERE username=?;";
+$sql5 = "SELECT id FROM users WHERE username=?;";
 $user = 'gg';
 $stmt = $dbConn->prepare($sql5);
 $stmt->execute([$user]);
@@ -94,18 +94,18 @@ echo '<br>' . 'Seventh query result should appear below:' . '<br>';
 // The below returns seven rows with three liked pictures
 $sql7 = "SELECT `likes`.`like_id`, `likes`.`user_id`, `likes`.`image_id`, `images`.`image_id` as toinen
 FROM likes
-INNER JOIN syottotesti
-ON likes.user_id = syottotesti.id
+INNER JOIN users
+ON likes.user_id = users.id
 INNER JOIN images
-ON syottotesti.id = images.user_id;
+ON users.id = images.user_id;
 ";
 
 // $sql7 = "SELECT *
 // FROM likes
-// INNER JOIN syottotesti
-// ON likes.user_id = syottotesti.id
+// INNER JOIN users
+// ON likes.user_id = users.id
 // INNER JOIN images
-// ON syottotesti.id = images.user_id;
+// ON users.id = images.user_id;
 // ";
 
 $stmt = $dbConn->prepare($sql7);
@@ -129,17 +129,17 @@ echo '<br>' . '<br>';
 // The below returns three rows with three liked pictures
 $sql8 = "SELECT `likes`.`like_id`, `likes`.`user_id`, `likes`.`image_id`
 FROM likes
-INNER JOIN syottotesti
-ON likes.user_id = syottotesti.id
+INNER JOIN users
+ON likes.user_id = users.id
 INNER JOIN images
 ON likes.image_id = images.image_id;
 ";
 
 // The below returns three rows with three liked pictures and all other data on the user and image on the same row if with star.
-$sql9 = "SELECT `likes`.`like_id`, `likes`.`user_id`, `likes`.`image_id`, `syottotesti`.`username`
+$sql9 = "SELECT `likes`.`like_id`, `likes`.`user_id`, `likes`.`image_id`, `users`.`username`
 FROM likes
-INNER JOIN syottotesti
-ON likes.user_id = syottotesti.id
+INNER JOIN users
+ON likes.user_id = users.id
 INNER JOIN images
 ON likes.image_id = images.image_id;
 ";
@@ -147,8 +147,8 @@ ON likes.image_id = images.image_id;
 // The below returns three rows with three liked pictures and all other data on the user and image on the same row if with star.
 $sql10 = "SELECT *
 FROM likes
-INNER JOIN syottotesti
-ON likes.user_id = syottotesti.id
+INNER JOIN users
+ON likes.user_id = users.id
 INNER JOIN images
 ON likes.image_id = images.image_id;
 ";

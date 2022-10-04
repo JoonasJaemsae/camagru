@@ -22,7 +22,7 @@ if (isset($_POST['login'])) {
 	$_SESSION['username'] = $_POST['username'];
 	$password = hash('whirlpool', $_POST['password']);
 
-	$sql = "SELECT * FROM syottotesti WHERE username=:username AND password=:password;";
+	$sql = "SELECT * FROM users WHERE username=:username AND password=:password;";
 	$stmt = $dbConn->prepare($sql);
 	$stmt->execute(
 		array(
@@ -33,7 +33,7 @@ if (isset($_POST['login'])) {
 	$_SESSION['loginErrorMessage'] = 'Wrong username and/or password!' . '<br>';
 	if ($stmt->rowCount() > 0) {
 		$_SESSION['loginErrorMessage'] = 'Correct username and/or password!' . '<br>';
-		$sql = "SELECT id FROM syottotesti WHERE username=?;";
+		$sql = "SELECT id FROM users WHERE username=?;";
 		$stmt = $dbConn->prepare($sql);
 		$stmt->execute(array($_POST['username']));
 		$_SESSION['logged_in_user_id'] = $stmt->fetch(PDO::FETCH_COLUMN);
@@ -86,11 +86,53 @@ if (isset($_POST['login'])) {
 				<a href="./select_all.php" class="form__link">SQL retrieval test</a>
 			</div>
 		</div>
+		<div class="flex-container1">
+			<div class="subBoxLeft">
+				<a href="./gallery.php" class="form__link">To Gallery</a>
+			</div>
+		</div>
 		<div class="loginErrorMessageBox" ;>
 			<span class="loginErrorText">
 				<?php
+				if ($_SESSION['loginPersist'] === TRUE) {
+					echo '$_SESSION["loginPersist"] is TRUE' . '<br>';
+				} else if ($_SESSION['loginPersist'] === FALSE) {
+					echo '$_SESSION["loginPersist"] is FALSE' . '<br>';
+				}
+	
+				if ($_SESSION['loginSuccess'] === TRUE) {
+					echo '$_SESSION["loginSuccess"] is TRUE' . '<br>';
+				} else if ($_SESSION['loginSuccess'] === FALSE) {
+					echo '$_SESSION["loginSuccess"] is FALSE' . '<br>';
+				}
+
+				if ($_SESSION['signupSuccess'] === TRUE) {
+					echo '$_SESSION["signupSuccess"] is TRUE' . '<br>';
+				} else if ($_SESSION['signupSuccess'] === FALSE) {
+					echo '$_SESSION["signupSuccess"] is FALSE' . '<br>';
+				}
+
+				if ($_SESSION['signupSuccessPersist'] === TRUE) {
+					echo '$_SESSION["signupSuccessPersist"] is TRUE' . '<br>';
+				} else if ($_SESSION['signupSuccessPersist'] === FALSE) {
+					echo '$_SESSION["signupSuccessPersist"] is FALSE' . '<br>';
+				}
+
+				if ($_POST['login'] == TRUE) {
+					echo '$_POST["login"] is TRUE' . '<br>' . '<br>';
+				} else if ($_POST['login'] == FALSE) {
+					echo '$_POST["login"] is FALSE' . '<br>' . '<br>';
+				}
+
+				if ($_POST['submit'] == TRUE) {
+					echo '$_POST["submit"] is TRUE' . '<br>' . '<br>';
+				} else if ($_POST['submit'] == FALSE) {
+					echo '$_POST["submit"] is FALSE' . '<br>' . '<br>';
+				}
+
 				echo $_SESSION['loginErrorMessage'] . '<br>';
 				$_SESSION['loginErrorMessage'] = FALSE;
+				echo "Hi!";
 				?>
 			</span>
 		</div>

@@ -13,7 +13,7 @@ if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
 	header('Location: gallery.php');
 	return;
 }
-if ($_SESSION['signupSuccess'] === TRUE) {
+if ($_SESSION['signupSuccess'] == TRUE) {    // Comparing to true with === produces a warning message sometimes for some reason.
     header("Location: signup_success.php");
     return;
 }
@@ -39,11 +39,11 @@ if (isset($_POST['submit'])) {
     $password = $_POST['password'];
     $email = $_POST['email'];
 
-    $sql = "SELECT username FROM syottotesti WHERE username = ?;";
+    $sql = "SELECT username FROM users WHERE username = ?;";
     $stmt = $dbConn->prepare($sql);
     $stmt->execute([$username]);
     $user = $stmt->fetch(); // If fetch takes as a parameter PDO::FETCH_COLUMN, we will get a blank screen with an error message.
-    $_SESSION['signupErrorMessage'] = $user['username'];
+    $_SESSION['signupErrorMessage'] = "Error";
     if (!checkPasswords($_POST['password'], $_POST['passwordAgain'])) {
         $_SESSION['signupErrorMessage'] = 'Passwords don\'t match each other. Please check your password!';
         // echo $_SESSION['message'] . '<br>' . 'Tamako nakyy tyhjalla sivulla?';
@@ -53,11 +53,12 @@ if (isset($_POST['submit'])) {
     } else {
         $_SESSION['signupSuccess'] = TRUE;
         $password = hash('whirlpool', $password);
-        $sql = "INSERT INTO syottotesti (`username`, `password`, `email`)
+        $sql = "INSERT INTO users (`username`, `password`, `email`)
                 VALUES ('$username', '$password', '$email');";
         $dbConn->exec($sql);
         $_SESSION['signupErrorMessage'] = '';
     }
+    $_POST['submit'] = FALSE;
     header("Location: signup.php");
     return;
 }

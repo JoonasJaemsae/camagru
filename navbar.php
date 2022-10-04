@@ -14,20 +14,40 @@
                 <a href="gallery.php" class="nav__iconText">Camagru</a>
                 <a class="nav__welcomeText">
                     <?php
-                    echo 'Welcome, ' . $_SESSION["username"] . " " . $_SESSION["logged_in_user_id"] . '!';
+                    if ($_SESSION['logged_in_user_id'] == TRUE) {
+                        echo 'Welcome, ' .  $_SESSION["username"] . ' ' . $_SESSION['logged_in_user_id'] . '!';
+                    }
                     ?>
                 </a>
-                <a href="webcam.php" class="nav__icon">
-                    <img src="./icons/camera32.png" title="Upload a picture"></img>
-                </a>
+                <div class="optionElement">
+                    <a href="webcam.php" class="nav__icon">
+                        <img src="./icons/camera32.png" title="Upload a picture"></img>
+                    </a>
+                </div>
             </div>
             <div class="navbar-right">
-                <a href="logout.php" class="nav__icon">
-                    <img src="./icons/profile32.png" title="Profile"></img>
-                </a>
-                <a href="logout.php" class="nav__icon">
-                    <img src="./icons/logout32.png" title="Log out"></img>
-                </a>
+                <div class="optionElement">
+                    <a href="profile.php" class="nav__icon">
+                        <img src="./icons/profile32.png" title="Profile"></img>
+                    </a>
+                </div>
+                <div class="optionElement">
+                    <?php
+                    if ($_SESSION['logged_in_user_id'] == TRUE) {
+                    ?>
+                        <a href="logout.php" class="nav__icon">
+                            <img src="./icons/logout32.png" title="Log out"></img>
+                        </a>
+                    <?php
+                    } else {
+                    ?>
+                        <a href="index.php" class="nav__icon">
+                            <img src="./icons/login32.png" title="Log in"></img>
+                        </a>
+                    <?php
+                    }
+                    ?>
+                </div>
             </div>
         </div>
     </div>
