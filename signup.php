@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
     if (!checkPasswords($_POST['password'], $_POST['passwordAgain'])) {
         $_SESSION['signupErrorMessage'] = 'Passwords don\'t match each other. Please check your password!';
         // echo $_SESSION['message'] . '<br>' . 'Tamako nakyy tyhjalla sivulla?';
-    } else if ($user['username'] != FALSE) {    // $user['username'] is not FALSE if it was found with the SQL query i.e. it exist in the database.
+    } else if ($stmt->rowCount() > 0) {    // $user['username'] is not FALSE if it was found with the SQL query i.e. it exist in the database.
         $_SESSION['signupErrorMessage'] = 'This username is not available. Try another one. '
             . $usernameAlreadyExists . ' <-- How many results were found.' . '<br>';
     } else {
@@ -62,6 +62,7 @@ if (isset($_POST['submit'])) {
     header("Location: signup.php");
     return;
 }
+// $user['username'] != FALSE
 
 ?>
 

@@ -11,10 +11,10 @@ try {
     echo "Something went wrong when trying to connect to the database." . "<br>";
 }
 
-$sql = "CREATE DATABASE IF NOT EXISTS `rex`";
+$sql = "CREATE DATABASE IF NOT EXISTS `joonasja_camagru`";
 $dbConn->exec($sql);
 
-$sql = "USE `rex`";
+$sql = "USE `joonasja_camagru`";
 $dbConn->exec($sql);
 
 $sql = "CREATE TABLE IF NOT EXISTS `users` (

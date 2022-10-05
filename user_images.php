@@ -26,7 +26,7 @@ if ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE) 
 <html>
 
 <head>
-    <title>Camagru - Upload a picture</title>
+    <title>Camagru - Your pictures</title>
 
     <style>
         <?php include "style.css"; ?>

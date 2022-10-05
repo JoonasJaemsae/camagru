@@ -8,6 +8,25 @@ include_once './config/new_conn.php';
 
 session_start();
 
+if (!isset($_SESSION["username"])) {
+	$_SESSION["username"] = FALSE;
+}
+if (!isset($_SESSION['logged_in_user_id'])) {
+	$_SESSION['logged_in_user_id'] = FALSE;
+}
+if (!isset($_SESSION['loginSuccess'])) {
+	$_SESSION['loginSuccess'] = FALSE;
+}
+if (!isset($_SESSION['loginPersist'])) {
+	$_SESSION['loginPersist'] = FALSE;
+}	
+if (!isset($_SESSION['signupSuccess']) || !isset($_SESSION['signupSuccessPersist'])) {
+	$_SESSION['signupSuccess'] = FALSE;
+	$_SESSION['signupSuccessPersist'] = FALSE;
+}
+if (!isset($_SESSION['loginErrorMessage'])) {
+	$_SESSION['loginErrorMessage'] = FALSE;
+}
 $_SESSION['signupSuccessPersist'] = FALSE;
 // ^ If you want to make it so that the user cannot return to the signup success page after returning to login screen.
 // Currently the back button will return the user to the signup page, though. Not sure if that's good either.
@@ -40,9 +59,9 @@ if (isset($_POST['login'])) {
 		$_SESSION['loginSuccess'] = TRUE;
 	} else {
 		$_SESSION['loginErrorMessage'] = 'Wrong username and/or password!' . '<br>';
-		echo $_SESSION['loginErrorMessage'];
+		// echo $_SESSION['loginErrorMessage'];
 	}
-	echo 'End of if (isset) ' . '<br>';
+	// echo 'End of if (isset) ' . '<br>';
 	header('Location: index.php');
 	return;
 }
@@ -99,7 +118,7 @@ if (isset($_POST['login'])) {
 				} else if ($_SESSION['loginPersist'] === FALSE) {
 					echo '$_SESSION["loginPersist"] is FALSE' . '<br>';
 				}
-	
+
 				if ($_SESSION['loginSuccess'] === TRUE) {
 					echo '$_SESSION["loginSuccess"] is TRUE' . '<br>';
 				} else if ($_SESSION['loginSuccess'] === FALSE) {

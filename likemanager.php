@@ -7,7 +7,7 @@ require_once './config/new_conn.php';
 $agent = $_SESSION['logged_in_user_id'];
 $likedImage = $_POST['likedImage'];
 
-$sql = "USE `rex`";
+$sql = "USE `joonasja_camagru`";
 $dbConn->exec($sql);
 
 $sql = "SELECT * FROM likes WHERE `user_id`=? AND `image_id`=?;";

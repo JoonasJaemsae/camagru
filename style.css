@@ -3,7 +3,7 @@ body#gradient {
     --color-primary: rgb(236, 209, 111);
     --color-primary-dark: rgb(247, 206, 58);
     --color-secondary: #252c6a;
-    --color-error: #cc3333;
+    --color-error: red;
     --color-success: #4bb544;
     --color-highlight: rgb(234, 234, 234);
     --border-radius: 12px;
@@ -113,6 +113,7 @@ h1 {
 .form__input,
 .form__button  {
     font: 500 1rem 'Quicksand', sans-serif;
+    max-width: 400px;
 }
 
 .flex-container1 {
@@ -138,14 +139,27 @@ h1 {
     text-align: right;
 }
 
-.loginErrorMessageBox {
-    width: 100%;
-    padding: 25px 10px 10px 10px;
+.subBoxRight2 {
+    width: 70%;
+    padding: 10px;
     text-align: center;
 }
 
-.loginErrorText {
-    color: red;
+.loginErrorMessageBox,
+.errorMessageBox,
+.successMessageBox {
+    width: 100%;
+    padding: 0px 10px 0px 10px;
+    text-align: center;
+}
+
+.loginErrorText,
+.errorText {
+    color: var(--color-error);
+}
+
+.successText {
+    color: var(--color-success);
 }
 
 .form__input-group {
@@ -652,4 +666,66 @@ h1 {
 .pageArea > a {
     text-decoration: none;
     margin: 1em;
+}
+
+.settingsArea {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.settingsBox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px 1px;
+}
+
+.settingsBoxLeftSide {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.settingsBoxLeftSide > div {
+    width: 20vw;
+    height: 350px;
+    padding: 1em;
+    border-bottom: solid 1px gainsboro;
+    border-right: solid 1px gainsboro;
+}
+
+.settingsBoxLeftSide > div:last-child {
+    border-bottom: none;
+    height: 200px;
+}
+
+.settingsBoxRightSide {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.settingsBoxRightSide > div {
+    width: 50vw;
+    height: 350px;
+    padding: 1em;
+    border-bottom: solid 1px gainsboro;
+}
+
+.settingsBoxRightSide > div:last-child {
+    border-bottom: none;
+    height: 200px;
 }

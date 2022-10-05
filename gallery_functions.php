@@ -103,7 +103,7 @@ if (isset($_SESSION['logged_in_user_id']) && isset($_POST['delete_action']) && i
     $agent = $_SESSION['logged_in_user_id'];
     $imageToDelete = $_POST['image_to_delete'];
 
-    $sql = "USE `rex`";
+    $sql = "USE `joonasja_camagru`";
     $dbConn->exec($sql);
 
     $sql = "SELECT * FROM images WHERE `user_id`=? AND `image_id`=?;";

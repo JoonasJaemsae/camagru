@@ -34,7 +34,7 @@ imagejpeg($image_php);
 $image_php = ob_get_clean(); // Think about the necessity of these. Harmless.
 $image = base64_encode($image_php);
 
-$sql = "USE `rex`";
+$sql = "USE `joonasja_camagru`";
 $dbConn->exec($sql);
 
 $sql = "INSERT INTO images (`user_id`, `image_data`)

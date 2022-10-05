@@ -7,7 +7,7 @@ require_once './config/new_conn.php';
 $agent = $_SESSION['logged_in_user_id'];
 $imageToDelete = $_POST['imageId'];
 
-$sql = "USE `rex`";
+$sql = "USE `joonasja_camagru`";
 $dbConn->exec($sql);
 
 $sql = "SELECT * FROM images WHERE `user_id`=? AND `image_id`=?;";

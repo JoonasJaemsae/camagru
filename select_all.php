@@ -92,15 +92,7 @@ echo $image_data . '<br>';
 echo '<br>' . 'Seventh query result should appear below:' . '<br>';
 
 // The below returns seven rows with three liked pictures
-$sql7 = "SELECT `likes`.`like_id`, `likes`.`user_id`, `likes`.`image_id`, `images`.`image_id` as toinen
-FROM likes
-INNER JOIN users
-ON likes.user_id = users.id
-INNER JOIN images
-ON users.id = images.user_id;
-";
-
-// $sql7 = "SELECT *
+// $sql7 = "SELECT `likes`.`like_id`, `likes`.`user_id`, `likes`.`image_id`, `images`.`image_id` as toinen
 // FROM likes
 // INNER JOIN users
 // ON likes.user_id = users.id
@@ -108,16 +100,16 @@ ON users.id = images.user_id;
 // ON users.id = images.user_id;
 // ";
 
-$stmt = $dbConn->prepare($sql7);
-$stmt->execute();
-$likes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// $stmt = $dbConn->prepare($sql7);
+// $stmt->execute();
+// $likes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-foreach ($likes as $key => $value) {
-   echo $value['like_id'] . '<br>';
-   echo $value['user_id'] . '<br>';
-   echo $value['image_id'] . '<br>';
-   echo $value['toinen'] . '<br>';
-}
+// foreach ($likes as $key => $value) {
+//    echo $value['like_id'] . '<br>';
+//    echo $value['user_id'] . '<br>';
+//    echo $value['image_id'] . '<br>';
+//    echo $value['toinen'] . '<br>';
+// }
 
 echo '<br>' . '<br>';
 
@@ -152,5 +144,52 @@ ON likes.user_id = users.id
 INNER JOIN images
 ON likes.image_id = images.image_id;
 ";
+
+echo '<br>' . 'Eleventh query result should appear below:' . '<br>';
+
+$agent = 73;
+$likedImageId = 217;
+
+$sql11 = "SELECT images.user_id as userid FROM images WHERE `image_id`=?;";
+$stmt = $dbConn->prepare($sql11);
+$stmt->execute([$likedImageId]);
+$pictureOwner = $stmt->fetch(PDO::FETCH_ASSOC);
+
+echo '$_SESSION["logged_in_user_id"]: ' . $agent . '<br>';
+echo '$pictureOwner: ' . $pictureOwner . '<br>';
+echo '$pictureOwner["userid"]: ' . $pictureOwner['userid'] . '<br>';
+
+if ($agent == $pictureOwner['userid']) {
+   echo "Liker was the same as the picture owner. " . '$pictureOwner["userid"]: ' . $pictureOwner['userid'];
+   return;
+}
+
+echo '<br>' . 'Twelfth query result should appear below:' . '<br>';
+
+$agent = 73;
+$likedImageId = 217;
+
+$sql12 = "SELECT images.user_id as userid, email, username
+FROM images
+INNER JOIN users
+ON images.user_id = users.id
+WHERE `image_id`=?;
+";
+
+$stmt = $dbConn->prepare($sql12);
+$stmt->execute([$likedImageId]);
+$pictureOwner = $stmt->fetch(PDO::FETCH_ASSOC);
+
+echo '$_SESSION["logged_in_user_id"]: ' . $agent . '<br>';
+echo '$pictureOwner: ' . $pictureOwner . '<br>';
+echo '$pictureOwner["userid"]: ' . $pictureOwner['userid'] . '<br>';
+echo '$pictureOwner["email"]: ' . $pictureOwner['email'] . '<br>';
+
+if ($agent == $pictureOwner['userid']) {
+   echo "Liker was the same as the picture owner. " . '$pictureOwner["userid"]: ' . $pictureOwner['userid'];
+   return;
+}
+
+// UPDATE users SET email = 'aiden.leung555@protonmail.com' WHERE id = 74;
 
 ?>

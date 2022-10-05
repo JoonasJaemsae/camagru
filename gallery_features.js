@@ -2,9 +2,9 @@
 //     likeButton.target.classList.toggle('heartFilledIcon');
 // });
 
-function adjustLikeStatus(likeId, isUserLoggedIn) {
-    console.log("User ID that got passed onto the function: ", isUserLoggedIn);
-    if (!isUserLoggedIn) {
+function adjustLikeStatus(likeId, likerId) {
+    console.log("User ID that got passed onto the function: ", likerId);
+    if (!likerId) {
         alert("You need to log in first to be able to like pictures!");
         return;
     }
@@ -23,6 +23,16 @@ function adjustLikeStatus(likeId, isUserLoggedIn) {
         likes = parseInt(document.getElementById('likeAmount' + imageId).innerHTML.replace("Likes: ", ""));
         likes++;
         document.getElementById('likeAmount' + imageId).innerHTML = "Likes: " + (likes);
+        console.log("likes: ", likes);
+
+        let xmlLikeNotification = new XMLHttpRequest();
+        var urlLikeNotification = './like_notification.php';
+        xmlLikeNotification.open('POST', urlLikeNotification, true);
+        xmlLikeNotification.onload = function () {
+            console.log("PHP Response: ", this.response);
+        }
+        xmlLikeNotification.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xmlLikeNotification.send('likedImage=' + imageId);
     } else if (likeIcon.src.match("heartfull32.png")) {
         likeIcon.src = "./icons/heartempty32.png"
         likes = parseInt(likesInnerHtml.replace("Likes: ", ""));
