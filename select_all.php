@@ -190,6 +190,20 @@ if ($agent == $pictureOwner['userid']) {
    return;
 }
 
+echo '<br>' . 'Thirteenth query result should appear below. Testing random string generation and hashing it:' . '<br>';
+
+function generateRandomString($scope) {
+   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+   $charactersLength = strlen($characters);
+   $randomString = '';
+   for ($i = 0; $i < $scope; $i++) {
+       $randomString .= $characters[random_int(0, $charactersLength - 1)];
+   }
+   return $randomString;
+}
+$randomString = generateRandomString(10);
+var_dump(hash('whirlpool', $randomString));
+
 // UPDATE users SET email = 'aiden.leung555@protonmail.com' WHERE id = 74;
 
 ?>

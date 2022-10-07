@@ -7,19 +7,24 @@ require_once './config/new_conn.php';
 $agent = $_SESSION['logged_in_user_id'];
 $likedImageId = $_POST['likedImage'];
 
-$sql = "SELECT images.user_id as userid, email, username
+$sql = "SELECT images.user_id as userid, email, username, notifications
     FROM images
     INNER JOIN users
     ON images.user_id = users.id
-    WHERE `image_id`=?;
+    WHERE image_id=?;
     ";
 $stmt = $dbConn->prepare($sql);
 $stmt->execute([$likedImageId]);
 $pictureOwner = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if ($pictureOwner['notifications'] == 0) {
+    echo "The recipient's notifications were set to zero. No notification sent. " . '$pictureOwner["notifications"]: ' . $pictureOwner['notifications'];
+    return;
+}
+
 $sql2 = "SELECT username
     FROM users
-    WHERE `id`=?;
+    WHERE id=?;
     ";
 $stmt = $dbConn->prepare($sql2);
 $stmt->execute([$agent]);

@@ -19,13 +19,16 @@ if (!isset($_SESSION['loginSuccess'])) {
 }
 if (!isset($_SESSION['loginPersist'])) {
 	$_SESSION['loginPersist'] = FALSE;
-}	
+}
 if (!isset($_SESSION['signupSuccess']) || !isset($_SESSION['signupSuccessPersist'])) {
 	$_SESSION['signupSuccess'] = FALSE;
 	$_SESSION['signupSuccessPersist'] = FALSE;
 }
 if (!isset($_SESSION['loginErrorMessage'])) {
 	$_SESSION['loginErrorMessage'] = FALSE;
+}
+if (!isset($_SESSION['emailChangeSuccessMessage'])) {
+	$_SESSION['emailChangeSuccessMessage'] = FALSE;
 }
 $_SESSION['signupSuccessPersist'] = FALSE;
 // ^ If you want to make it so that the user cannot return to the signup success page after returning to login screen.
@@ -51,11 +54,16 @@ if (isset($_POST['login'])) {
 	);
 	$_SESSION['loginErrorMessage'] = 'Wrong username and/or password!' . '<br>';
 	if ($stmt->rowCount() > 0) {
-		$_SESSION['loginErrorMessage'] = 'Correct username and/or password!' . '<br>';
-		$sql = "SELECT id FROM users WHERE username=?;";
+		$sql = "SELECT id, email_is_verified FROM users WHERE username=?;";
 		$stmt = $dbConn->prepare($sql);
 		$stmt->execute(array($_POST['username']));
-		$_SESSION['logged_in_user_id'] = $stmt->fetch(PDO::FETCH_COLUMN);
+		$user_data = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($user_data['email_is_verified'] == 0) {
+			$_SESSION['loginErrorMessage'] = 'Verify your email address before trying to log in!';
+			header('Location: index.php');
+			return;
+		}
+		$_SESSION['logged_in_user_id'] = $user_data['id'];
 		$_SESSION['loginSuccess'] = TRUE;
 	} else {
 		$_SESSION['loginErrorMessage'] = 'Wrong username and/or password!' . '<br>';
@@ -109,6 +117,14 @@ if (isset($_POST['login'])) {
 			<div class="subBoxLeft">
 				<a href="./gallery.php" class="form__link">To Gallery</a>
 			</div>
+		</div>
+		<div class="successMessageBox" ;>
+			<span class="successText">
+				<?php
+				echo $_SESSION['emailChangeSuccessMessage'] . '<br>';
+				$_SESSION['emailChangeSuccessMessage'] = FALSE;
+				?>
+			</span>
 		</div>
 		<div class="loginErrorMessageBox" ;>
 			<span class="loginErrorText">

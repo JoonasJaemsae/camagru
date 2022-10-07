@@ -6,7 +6,8 @@ error_reporting(-1);
 
 session_start();
 
-if ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE) {
+if ((!isset($_SESSION['loginSuccess']) || !isset($_SESSION['loginPersist']))
+    || ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE)) {
 
     header("Location: index.php");
     exit();

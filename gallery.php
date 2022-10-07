@@ -10,7 +10,7 @@ session_start();
 include_once './config/new_conn.php';
 require 'gallery_functions.php';
 
-if ($_SESSION['loginSuccess'] === TRUE) {
+if ($_SESSION['loginSuccess'] === TRUE) { 
 
     $_SESSION['loginSuccess'] = FALSE;
     $_SESSION['loginPersist'] = TRUE;
@@ -144,18 +144,9 @@ if (isset($_SESSION['loginPersist'])) {
         </div>
         <script src="gallery_features.js"></script>
     </body>
-
-
-
 </html>
 <?php
 
 }
 
 ?>
-
-<!-- <form method="POST" id="delete<?php echo $value['image_id'] ?>"  action="gallery.php">
-                                        <input type="text" name="image_to_delete" value="<?php echo $value['image_id']; ?>" hidden>
-                                        <input type="text" name="delete_action" value="delete" hidden>
-                                        <img class="likeIcon" id="delete<?php echo $value['image_id'] ?>" src="./icons/trash32.png" title="Delete picture" onclick=deleteImageConfirm(<?php echo $value['image_id'] ?>)></img>
-                                    </form> -->
