@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
         </form>
         <div class="flex-container1">
             <div class="subBoxLeft2">
-                <a href="./index.php" class="form__link">Back to the login</a>
+                <a href="./index.php" class="form__link">Back to login</a>
             </div>
         </div>
         <div style="color: red;">

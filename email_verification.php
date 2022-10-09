@@ -4,6 +4,7 @@ session_start();
 
 include_once './config/new_conn.php';
 
+// Make this one less duct-tapey and dumb.
 $message = "empty";
 $verifCode = $_GET['verifCode'];
 
@@ -38,7 +39,7 @@ if ($message == '') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your account was created successfully!</title>
+    <title>Camagru - Email verification</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 

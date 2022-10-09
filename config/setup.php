@@ -40,6 +40,15 @@ $sql = "CREATE TABLE IF NOT EXISTS `likes` (
 )";
 $dbConn->exec($sql);
 
+$sql = "CREATE TABLE IF NOT EXISTS `password_requests` (
+	`request_id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`email` VARCHAR(255) NOT NULL,
+    `reset_link_url` VARCHAR(255) NOT NULL,
+    `active_bool` INT(11) NOT NULL,
+    `creation_datetime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+)";
+$dbConn->exec($sql);
+
 echo "Setup has finished running. See above message to learn if the setup was successful or not." . "<br>";
 
 ?>

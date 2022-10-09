@@ -102,7 +102,7 @@ if (isset($_POST['login'])) {
 				<a href="./signup.php" class="form__link">Sign up</a>
 			</div>
 			<div class="subBoxRight">
-				<a href="./forgot.html" class="form__link">Forgot your password?</a>
+				<a href="./password_request.php" class="form__link">Forgot your password?</a>
 			</div>
 		</div>
 		<div class="flex-container1">
