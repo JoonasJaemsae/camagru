@@ -7,6 +7,7 @@ error_reporting(-1);
 session_start();
 
 include_once './config/new_conn.php';
+require 'email_functions.php';
 
 if (!isset($_SESSION['loginSuccess'])) {
     $_SESSION['loginSuccess'] = FALSE;
@@ -30,15 +31,19 @@ if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
 
 $reset_link_url = $_GET['reset_url'];
 
-// Needs password strength check.
 if (isset($_POST['newPwResetSubmit'])) {
     $newPw = $_POST['newPwReset'];
     $newPwAgain = $_POST['newPwResetAgain'];
     echo "Went here!" . '<br>';
     if ($newPw != $newPwAgain) {
         $_SESSION['pwResetErrorMessage'] = "The passwords you entered did not match each other. Please try again.";
+    } else if (!checkPasswordStrength($newPw)) {
+        $_SESSION['pwResetErrorMessage'] = 'Please enter a stronger password. Your password should have at least 8 characters and contain at least three of the following:' . '<br>'
+            . '- a lowercase alphabetic character.' . '<br>'
+            . '- an uppercase alphabetic character.' . '<br>'
+            . '- a numeric character.' . '<br>'
+            . '- a special character such as "!" or "#".';
     } else {
-
         $sql = "SELECT *
                 FROM password_requests
                 INNER JOIN users
@@ -57,7 +62,6 @@ if (isset($_POST['newPwResetSubmit'])) {
 
         $newPw = hash('whirlpool', $newPw);
 
-        echo "And here!" . '<br>'; // Remove this.
         $sql3 = "UPDATE users SET `password`=? WHERE `id`=?;";
         $stmt = $dbConn->prepare($sql3);
         $stmt->execute([$newPw, $userid]);
@@ -116,7 +120,6 @@ if ($reset_link_url == '' && !isset($_POST['newPwResetSubmit'])) {
                 <div class="form__input-group">
                     <input type="password" class="form__input" name="newPwResetAgain" placeholder="New password again" required>
                 </div>
-                <!-- 'autofocus' selects the field automatically on page load so you can input text without having to click on the field. -->
                 <button class="form__button" type="submit" name="newPwResetSubmit">Submit</button>
             </form>
             <div class="flex-container1">

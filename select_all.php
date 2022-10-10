@@ -1,19 +1,22 @@
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
 </head>
+
 <body>
    <a href="index.php">Back to login</a>
    <br></br>
 </body>
+
 </html>
 
 <?php
 
-include_once './config/new_conn.php';   
+include_once './config/new_conn.php';
 
 echo 'Site load successful.' . '<br>';
 // echo 'Your query results should appear below this line if the query was successful:' . '<br>';
@@ -192,12 +195,13 @@ if ($agent == $pictureOwner['userid']) {
 
 echo '<br>' . 'Thirteenth query result should appear below. Testing random string generation and hashing it:' . '<br>';
 
-function generateRandomString($scope) {
+function generateRandomString($scope)
+{
    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
    $charactersLength = strlen($characters);
    $randomString = '';
    for ($i = 0; $i < $scope; $i++) {
-       $randomString .= $characters[random_int(0, $charactersLength - 1)];
+      $randomString .= $characters[random_int(0, $charactersLength - 1)];
    }
    return $randomString;
 }
@@ -206,4 +210,104 @@ var_dump(hash('whirlpool', $randomString));
 
 // UPDATE users SET email = 'aiden.leung555@protonmail.com' WHERE id = 74;
 
+echo '<br>' . '<br>' . 'Fourteenth query result should appear below. Testing email address validity:' . '<br>';
+
+function checkEmailStrength($email)
+{
+   $length = strlen($email);
+   if ($length < 6) {
+      return FALSE;
+   }
+   // Check that there is only on '@' and that it's surrounded by non-@ characters.
+   if (!preg_match("/^[^@]*@[^@]*$/", $email)) {
+      return FALSE;
+   }
+   // Check for a certain pattern: at least one char before and after '@', and the string must end with 2 or 3 alphabetical characters (.fi, .com, .net, etc.).
+   if (!preg_match("/^.+@.+\.[a-z]{2,3}$/i", $email)) {
+      return FALSE;
+   }
+   return TRUE;
+}
+
+$email[] = 'john.doe@email.com';
+$email[] = 'a@b.c';
+$email[] = 'a@b.cd';
+$email[] = 'a@b.cde';
+$email[] = 'a@b.cdef';
+$email[] = 'a@b.cdefghijkl';
+$email[] = 'a@bcd';
+$email[] = 'a@.bcd';
+$email[] = 'a@b.cde';
+$email[] = 'a@aaa.bcd';
+$email[] = 'a@aa@a.bcd';
+$email[] = 'ab.c';
+$email[] = '@ab.cd';
+$email[] = 'ab.cd@';
+
+foreach ($email as $member) {
+   if (checkEmailStrength($member)) {
+      echo $member . " passed." . '<br>';
+   } else {
+      echo $member . " didn't pass." . '<br>';
+   }
+}
+
+echo '<br>' . '<br>' . 'Fifteenth query result should appear below. Testing password strength:' . '<br>';
+
+function checkPasswordStrength($password)
+{
+   $strengthPoints = 0;
+   if (strlen($password) < 8 || strlen($password) > 30) {
+      return FALSE;
+   }
+   // The password is not allowed to have whitespace characters.
+   if (preg_match("/\s/", $password)) {
+      return FALSE;
+   }
+   // The password should contain at least one numeric char.
+   if (preg_match("/\d/", $password)) {
+      $strengthPoints++;
+   }
+   if (preg_match("/[A-Z]/", $password)) {
+      $strengthPoints++;
+   }
+   if (preg_match("/[a-z]/", $password)) {
+      $strengthPoints++;
+   }
+   // The password should contain at least one special character or an underscore.
+   if (preg_match("/\W/", $password) || (preg_match("/_/", $password))) {
+      $strengthPoints++;
+   }
+   if ($strengthPoints < 3) {
+      return FALSE;
+   } else {
+      return TRUE;
+   }
+}
+
+$password[] = '1234koira';
+$password[] = '1234Koir';
+$password[] = '1234KOIR';
+$password[] = '1234Koi';
+$password[] = '1234koi';
+$password[] = '1234K___';
+$password[] = '1234____';
+$password[] = '1234K@@@';
+$password[] = '1234K!!!';
+$password[] = '1234K###';
+$password[] = '1234K???';
+$password[] = '1234K%%%';
+$password[] = '1234K   ';
+$password[] = '1234K\'\'\'\'';
+$password[] = '1234K"""';
+
+foreach ($password as $member) {
+   if (checkPasswordStrength($member)) {
+      echo $member . " passed." . '<br>';
+   } else {
+      echo $member . " didn't pass." . '<br>';
+   }
+}
+
 ?>
+

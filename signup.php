@@ -37,6 +37,11 @@ if (isset($_POST['submit'])) {
     $_SESSION['email'] = $_POST['email'];
 
     $username = $_POST['username'];
+    if (strlen($username) > 16 || strlen($username) < 4) {
+        $_SESSION['signupErrorMessage'] = "Username must be between 4 and 16 characters long. Please try another username.";
+        header("Location: signup.php");
+        return;
+    }
     $password = $_POST['password'];
     $email = $_POST['email'];
 
@@ -52,10 +57,17 @@ if (isset($_POST['submit'])) {
     $sql2 = "SELECT username FROM users WHERE username=?;";
     $stmt = $dbConn->prepare($sql2);
     $stmt->execute([$username]);
-    $user = $stmt->fetch(); // If fetch takes as a parameter PDO::FETCH_COLUMN, we will get a blank screen with an error message.
-    if (!checkPasswords($_POST['password'], $_POST['passwordAgain'])) {
+    $user = $stmt->fetch();
+    if (!checkPasswordStrength($password)) {
+        $_SESSION['signupErrorMessage'] = 'Please enter a stronger password. Your password should be between 8 and 30 characters and contain at least three of the following:' . '<br>'
+            . '- a lowercase alphabetic character.' . '<br>'
+            . '- an uppercase alphabetic character.' . '<br>'
+            . '- a numeric character.' . '<br>'
+            . '- a special character such as "!" or "#".';
+    } else if (!checkPasswords($_POST['password'], $_POST['passwordAgain'])) {
         $_SESSION['signupErrorMessage'] = 'The passwords you entered did not match each other. Please try again!';
-        // echo $_SESSION['message'] . '<br>' . 'Tamako nakyy tyhjalla sivulla?';
+    } else if (!checkEmailStrength($email)) {
+        $_SESSION['signupErrorMessage'] = 'Your email address is not a valid one. Please try again.';
     } else if ($stmt->rowCount() > 0) {    // $user['username'] is not FALSE if it was found with the SQL query i.e. it exist in the database.
         $_SESSION['signupErrorMessage'] = 'This username is not available. Please try another one.';
     } else {
@@ -87,13 +99,9 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body id="index">
-    <!-- <-- If id is index, then background will be image. With signup it's linear gradient. -->
+    <!-- If id is index, then background will be image. With signup it's linear gradient. -->
     <?php
     $message = isset($_SESSION['signupErrorMessage']) ? $_SESSION['signupErrorMessage'] : FALSE;
-    // if $_SESSION['signupErrorMessage'] is set, copy that to $message. Otherwise copy FALSE.
-    // echo 'Yläkulman viesti alla:';
-    // echo '<br>';
-    // echo $message . ' <-- message vasemmalla.';
     ?>
     <div class="accountCreationBox">
         <div class="logo">Camagru</div>
@@ -120,13 +128,12 @@ if (isset($_POST['submit'])) {
         <div style="color: red;">
             <?php
             if ($message != FALSE) {
-                echo $message . ' on the same row' . '<br>';
+                echo $message;
             }
             if ($message == TRUE) {
                 echo 'Message is TRUE';
                 $_SESSION['signupErrorMessage'] = FALSE; // This is to make it so that the message doesn't show up again on reloading the page.
             } else if ($message == FALSE) {
-                // echo "Falsehan se lopuksikin." . '<br>';
                 echo 'Message is FALSE';
             }
             ?>
@@ -135,26 +142,3 @@ if (isset($_POST['submit'])) {
 </body>
 
 </html>
-
-<?php
-// function display()
-//             {
-//                 echo "Hello " . $_POST['login'];
-//             }
-// if (isset($_POST['submit'])) {
-//     display();
-// }
-
-// INSERT INTO testusers (`username`, `password`, `email`)
-// VALUES ('jjamsa', 'root', 'jjamsa@geemail.com');
-// INSERT INTO testusers (`username`, `password`, `email`)
-// VALUES ('lsalmi', 'test123', 'lsalmi@geemail.com');
-// INSERT INTO testusers (`username`, `password`, `email`)
-// VALUES ('mapostol', 'test1234', 'mapostol@geemail.com');
-// INSERT INTO testusers (`username`, `password`, `email`)
-// VALUES ('plehtika', 'test12345', 'plehtika@geemail.com');
-
-
-// } else {
-    // echo '<p style="color: red; text-align: center">Please fill in all the fields!</p>';
-// }

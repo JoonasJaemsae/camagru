@@ -40,6 +40,15 @@ if (!isset($_SESSION['emailChangeSuccessMessage'])) {
 if (isset($_POST['submitPwChange'])) {
     $oldPw = $_POST['oldPw'];
     $newPw = $_POST['newPw'];
+    if (!checkPasswordStrength($newPw)) {
+        $_SESSION['pwChangeErrorMessage'] = 'Please enter a stronger password. Your password should have at least 8 characters and contain at least three of the following:' . '<br>'
+        . '- a lowercase alphabetic character.' . '<br>'
+        . '- an uppercase alphabetic character.' . '<br>'
+        . '- a numeric character.' . '<br>'
+        . '- a special character such as "!" or "#".';
+        header('Location: settings.php');
+        return;
+    }
     $newPwAgain = $_POST['newPwAgain'];
     if ($newPw != $newPwAgain) {
         $_SESSION['pwChangeErrorMessage'] = "The new passwords you entered did not match each other. Try again!";
@@ -78,6 +87,11 @@ if (isset($_POST['submitUsernameChange'])) {
     $newUsername = $_POST['newUsername'];
     $pwForUsernameChange = $_POST['pwForUsername'];
     $username = $_SESSION['username'];
+    if (strlen($username) > 16 || strlen($username) < 4) {
+        $_SESSION['usernameChangeErrorMessage'] = "Username must be between 4 and 16 characters long. Please try another username.";
+        header("Location: signup.php");
+        return;
+    }
     if ($username == $newUsername) {
         $_SESSION['usernameChangeErrorMessage'] = "The new username you entered is the same as your current one. No change was made.";
         header('Location: settings.php');
@@ -117,6 +131,11 @@ if (isset($_POST['submitUsernameChange'])) {
 
 if (isset($_POST['submitEmailChange'])) {
     $newEmail = $_POST['newEmail'];
+    if (!checkEmailStrength($newEmail)) {
+        $_SESSION['emailChangeErrorMessage'] = 'Your email address is not a valid one. Please try again.';
+        header('Location: settings.php');
+        return;
+    }
     $pwForEmailChange = $_POST['pwForEmail'];
     $username = $_SESSION['username'];
     $password = hash('whirlpool', $pwForEmailChange);

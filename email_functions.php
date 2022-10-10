@@ -1,5 +1,53 @@
 <?php
 
+function checkPasswordStrength($password)
+{
+   $strengthPoints = 0;
+   if (strlen($password) < 8 || strlen($password) > 30) {
+      return FALSE;
+   }
+   // The password is not allowed to have whitespace characters.
+   if (preg_match("/\s/", $password)) {
+      return FALSE;
+   }
+   // The password should contain at least one numeric char.
+   if (preg_match("/\d/", $password)) {
+      $strengthPoints++;
+   }
+   if (preg_match("/[A-Z]/", $password)) {
+      $strengthPoints++;
+   }
+   if (preg_match("/[a-z]/", $password)) {
+      $strengthPoints++;
+   }
+   // The password should contain at least one special character or an underscore.
+   if (preg_match("/\W/", $password) || (preg_match("/_/", $password))) {
+      $strengthPoints++;
+   }
+   if ($strengthPoints < 3) {
+      return FALSE;
+   } else {
+      return TRUE;
+   }
+}
+
+function checkEmailStrength($email)
+{
+   $length = strlen($email);
+   if ($length < 6) {
+      return FALSE;
+   }
+   // Check that there is only on '@' and that it's surrounded by non-@ characters.
+   if (!preg_match("/^[^@]*@[^@]*$/", $email)) {
+      return FALSE;
+   }
+   // Check for a certain pattern: at least one char before and after '@', and the string must end with 2 or 3 alphabetical characters (.fi, .com, .net, etc.).
+   if (!preg_match("/^.+@.+\.[a-z]{2,3}$/i", $email)) {
+      return FALSE;
+   }
+   return TRUE;
+}
+
 function generateRandomString($scope, $dbConn)
 {
     $randomString = '';
@@ -86,12 +134,11 @@ function sendVerificationEmail($email, $verifCode, $dbConn)
 function createNewPasswordRequest($email, $reset_link_url, $dbConn)
 {
     $sql = "SELECT *
-            FROM password_requests
-            INNER JOIN users
-            ON password_requests.email = users.email
+            FROM users
+            WHERE email=?
             ;";
     $stmt = $dbConn->prepare($sql);
-    $stmt->execute();
+    $stmt->execute([$email]);
     if ($stmt->rowCount() < 1) {
         return FALSE;
     } else {

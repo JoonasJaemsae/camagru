@@ -80,8 +80,8 @@ h1 {
 }
 
 .accountCreationBox {
-    height: 500px;
-    max-height: 500px;
+    height: 600px;
+    max-height: 600px;
 }
 
 .loginBox,
@@ -710,6 +710,10 @@ h1 {
     border-right: solid 1px gainsboro;
 }
 
+.settingsBoxLeftSide > div:first-child {
+    height: 550px;
+}
+
 .settingsBoxLeftSide > div:last-child {
     border-bottom: none;
     height: 200px;
@@ -721,6 +725,10 @@ h1 {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+}
+
+.settingsBoxRightSide > div:first-child {
+    height: 550px;
 }
 
 .settingsBoxRightSide > div {

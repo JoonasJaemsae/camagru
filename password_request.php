@@ -27,13 +27,14 @@ if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
 }
 
 if (isset($_POST['pwRequestSubmit'])) {
-
-    // Need to add minimal checks for valid email.
-
-    $_SESSION['pwRequestSuccessMessage'] = "Thank you! Instructions on how to proceed with the resetting your password have been sent to the provided email address.";
-    $reset_link_url = generateRandomString2(10, $dbConn);
     $email = $_POST['pwRequestEmail'];
-    sendPasswordResetEmail($email, $reset_link_url, $dbConn);
+    if (!checkEmailStrength($email)) {
+        $_SESSION['pwRequestErrorMessage'] = 'Your email address is not a valid one. Please try again.';
+    } else {
+        $_SESSION['pwRequestSuccessMessage'] = "Thank you! Instructions on how to proceed with resetting your password have been sent to the email address provided.";
+        $reset_link_url = generateRandomString2(10, $dbConn);
+        sendPasswordResetEmail($email, $reset_link_url, $dbConn);
+    }
     header('Location: password_request.php');
     return;
 }
@@ -57,7 +58,6 @@ if (isset($_POST['pwRequestSubmit'])) {
             <div class="form__input-group">
                 <input type="text" class="form__input" name="pwRequestEmail" autofocus placeholder="Email address" required>
             </div>
-            <!-- 'autofocus' selects the field automatically on page load so you can input text without having to click on the field. -->
             <button class="form__button" type="submit" name="pwRequestSubmit">Request a new password</button>
         </form>
         <div class="flex-container1">
