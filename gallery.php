@@ -10,6 +10,10 @@ session_start();
 include_once './config/new_conn.php';
 require 'gallery_functions.php';
 
+if (!isset($_SESSION['loginSuccess'])) {
+    $_SESSION['loginSuccess'] = FALSE;
+} 
+
 if ($_SESSION['loginSuccess'] === TRUE) { 
 
     $_SESSION['loginSuccess'] = FALSE;

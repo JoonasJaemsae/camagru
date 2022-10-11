@@ -8,7 +8,7 @@ body#gradient {
     --color-highlight: rgb(234, 234, 234);
     --border-radius: 12px;
     font-size: 16px;
-    height: 100vh; /* 1vh is 1% of viewports height. */
+    height: 100vh;
 }
 
 body#index {
@@ -62,7 +62,7 @@ h1 {
 }
 
 .logo {
-    padding: 10px 0px 40px; /* top is 10, left and right are both 0, bottom is 40 */
+    padding: 10px 0px 40px;
     font-size: 3rem;
     text-align: center;
     font-family: 'Brush Script MT';
@@ -243,8 +243,6 @@ h1 {
     z-index: 5;
 }
 
-/* Fixed from navbar a:first-child. Not sure why this solved the problem of the second vertical border line. */
-/* The padding prints margin between text and border. Margin doesn't do that. */
 .navbar-left > a:first-child {
     border-right: 1px solid rgb(0, 0, 0);
     margin-left: 1rem;
@@ -252,17 +250,12 @@ h1 {
     padding-right: 2rem;
 }
 
-/* .navbar a {
-    float: left;
-} */
-
 .navbar-left {
     width: 368px;
     min-width: 16px;
     height: 45px;
     display: flex;
     align-items: center;
-    /* background-color: greenyellow; */
 }
 
 .navbar-right {
@@ -271,13 +264,7 @@ h1 {
     height: 45px;
     display: flex;
     align-items: center;
-    /* background-color: cyan; */
 }
-
-/* 1 rem equals the font size of the html element */
-/* .nav__link {
-    padding: 0 1rem;
-} */
 
 .nav__icon {
     margin-left: 10px;
@@ -298,28 +285,23 @@ h1 {
 }
 
 #snap {
-    width: 10vw;
-    height: 10vw;
-    max-width: 125px;
-    max-height: 125px;
+    width: 125px;
+    height: 125px;
     border-radius: 50%;
     cursor: pointer;
     font-family: 'Courier New', monospace;
     text-align: center;
     background-color: gainsboro;
     margin: 20px;
-    font-size: min(max(10px, 2vw), 18px)
-    /* line-height: 150px; Apparently the purpose of this is to center the text vertically, but I don't know if that's what it does really. */
+    font-size: 18px;
 }
 
 #save {
-    width: 7vw;
-    height: 7vw;
-    max-width: 85px;
-    max-height: 60px;
+    width: 85px;
+    height: 60px;
     cursor: pointer;
     border-radius: 10%;
-    font-size: min(max(7px, 1.5vw), 18px)
+    font-size: 18px;
 }
 
 #save, #upload {
@@ -327,64 +309,13 @@ h1 {
     text-align: center;
     background-color: gainsboro;
     margin: 20px;
-    /* line-height: 150px; Apparently the purpose of this is to center the text vertically, but I don't know if that's what it does really. */
 }
 
 #upload {
     font-size: 1.1em;
 }
 
-.captureElements {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.captureElementsLeftSide {
-    width: 75%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.captureElementsRightSide {
-    width: 25%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.editables {
-    width: 80vw;
-    display: flex;
-    /* flex-direction: row; */
-    flex-wrap: wrap;
-    /* justify-content: left; */
-}
-
-.videoArea {
-    width: 50%;
-    height: 50%;
-}
-
-.canvasArea {
-    width: 50%;
-    height: 50%;
-}
-
-.snapArea {
-    margin-top: 25vw;
-    margin-left: 10vw;
-}
-
-.buttonArea {
-    margin-top: 25vw;
-    margin-left: 10vw;
-}
-
 .photoDisplayBar {
-    position: absolute;
     display: flex;
     flex-direction: column;
     width: 15vw;
@@ -399,22 +330,27 @@ h1 {
     box-shadow: 2px 5px 20px 4px;
 }
 
-/* .displayBar {   
-    width: 20%;
-    background-color: white;
-    border-radius: 5%;
-} */
-
 #barPhoto {
 	width: 12vw;
     height: 9vw;
 	margin: 0.5vw;
 }
 
-.video {
-    position: absolute;
+.halfContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.videoScreenArea,
+.canvasScreenArea {
     width: 28vw;
     height: 21vw;
+    max-width: 640px;
+    max-height: 480px;
     min-width: 320px;
     min-height: 240px;
     margin-left: 10px;
@@ -423,10 +359,57 @@ h1 {
     border-radius: 5%;
     padding: 20px;
     box-shadow: 7px 5px 20px 4px;
+}
+
+.captureElements {
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* @media screen and (max-width: 600px) {
+    .captureElements {
+        display: flex;
+        flex-direction: column;
+    }  
+} */
+
+.canvasContainer,
+.videoContainer {
+    width: 640px;
+    min-width: 350px;
+    max-height: 840px;
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.videoScreens,
+.canvasScreens {
+    height: 50%;
+}
+
+.buttonArea {
+    height: 50%;
+}
+
+.saveButtonArea {
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .canvas {
-    position: absolute;
     width: 28vw;
     height: 21vw;
     min-width: 320px;
@@ -439,32 +422,37 @@ h1 {
     box-shadow: 7px 5px 20px 4px;
 }
 
-#video, #canvas {
-    position: absolute;
+#video,
+#canvas {
     width: 28vw;
     height: 21vw;
+    max-width: 640px;
     min-width: 320px;
+    max-height: 480px;
     min-height: 240px;
+    position: absolute;
 }
 
 #stickerPreview1 {
-    /* Dimensions must be changed to 28 and 21, respectively. */
     width: 28vw;
 	height: 21vw;
-	min-width: 320px;
-	min-height: 240px;
-	position: absolute;
+	max-width: 640px;
+    min-width: 320px;
+    max-height: 480px;
+    min-height: 240px;
+    position: absolute;
 	z-index: 3; /* Determines if the layer is on top or below. */
     /* background-color: greenyellow; */
     /* The above is to keep track of where the canvas is. */
 }
 
 #stickerPreview2 {
-    /* Dimensions must be changed to 28 and 21, respectively. */
     width: 28vw;
 	height: 21vw;
-	min-width: 320px;
-	min-height: 240px;
+	max-width: 640px;
+    min-width: 320px;
+    max-height: 480px;
+    min-height: 240px;
 	position: absolute;
 	z-index: 3; /* Determines if the layer is on top or below. */
     /* background-color: greenyellow; */
@@ -475,8 +463,10 @@ h1 {
     /* Dimensions must be changed to 28 and 21, respectively. */
     width: 28vw;
 	height: 21vw;
-	min-width: 320px;
-	min-height: 240px;
+	max-width: 640px;
+    min-width: 320px;
+    max-height: 480px;
+    min-height: 240px;
 	position: absolute;
 	z-index: 2; /* Determines if the layer is on top or below. */
     /* background-color: greenyellow; */
@@ -487,8 +477,24 @@ h1 {
     /* Dimensions must be changed to 28 and 21, respectively. */
     width: 28vw;
 	height: 21vw;
-	min-width: 320px;
-	min-height: 240px;
+	max-width: 640px;
+    min-width: 320px;
+    max-height: 480px;
+    min-height: 240px;
+	position: absolute;
+	z-index: 2; /* Determines if the layer is on top or below. */
+    /* background-color: greenyellow; */
+    /* The above is to keep track of where the canvas is. */
+}
+
+#lockedPreview3 {
+    /* Dimensions must be changed to 28 and 21, respectively. */
+    width: 28vw;
+	height: 21vw;
+	max-width: 640px;
+    min-width: 320px;
+    max-height: 480px;
+    min-height: 240px;
 	position: absolute;
 	z-index: 2; /* Determines if the layer is on top or below. */
     /* background-color: greenyellow; */
@@ -499,8 +505,6 @@ h1 {
     /* width: 65vw;
     height: 10vw; */
     /* max-height: 150px; */
-    margin-top: 100px;
-    margin-left: 30px;
     display: flex;
     flex-direction: row;
     align-items: center;

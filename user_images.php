@@ -34,10 +34,6 @@ if ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE) 
 </head>
 <?php
 
-if ($_GET['page'] < 0 || $_GET['page'] > $number_of_pages) {
-    header("Location: ./user_images.php?page=1");
-} 
-
 if (isset($_SESSION['loginPersist'])) {
 ?>
 
@@ -80,25 +76,6 @@ if (isset($_SESSION['loginPersist'])) {
                 ?>
 
             </div>
-        </div>
-        <div class="pageArea">
-            <?php
-            if ($page > 1) {
-            ?>
-                <a href="gallery.php?page=<?php echo ($page - 1); ?>"><</a>
-            <?php
-            }
-            for ($page = 1; $page <= $number_of_pages; $page++) {
-            ?>
-                <a href="gallery.php?page=<?php echo $page; ?>"><?php echo $page; ?></a>
-            <?php
-            }
-            if ($_GET['page'] < $number_of_pages) {
-            ?>
-                <a href="gallery.php?page=<?php echo ($_GET['page'] + 1); ?>">></a>
-            <?php
-            }
-            ?>
         </div>
         <div style="text-align: center;">
             <?php

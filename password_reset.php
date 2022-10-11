@@ -78,9 +78,11 @@ if ($reset_link_url == '' && !isset($_POST['newPwResetSubmit'])) {
     $_SESSION['pwResetErrorMessage'] = '<p style="color: red;">The password reset url you tried to access is not a valid one or has expired.</p>';
 } else if ($reset_link_url != '') {
     $reset_link_url = $_GET['reset_url'];
-    $sql = "SELECT * FROM password_requests WHERE reset_link_url=?;";
+    $sql = "SELECT * FROM password_requests WHERE reset_link_url=? AND creation_datetime>=?;";
     $stmt = $dbConn->prepare($sql);
-    $stmt->execute([$reset_link_url]);
+    // The creation date must be later (larger) than time now minus 24 hours.
+    date_default_timezone_set('Europe/Helsinki');
+    $stmt->execute([$reset_link_url, date("Y-m-d H:i:s", time() - 24 * 60 * 60)]);
     $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($stmt->rowCount() < 1) {
         $_SESSION['pwResetErrorMessage'] = '<p style="color: red;">The password reset url you tried to access is not a valid one or has expired.</p>';
