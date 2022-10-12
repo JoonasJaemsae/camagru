@@ -1,29 +1,18 @@
-// likeButton.addEventListener('click', function(likeButton) {
-//     likeButton.target.classList.toggle('heartFilledIcon');
-// });
-
 function adjustLikeStatus(likeId, likerId) {
-    console.log("User ID that got passed onto the function: ", likerId);
     if (!likerId) {
         alert("You need to log in first to be able to like pictures!");
         return;
     }
     var likeIcon = document.getElementById(likeId);
-    console.log(likeIcon);
     var imageId = likeId.replace("like", "");
-    console.log("imageId ", imageId);
-    console.log("likeIcon.src ", likeIcon.src);
     let likesInnerHtml = document.getElementById('likeAmount' + imageId).innerHTML
-    console.log("likesInnerHTML: ", likesInnerHtml);
     let likes = 0;
     likes = parseInt(document.getElementById('likeAmount' + imageId).innerHTML);
     if (likeIcon.src.match("heartempty32.png")) {
         likeIcon.src = "./icons/heartfull32.png"
-        console.log("Yees");
         likes = parseInt(document.getElementById('likeAmount' + imageId).innerHTML.replace("Likes: ", ""));
         likes++;
         document.getElementById('likeAmount' + imageId).innerHTML = "Likes: " + (likes);
-        console.log("likes: ", likes);
 
         let xmlLikeNotification = new XMLHttpRequest();
         var urlLikeNotification = './like_notification.php';
@@ -38,7 +27,6 @@ function adjustLikeStatus(likeId, likerId) {
         likes = parseInt(likesInnerHtml.replace("Likes: ", ""));
         likes--;
         document.getElementById('likeAmount' + imageId).innerHTML = "Likes: " + (likes);
-        console.log("Nahgh");
     }
     console.log("likes: ", likes);
     let xml = new XMLHttpRequest();
@@ -51,11 +39,29 @@ function adjustLikeStatus(likeId, likerId) {
     xml.send('likedImage=' + imageId);
 }
 
+function postComment(imageId) {
+    function sendAsXML(form, imageId) {
+        let formData = new FormData(form);
+        let content = formData.get('comment');
+        let xmlComment = new XMLHttpRequest();
+        var urlComment = './post_comment.php';
+        xmlComment.open('POST', urlComment, true);
+        xmlComment.onload = function () {
+            document.location.reload();
+        }
+        xmlComment.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xmlComment.send('image_id=' + imageId + '&content=' + content);
+    }
+    let form = document.getElementById('formElement' + imageId);
+    form.addEventListener("submit", (event) => {
+        event.preventDefault(); // Prevents the submit button from doing what it would normally do, which is submitting the form.
+        sendAsXML(form, imageId)
+    });
+}
+
 function toggleNotifications(destValue) {
     var notifDescrBody = "By having this set to ON, you will receive notifications in your email when someone likes your pictures\. Currently set to ";
     var notifIcon = document.getElementById('notifIcon');
-    console.log("notifIcon", notifIcon);
-    console.log("notifIcon.src", notifIcon.src);
     if (notifIcon.src.match("yes32.png")) {
         document.getElementById('notifDescr').innerHTML = notifDescrBody + "OFF.";
         notifIcon.src = "./icons/no32.png"

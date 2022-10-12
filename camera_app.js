@@ -46,9 +46,6 @@ snap.addEventListener('click', function () {
     // The last two are the canvas width and height which we'll want to match perfectly.
     // When our div is clicked, we want to draw onto the canvas the image that is displayed on our video element
     let image_data_url = canvas.toDataURL('image/jpeg');
-    // let image_base64 = document.querySelector("#canvas").toDataURL().replace(/^data:image\/png;base64,/, "");
-
-    console.log(image_data_url); // You can find the image data in Inspect -> Console
     save.disabled = false;
 });
 

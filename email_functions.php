@@ -3,14 +3,14 @@
 function checkPasswordStrength($password)
 {
    $strengthPoints = 0;
-   if (strlen($password) < 8 || strlen($password) > 30) {
+   if (strlen($password) < 8 || strlen($password) > 16) {
       return FALSE;
    }
    // The password is not allowed to have whitespace characters.
    if (preg_match("/\s/", $password)) {
       return FALSE;
    }
-   // The password should contain at least one numeric char.
+   // Check if the password contains a numeric character.
    if (preg_match("/\d/", $password)) {
       $strengthPoints++;
    }
@@ -143,9 +143,9 @@ function createNewPasswordRequest($email, $reset_link_url, $dbConn)
         return FALSE;
     } else {
         $sql2 = "INSERT INTO password_requests (`email`, `reset_link_url`, `active_bool`)
-                VALUES ('$email', '$reset_link_url', 1);";
+                VALUES (?, ?, ?);";
         $stmt = $dbConn->prepare($sql2);
-        $stmt->execute();
+        $stmt->execute([$email, $reset_link_url, 1]);
         return TRUE;
     }
 }

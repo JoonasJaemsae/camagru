@@ -38,6 +38,16 @@ $stmt = $dbConn->prepare($sql);
 $stmt->execute();
 $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$sql2 = "SELECT comment_id, comments.image_id, content, users.id AS userid, users.username AS username
+        FROM comments
+        INNER JOIN users
+        ON comments.user_id = users.id
+        ORDER BY comments.creation_datetime ASC;";
+
+$stmt = $dbConn->prepare($sql2);
+$stmt->execute();
+$comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 if (isset($_SESSION['logged_in_user_id'])) {
     $user_id = $_SESSION['logged_in_user_id'];
     $sql2 = "SELECT image_id, image_data, username, `users`.`id` AS userid
@@ -133,30 +143,6 @@ function getImageLikeCount($image_id, $dbConn)
 
 // The below is for deleting an image
 
-if (isset($_SESSION['logged_in_user_id']) && isset($_POST['delete_action']) && isset($_POST['image_to_delete'])) {
-    $agent = $_SESSION['logged_in_user_id'];
-    $imageToDelete = $_POST['image_to_delete'];
+if (isset($_SESSION['logged_in_user_id']) && isset($_POST['gallery'])) {
 
-    $sql = "USE `joonasja_camagru`";
-    $dbConn->exec($sql);
-
-    $sql = "SELECT * FROM images WHERE `user_id`=? AND `image_id`=?;";
-    $stmt = $dbConn->prepare($sql);
-    $stmt->execute([$agent, $imageToDelete]);
-    if ($stmt->rowCount() > 0) {
-        echo "if" . '<br>';
-        $sql = "DELETE FROM images WHERE `user_id`=? AND `image_id`=?;";
-        $stmt = $dbConn->prepare($sql);
-        $stmt->execute([$agent, $imageToDelete]);
-        $sql = "DELETE FROM likes WHERE `image_id`=?;";
-        $stmt = $dbConn->prepare($sql);
-        $stmt->execute([$imageToDelete]);
-    } else {
-        echo "else " . $agent . ' ' . $imageToDelete . '<br>';
-    }
-    if ($_POST['delete_action'] == 'delete') {
-        header("Location: gallery.php", true, 303);
-    } else {
-        header("Location: user_images.php", true, 303);
-    }
 }

@@ -15,7 +15,7 @@
                 <a class="nav__welcomeText">
                     <?php
                     if ($_SESSION['logged_in_user_id'] == TRUE) {
-                        echo 'Welcome, ' .  $_SESSION["username"] . ' ' . $_SESSION['logged_in_user_id'] . '!';
+                        echo 'Welcome, ' .  htmlspecialchars($_SESSION["username"]) . '!';
                     }
                     ?>
                 </a>
@@ -41,7 +41,7 @@
                     <?php
                     } else {
                     ?>
-                        <a href="index.php" class="nav__icon">
+                        <a href="logout.php" class="nav__icon">
                             <img src="./icons/login32.png" title="Log in"></img>
                         </a>
                     <?php
@@ -53,9 +53,5 @@
     </div>
 
 </body>
-
-<!-- <a href="webcam.php" class="nav__link" style="font-size: min(max(10px, 2vw), 18px)">Upload a picture</a> -->
-<!-- <a href="logout.php" class="nav__link" style="font-size: min(max(10px, 2vw), 18px)">Profile</a> -->
-<!-- <a href="logout.php" class="nav__link" style="text-align: right; font-size: min(max(10px, 2vw), 18px)">Log out</a> -->
 
 </html>

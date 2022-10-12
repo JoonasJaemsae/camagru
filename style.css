@@ -180,10 +180,24 @@ h1 {
     outline: none;
     background: #eeeeee;
     transition: background 0.2s, border-color 0.2s;
-    /* Transition background determines how long it takes for the background color to gradually change into the specified color. */
+    /* transition: background determines how long it takes for the background color to gradually change into the specified color. */
 }
 
-.form__input:focus {
+.form__input2 {
+    display: block;
+    width: 90%;
+    margin: 0 10px 0 10px;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+    border: 1px solid #dddddd;
+    outline: none;
+    background: #eeeeee;
+    transition: background 0.2s, border-color 0.2s;
+    /* transition: background determines how long it takes for the background color to gradually change into the specified color. */
+}
+
+.form__input:focus, .form__input2:focus {
     background: rgb(255, 255, 255);
 }
 
@@ -200,11 +214,25 @@ h1 {
     padding: 0.75rem;
 }
 
-.form__button:hover {
+.form__button2 {
+    width: 90%;
+    margin: 0 10px 0 10px;
+    margin-bottom: 10px;
+    background-color: var(--color-primary);
+    color: #000000;
+    font-weight: bold;
+    font-size: 0.8rem;
+    border-radius: var(--border-radius);
+    border: 1px solid #dddddd;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.form__button:hover, .form__button2:hover {
     background-color: var(--color-primary-dark);
 }
 
-.form__button:active {
+.form__button:active, .form__button2:active {
     transform: scale(0.98);
 }
 
@@ -605,6 +633,10 @@ h1 {
     border-radius: 2px;
 }
 
+.galleryElement > div:first-child {
+    font: 600 1rem 'Quicksand', sans-serif;
+}
+
 .handleElement {
     margin-bottom: 10px;
 }
@@ -659,9 +691,25 @@ h1 {
     background: url('./icons/heartfull32.png');
 }
 
-.commentElement {
-    display: flex;
-    align-items: center;
+.commentElement > div {
+    border-top: 1px solid gainsboro;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.commentElement > div:first-child {
+    margin-top: 10px;
+}
+
+.commentElement > div:last-child {
+    margin-bottom: 20px;
+    border-bottom: 1px solid gainsboro;
+}
+
+.commentElement > div > div:first-child {
+    text-align: left;
+    font: 600 1rem 'Quicksand', sans-serif;
+    margin-bottom: 5px;
 }
 
 .pageArea {

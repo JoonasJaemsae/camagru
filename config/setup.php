@@ -21,7 +21,10 @@ $sql = "CREATE TABLE IF NOT EXISTS `users` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`username` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
-	`email` VARCHAR(255) NOT NULL
+	`email` VARCHAR(255) NOT NULL,
+    `verification_code` VARCHAR(255) NOT NULL,
+    `email_is_verified` INT(11) NOT NULL,
+    `notifications` INT(11) NOT NULL
 )";
 $dbConn->exec($sql);
 
@@ -45,6 +48,15 @@ $sql = "CREATE TABLE IF NOT EXISTS `password_requests` (
 	`email` VARCHAR(255) NOT NULL,
     `reset_link_url` VARCHAR(255) NOT NULL,
     `active_bool` INT(11) NOT NULL,
+    `creation_datetime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+)";
+$dbConn->exec($sql);
+
+$sql = "CREATE TABLE IF NOT EXISTS `comments` (
+	`comment_id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT(11) NOT NULL,
+    `image_id` INT(11) NOT NULL,
+	`content` VARCHAR(255) NOT NULL,
     `creation_datetime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
 $dbConn->exec($sql);

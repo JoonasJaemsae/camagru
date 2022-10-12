@@ -4,11 +4,10 @@ session_start();
 
 include_once './config/new_conn.php';
 
-// Make this one less duct-tapey and dumb.
-$message = "empty";
+$message = '';
 $verifCode = $_GET['verifCode'];
 
-if ($message == '') {
+if ($verifCode == '') {
     $message = '<p style="color: red;">This page is for verifying your email address. The verification url you tried to access is not a valid one.</p>';
 } else {
     $verifCode = $_GET['verifCode'];
@@ -27,8 +26,6 @@ if ($message == '') {
         $stmt->execute(['1', $verifCode]);
     }
 }
-
-// 3bffe701b2fb71c100beb6b621ed5e22d2d9d6b992c05b5f48c0dd56cf0d2d3ee9d920924668e9f0394504d718eecee030b59f39adf47106f4dd2abde39ebace
 
 ?>
 

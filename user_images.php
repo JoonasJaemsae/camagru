@@ -52,23 +52,46 @@ if (isset($_SESSION['loginPersist'])) {
                     $image = 'data:image/jpeg;base64,' . $base64;
                 ?>
                     <div class="galleryElement">
-                        <div class="handleElement"><?php echo $value['username'] . ' ' . $value['image_id'] ?></div>
+                        <div class="handleElement"><?php echo htmlspecialchars($value['username']) ?></div>
                         <img class="photoElement" src="<?php echo $image; ?>"></img>
                         <div class="iconElement">
                             <div class="iconElementLeft">
-                                <div id="likeAmount<?php echo $value['image_id']; ?>">Likes: <?php echo getImageLikeCount($value['image_id'], $dbConn);?></div>
+                                <div id="likeAmount<?php echo $value['image_id']; ?>">Likes: <?php echo getImageLikeCount($value['image_id'], $dbConn); ?></div>
                             </div>
                             <div class="iconElementRight">
-                                <img class="likeIcon" id="delete<?php echo $value['image_id'] ?>" src="./icons/trash32.png" title="Delete the picture" onclick=confirmDelete(<?php echo $value['image_id'] ?>)></img>       
+                                <img class="likeIcon" id="delete<?php echo $value['image_id'] ?>" src="./icons/trash32.png" title="Delete the picture" onclick=confirmDelete(<?php echo $value['image_id'] ?>)></img>
                                 <?php if (checkUsersLike($value['image_id'], $dbConn) == true) { ?>
-                                    <img class="likeIcon" id="like<?php echo $value['image_id'] ?>" src="./icons/heartfull32.png" title="Like the picture" onclick="adjustLikeStatus(this.id, <?php echo $_SESSION['logged_in_user_id']?> )"></img>
+                                    <img class="likeIcon" id="like<?php echo $value['image_id'] ?>" src="./icons/heartfull32.png" title="Like the picture" onclick="adjustLikeStatus(this.id, <?php echo $_SESSION['logged_in_user_id'] ?> )"></img>
                                 <?php } else { ?>
-                                    <img class="likeIcon" id="like<?php echo $value['image_id'] ?>" src="./icons/heartempty32.png" title="Like the picture" onclick="adjustLikeStatus(this.id, <?php echo $_SESSION['logged_in_user_id']?> )"></img>
+                                    <img class="likeIcon" id="like<?php echo $value['image_id'] ?>" src="./icons/heartempty32.png" title="Like the picture" onclick="adjustLikeStatus(this.id, <?php echo $_SESSION['logged_in_user_id'] ?> )"></img>
                                 <?php } ?>
                             </div>
-                            <div class="commentElement">
-                            </div>
                         </div>
+                        <div class=" commentElement">
+                            <?php
+                            foreach ($comments as $key => $comment) {
+                                if ($value['image_id'] == $comment['image_id']) { ?>
+                                    <div>
+                                        <div><?php echo htmlspecialchars($comment['username']) ?></div>
+                                        <div><?php echo htmlspecialchars($comment['content']) . '<br>'; ?></div>
+                                    </div>
+                            <?php
+                                }
+                            } ?>
+                        </div>
+                        <?php if ($_SESSION['logged_in_user_id'] == TRUE) { ?>
+                            <div class="formElement">
+                                <form action="user_images.php" id="formElement<?= $value['image_id'] ?>" method="POST" class="form">
+                                    <input type="hidden" class="form__input2" name="comment_image_id" value="<?= $value['image_id'] ?>">
+                                    <div class="form__input-group">
+                                        <input type="text" class="form__input2" name="comment" required>
+                                    </div>
+                                    <button class="form__button2" type="submit" name="submitComment" onclick="postComment(<?= $value['image_id'] ?>)">Post comment</button>
+                                </form>
+                            </div>
+                        <?php
+                        }
+                        ?>
                     </div>
                 <?php
                 }
@@ -76,21 +99,6 @@ if (isset($_SESSION['loginPersist'])) {
                 ?>
 
             </div>
-        </div>
-        <div style="text-align: center;">
-            <?php
-            if ($_SESSION['loginPersist'] == TRUE) {
-                echo '$_SESSION["loginPersist"] is TRUE' . '<br>';
-            } else if ($_SESSION['loginPersist'] == FALSE) {
-                echo '$_SESSION["loginPersist"] is FALSE' . '<br>';
-            }
-
-            if ($_SESSION['loginSuccess'] == TRUE) {
-                echo '$_SESSION["loginSuccess"] is TRUE' . '<br>';
-            } else if ($_SESSION['loginSuccess'] == FALSE) {
-                echo '$_SESSION["loginSuccess"] is FALSE' . '<br>';
-            }
-            ?>
         </div>
         <script src="gallery_features.js"></script>
     </body>

@@ -34,7 +34,6 @@ $reset_link_url = $_GET['reset_url'];
 if (isset($_POST['newPwResetSubmit'])) {
     $newPw = $_POST['newPwReset'];
     $newPwAgain = $_POST['newPwResetAgain'];
-    echo "Went here!" . '<br>';
     if ($newPw != $newPwAgain) {
         $_SESSION['pwResetErrorMessage'] = "The passwords you entered did not match each other. Please try again.";
     } else if (!checkPasswordStrength($newPw)) {

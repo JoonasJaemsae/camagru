@@ -75,16 +75,15 @@ if (isset($_POST['submit'])) {
         $password = hash('whirlpool', $password);
         $verifCode = generateRandomString(10, $dbConn);
         $sql = "INSERT INTO users (`username`, `password`, `email`, `verification_code`, `email_is_verified`, `notifications`)
-                VALUES ('$username', '$password', '$email', '$verifCode', 0, 1);";
-        $dbConn->exec($sql);
+                VALUES (?, ?, ?, ?, ?, ?);";
+        $stmt = $dbConn->prepare($sql);
+        $stmt->execute([$username, $password, $email, $verifCode, 0, 1]);
         sendVerificationEmail($email, $verifCode, $dbConn);
         $_SESSION['signupErrorMessage'] = '';
     }
-    $_POST['submit'] = FALSE; // This might not be good actually, because we're looking for isset in this bigger if clause, and FALSE is still true for isset, afaik.
     header("Location: signup.php");
     return;
 }
-// $user['username'] != FALSE
 
 ?>
 
@@ -129,12 +128,7 @@ if (isset($_POST['submit'])) {
             <?php
             if ($message != FALSE) {
                 echo $message;
-            }
-            if ($message == TRUE) {
-                echo 'Message is TRUE';
                 $_SESSION['signupErrorMessage'] = FALSE; // This is to make it so that the message doesn't show up again on reloading the page.
-            } else if ($message == FALSE) {
-                echo 'Message is FALSE';
             }
             ?>
         </div>
