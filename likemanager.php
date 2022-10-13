@@ -4,6 +4,11 @@ session_start();
 
 require_once './config/new_conn.php';
 
+if (!isset($_POST['likedImage'])) {
+    header('Location: gallery.php');
+    return;
+}
+
 $agent = $_SESSION['logged_in_user_id'];
 $likedImage = $_POST['likedImage'];
 

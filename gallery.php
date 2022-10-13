@@ -12,6 +12,12 @@ require 'gallery_functions.php';
 if (!isset($_SESSION['loginSuccess'])) {
     $_SESSION['loginSuccess'] = FALSE;
 }
+if (!isset($_SESSION['loginPersist'])) {
+    $_SESSION['loginPersist'] = FALSE;
+}
+if (!isset($_SESSION['loginErrorMessage'])) {
+    $_SESSION['loginErrorMessage'] = FALSE;
+}
 if (!isset($_SESSION['logged_in_user_id'])) {
     $_SESSION['logged_in_user_id'] = FALSE;
 }
@@ -47,7 +53,7 @@ if (isset($_SESSION['loginPersist'])) {
         include_once 'navbar.php';
 
         ?>
-        <h1 style="margin-top: 100px; font: 700 2rem 'Quicksand', sans-serif;"></h1>
+        <h1 style="margin-top: 100px;"></h1>
         <div class="galleryPhotoArea">
             <div class="galleryPhotos" id="galleryPhotos">
                 <?php
@@ -56,7 +62,7 @@ if (isset($_SESSION['loginPersist'])) {
                     $image = 'data:image/jpeg;base64,' . $base64;
                 ?>
                     <div class="galleryElement">
-                        <div class="handleElement"><?php echo htmlspecialchars($value['username']) .  ' ' . $value['image_id'] ?></div>
+                        <div class="handleElement"><?php echo htmlspecialchars($value['username']) ?></div>
                         <img class="photoElement" src="<?php echo $image; ?>"></img>
                         <div class="iconElement">
                             <div class="iconElementLeft">

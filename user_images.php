@@ -95,7 +95,6 @@ if (isset($_SESSION['loginPersist'])) {
                     </div>
                 <?php
                 }
-                // <?php echo $value['image_id'];
                 ?>
 
             </div>

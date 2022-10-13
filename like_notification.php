@@ -4,6 +4,11 @@ session_start();
 
 require_once './config/new_conn.php';
 
+if (!isset($_POST['likedImage'])) {
+    header('Location: index.php');
+    return;
+}
+
 $agent = $_SESSION['logged_in_user_id'];
 $likedImageId = $_POST['likedImage'];
 
@@ -18,7 +23,7 @@ $stmt->execute([$likedImageId]);
 $pictureOwner = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($pictureOwner['notifications'] == 0) {
-    echo "The recipient's notifications were set to zero. No notification sent. " . '$pictureOwner["notifications"]: ' . $pictureOwner['notifications'];
+    echo "The recipient's notifications were set to zero. No notification was sent.";
     return;
 }
 
@@ -30,17 +35,9 @@ $stmt = $dbConn->prepare($sql2);
 $stmt->execute([$agent]);
 $liker = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// For debugging:
-echo '$likedImageId: ' . $likedImageId . '<br>';
-echo '$_SESSION["logged_in_user_id"]: ' . $_SESSION['logged_in_user_id'] . '<br>';
-echo '$pictureOwner["userid"]: ' . $pictureOwner['userid'] . '<br>';
-echo '$pictureOwner["email"]: ' . $pictureOwner['email'] . '<br>';
-echo '$pictureOwner["username"]: ' . $pictureOwner['username'] . '<br>';
-echo '$liker["username"]: ' . $liker['username'] . '<br>';
-
 // Don't send an email, if the user liked their own picture. Some sad people do that.
 if ($agent == $pictureOwner['userid']) {
-    echo "Liker was the same as the picture owner. " . '$pictureOwner["userid"]: ' . $pictureOwner['userid'];
+    echo "Liker was the same as the picture owner. No email was sent.";
     return;
 }
 

@@ -4,9 +4,10 @@ session_start();
 
 require_once './config/new_conn.php';
 
-if (!isset($_SESSION['logged_in_user_id'])) {
-    $_SESSION['logged_in_user_id'] = FALSE;
-};
+if (!isset($_POST['image_id'])) {
+    header('Location: index.php');
+    return;
+}
 
 function sendCommentNotification($agent, $image_id, $dbConn)
 {

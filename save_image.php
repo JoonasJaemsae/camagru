@@ -4,11 +4,8 @@ session_start();
 
 require_once './config/new_conn.php';
 
-if (!isset($_SESSION['logged_in_user_id'])) {
-    $_SESSION['logged_in_user_id'] = FALSE;
-}
-if ($_SESSION['logged_in_user_id'] == FALSE) {
-    header('Location: index.php');
+if (!isset($_POST['new_image'])) {
+    header('Location: gallery.php');
     return;
 }
 
@@ -37,9 +34,9 @@ while ($stickerData[$i] != "") {
     $i = $i + 3;
 }
 
-ob_start(); // Think about the necessity of these. Harmless.
+ob_start();
 imagejpeg($image_php);
-$image_php = ob_get_clean(); // Think about the necessity of these. Harmless.
+$image_php = ob_get_clean();
 $image = base64_encode($image_php);
 
 $sql = "USE `joonasja_camagru`";

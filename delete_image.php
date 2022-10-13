@@ -4,21 +4,22 @@ session_start();
 
 require_once './config/new_conn.php';
 
-if (!isset($_SESSION['logged_in_user_id'])) {
-    $_SESSION['logged_in_user_id'] = FALSE;
-}
-if ($_SESSION['logged_in_user_id'] == FALSE) {
+if (!isset($_POST['imageId'])) {
     header('Location: index.php');
-	return;
+	exit ;
 }
 
 $agent = $_SESSION['logged_in_user_id'];
 $imageToDelete = $_POST['imageId'];
 
+if ($userid != $logged_in_id) {
+    echo "We were here!";
+    header('Location: index.php');
+    exit ;
+}
+
 $sql = "USE `joonasja_camagru`";
 $dbConn->exec($sql);
-
-// Add a check that checks if the user owns the image. The below checks for that one! \/
 
 $sql = "SELECT * FROM images WHERE `user_id`=? AND `image_id`=?;";
 $stmt = $dbConn->prepare($sql);

@@ -79,7 +79,7 @@ if (isset($_SESSION['loginPersist'])) {
             <div class="photoDisplayBar" id='photoDisplayBar'></div>
             <div class="stickerBarArea">
                 <div class="stickerBar">
-                    <img sticker class="sticker" src="stickers/empty.png" onclick="drawSticker(this, 0, 0, 128, 96, 'empty')">
+                    <img sticker class="sticker" src="stickers/empty.png" onclick="drawSticker(this, 0, 0, 'empty')">
                     <img class="sticker" id="crown.png" width="128" height="95" src="stickers/crown.png" onclick="drawSticker(this, 0, 0, 'new')">
                     <img class="sticker" id="42.png" width="128" height="78" , src="stickers/42.png" onclick="drawSticker(this, 0, 0, 'new')">
                     <img class="sticker" id="confetti.png" width="128" height="131" src="stickers/confetti.png" onclick="drawSticker(this, 0, 0, 'new')">

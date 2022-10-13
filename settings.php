@@ -5,7 +5,6 @@ ini_set('html_errors', 0);
 error_reporting(-1);
 
 session_start();
-// ob_start(); // if logout redirection doesn't work.
 
 include_once './config/new_conn.php';
 require 'gallery_functions.php';
@@ -41,7 +40,7 @@ if (isset($_POST['submitPwChange'])) {
     $oldPw = $_POST['oldPw'];
     $newPw = $_POST['newPw'];
     if (!checkPasswordStrength($newPw)) {
-        $_SESSION['pwChangeErrorMessage'] = 'Please enter a stronger password. Your password should have at least 8 characters and contain at least three of the following:' . '<br>'
+        $_SESSION['pwChangeErrorMessage'] = 'Please enter a stronger password. Your password should be between 8 and 30 characters and contain at least three of the following:' . '<br>'
         . '- a lowercase alphabetic character.' . '<br>'
         . '- an uppercase alphabetic character.' . '<br>'
         . '- a numeric character.' . '<br>'
@@ -87,9 +86,9 @@ if (isset($_POST['submitUsernameChange'])) {
     $newUsername = $_POST['newUsername'];
     $pwForUsernameChange = $_POST['pwForUsername'];
     $username = $_SESSION['username'];
-    if (strlen($username) > 16 || strlen($username) < 4) {
+    if (strlen($newUsername) > 16 || strlen($newUsername) < 4) {
         $_SESSION['usernameChangeErrorMessage'] = "Username must be between 4 and 16 characters long. Please try another username.";
-        header("Location: signup.php");
+        header("Location: settings.php");
         return;
     }
     if ($username == $newUsername) {
@@ -119,11 +118,11 @@ if (isset($_POST['submitUsernameChange'])) {
         header('Location: settings.php');
         return;
     } else {
-        $_SESSION['usernameChangeSuccessMessage'] = 'Your username was changed successfully!';
         $sql3 = "UPDATE users SET username=? WHERE username=?;";
         $stmt = $dbConn->prepare($sql3);
         $stmt->execute([$newUsername, $username]);
         $_SESSION['username'] = $newUsername;
+        $_SESSION['usernameChangeSuccessMessage'] = 'Your username was changed successfully!';
         header('Location: settings.php');
         return;
     }
@@ -210,7 +209,7 @@ if (isset($_SESSION['loginPersist'])) {
                 </div>
                 <div class="settingsBoxRightSide">
                     <div class="subBoxRight2" style="font: 500 1rem 'Quicksand', sans-serif;">
-                        You really should. Your current one is easy to guess.
+                        Input your new password twice and your old one to confirm submission.
                         <form action="settings.php" method="POST" class="form">
                             <div class="form__input-group" style>
                                 <input type="password" class="form__input" name="oldPw" style="margin-top: 25px;" placeholder="Old password" required>
@@ -272,7 +271,7 @@ if (isset($_SESSION['loginPersist'])) {
                         Enter your new email address and your password. You will need to verify your new email address in order to be able to log in again.
                         <form action="settings.php" method="POST" class="form">
                             <div class="form__input-group">
-                                <input type="text" class="form__input" name="newEmail" style="margin-top: 15px;" placeholder="New email" required>
+                                <input type="email" class="form__input" name="newEmail" style="margin-top: 15px;" placeholder="New email" required>
                             </div>
                             <div class="form__input-group" style>
                                 <input type="password" class="form__input" name="pwForEmail" placeholder="Password" required>

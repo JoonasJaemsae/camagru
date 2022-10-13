@@ -3,12 +3,10 @@
 require_once 'database.php';
 
 try {
-    $dbConn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    $dbConn = new PDO($DB_DSN_SETUP, $DB_USER, $DB_PASSWORD);
     $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connection from new_conn.php successful!" . "<br>";
 } catch (PDOException $errorMessage) {
     echo $errorMessage . "<br>";
-    echo "Something went wrong when trying to connect to the database." . "<br>";
 }
 
 $sql = "CREATE DATABASE IF NOT EXISTS `joonasja_camagru`";
@@ -60,7 +58,5 @@ $sql = "CREATE TABLE IF NOT EXISTS `comments` (
     `creation_datetime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
 $dbConn->exec($sql);
-
-echo "Setup has finished running. See above message to learn if the setup was successful or not." . "<br>";
 
 ?>

@@ -50,12 +50,12 @@ h1 {
 
 @font-face {
     font-family: 'Quicksand';
-    src: url('Quicksand-Medium.eot');
-    src: url('Quicksand-Medium.eot?#iefix') format('embedded-opentype'),
-        /* url('Quicksand-Medium.woff2') format('woff2'),
-        url('Quicksand-Medium.woff') format('woff'),
-        url('Quicksand-Medium.ttf') format('truetype'), */
-        url('Quicksand-Medium.svg#Quicksand-Medium') format('svg');
+    src: url('./font/quicksand/Quicksand-Medium.eot');
+    src: url('./font/quicksand/Quicksand-Medium.eot?#iefix') format('embedded-opentype'),
+        url('./font/quicksand/Quicksand-Medium.woff2') format('woff2'),
+        url('./font/quicksand/Quicksand-Medium.woff') format('woff'),
+        url('./font/quicksand/Quicksand-Medium.ttf') format('truetype'),
+        url('./font/quicksand/Quicksand-Medium.svg#Quicksand-Medium') format('svg');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -90,7 +90,7 @@ h1 {
     width: 300px;
     max-width: 300px;
     margin: 1rem;
-    padding: 2rem;
+    padding: 5rem 2rem;
     background-color: rgb(255, 255, 255);
     border-radius: var(--border-radius);
 }

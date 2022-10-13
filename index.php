@@ -4,7 +4,7 @@ ini_set('display_errors', 'On');
 ini_set('html_errors', 0);
 error_reporting(-1);
 
-include_once './config/new_conn.php';
+require_once './config/setup.php';
 
 session_start();
 
@@ -105,9 +105,6 @@ if (isset($_POST['login'])) {
 		</div>
 		<div class="flex-container1">
 			<div class="subBoxLeft">
-				<a href="./setup_db.php" class="form__link">Set up DB</a>
-			</div>
-			<div class="subBoxRight">
 				<a href="./gallery.php" class="form__link">To Gallery</a>
 			</div>
 		</div>

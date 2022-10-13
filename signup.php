@@ -115,7 +115,7 @@ if (isset($_POST['submit'])) {
                 <input type="password" class="form__input" name="passwordAgain" placeholder="Confirm password" required>
             </div>
             <div class="form__input-group">
-                <input type="text" class="form__input" name="email" placeholder="Email" required>
+                <input type="email" class="form__input" name="email" placeholder="Email" required>
             </div>
             <button class="form__button" id="submit" type="submit" name="submit">Sign up</button>
         </form>

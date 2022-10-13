@@ -3,7 +3,7 @@
 function checkPasswordStrength($password)
 {
    $strengthPoints = 0;
-   if (strlen($password) < 8 || strlen($password) > 16) {
+   if (strlen($password) < 8 || strlen($password) > 30) {
       return FALSE;
    }
    // The password is not allowed to have whitespace characters.
@@ -96,7 +96,6 @@ function sendVerificationEmail($email, $verifCode, $dbConn)
 {
     echo "Made it to the function.";
     $to = $email;
-    $to = 'aiden.leung555@protonmail.com';
 
     $sql = "USE `joonasja_camagru`";
     $dbConn->exec($sql);

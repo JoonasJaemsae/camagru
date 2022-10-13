@@ -1,5 +1,3 @@
-// The below is needed if we want to toggle the camera on with a button press.
-// let camera_button = document.querySelector("#start-camera");
 let video = document.querySelector("#video");
 let snap = document.querySelector("#snap");
 let canvas = document.querySelector("#canvas");
@@ -45,7 +43,6 @@ snap.addEventListener('click', function () {
     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height); // 0 0 is top left position we want the video to be.
     // The last two are the canvas width and height which we'll want to match perfectly.
     // When our div is clicked, we want to draw onto the canvas the image that is displayed on our video element
-    let image_data_url = canvas.toDataURL('image/jpeg');
     save.disabled = false;
 });
 
@@ -108,7 +105,9 @@ document.getElementById('upload').onchange,
     };
 function draw() {
     save.disabled = false;
-    var canvas = document.getElementById('canvas');
+    // var canvas = document.getElementById('canvas');
+    canvas.width = 640;
+    canvas.height = 480;
 
     x_width = rect.right - rect.left;
     y_height = rect.bottom - rect.top;
@@ -116,21 +115,19 @@ function draw() {
     scaleX = x_width / 640;
     scaleY = y_height / 480;
 
-    canvas.width = 640;
-    canvas.height = 480;
-    if (this.width >= 640 || this.height >= 480) {
-        final_width = this.width * scaleX;
-        final_height = this.height * scaleY;
-    } else {
-        final_width = this.width * scaleX;
-        final_height = this.height * scaleY;
-    }
+    final_width = this.width * scaleX;
+    final_height = this.height * scaleY;
     positionX = x_width / 2 - final_width / 2;
     positionY = y_height / 2 - final_height / 2;
     finalPositionX = positionX * (640 / x_width);
     finalPositionY = positionY * (480 / y_height);
-    lockedPreview3.getContext('2d').drawImage(this, finalPositionX, finalPositionY);
-    canvas.getContext('2d').drawImage(this, finalPositionX, finalPositionY);
+    if (this.width >= 640 || this.height >= 480) {
+        lockedPreview3.getContext('2d').drawImage(this, 0, 0, canvas.width, canvas.height);
+        canvas.getContext('2d').drawImage(this, 0, 0, canvas.width, canvas.height);
+    } else {
+        lockedPreview3.getContext('2d').drawImage(this, finalPositionX, finalPositionY);
+        canvas.getContext('2d').drawImage(this, finalPositionX, finalPositionY);
+    }
 }
 function failed() {
     save.disabled = true;
@@ -151,6 +148,7 @@ function drawSticker(sticker, hori_offset, vert_offset, flag) {
             finalPositionY = positionY * (480 / y_height)
             lockedPreview1.getContext('2d').drawImage(selected, finalPositionX, finalPositionY);
             lockedPreview2.getContext('2d').drawImage(selected, finalPositionX, finalPositionY);
+            lockedPreview3.getContext('2d').drawImage(selected, finalPositionX, finalPositionY);
             stickerArray += selected.src + ',' + finalPositionX + ',' + finalPositionY + ',';
         }
         selected = document.getElementById(sticker.id);
@@ -187,10 +185,6 @@ function drawSticker(sticker, hori_offset, vert_offset, flag) {
 }
 
 preview1.onmousedown = (e) => {
-
-    rect = preview1.getBoundingClientRect();
-    var x_width = rect.right - rect.left;
-    var y_height = rect.bottom - rect.top;
     final_width = selected.width * scaleX;
     final_height = selected.height * scaleY;
     if (e.layerX <= (currentX + final_width / 2) &&

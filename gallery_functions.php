@@ -7,15 +7,11 @@ $stmt = $dbConn->prepare($sql);
 $stmt->execute();
 $number_of_pages = CEIL($stmt->rowCount() / $results_per_page);
 
-// Pagination might break for a sec, if user tries to input a string onto ?page=.
-// || !is_int($_GET['page'])
-
-// The if in the first else clause guards against situation where the user tries to access page 0 or lower or a page that's beyond the last page.
 if (!isset($_GET['page'])) {
     $page = 1;
     $_GET['page'] = 1;
 } else {
-    if ($_GET['page'] <= 0 || $_GET['page'] > $number_of_pages) {
+    if ($_GET['page'] <= 0 || $_GET['page'] > $number_of_pages || !getPageRegexCheck($_GET['page'])) {
         $page = 1;
         header('Location: ./gallery.php?page=1');
         return;
@@ -26,7 +22,6 @@ if (!isset($_GET['page'])) {
 
 $page_first_result = ($page - 1) * $results_per_page;
 
-// LIMIT: Starting from page_first_result, a total of results_per_page images per page.
 $sql = "SELECT image_id, image_data, username, users.id AS userid
         FROM images
         INNER JOIN users
@@ -63,6 +58,25 @@ if (isset($_SESSION['logged_in_user_id'])) {
     $usersImages = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getPageRegexCheck($get_page)
+{
+    // The page is not allowed to have whitespace characters.
+    if (preg_match("/\s/", $get_page)) {
+        return FALSE;
+    }
+    if (preg_match("/[A-Z]/", $get_page)) {
+        return FALSE;
+    }
+    if (preg_match("/[a-z]/", $get_page)) {
+        return FALSE;
+    }
+    // The password should contain at least one special character or an underscore.
+    if (preg_match("/\W/", $get_page) || (preg_match("/_/", $get_page))) {
+        return FALSE;
+    }
+    return TRUE;
+}
+
 function checkUsersLike($image_id, $dbConn)
 {
     if (isset($_SESSION['logged_in_user_id'])) {
@@ -89,7 +103,8 @@ function checkUsersLike($image_id, $dbConn)
     }
 }
 
-function getNotifStatusAsText($dbConn) {
+function getNotifStatusAsText($dbConn)
+{
     $user_id = $_SESSION['logged_in_user_id'];
     $sql = "SELECT notifications
             FROM users
@@ -144,5 +159,4 @@ function getImageLikeCount($image_id, $dbConn)
 // The below is for deleting an image
 
 if (isset($_SESSION['logged_in_user_id']) && isset($_POST['gallery'])) {
-
 }

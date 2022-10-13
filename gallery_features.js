@@ -28,7 +28,6 @@ function adjustLikeStatus(likeId, likerId) {
         likes--;
         document.getElementById('likeAmount' + imageId).innerHTML = "Likes: " + (likes);
     }
-    console.log("likes: ", likes);
     let xml = new XMLHttpRequest();
     var url = './likemanager.php';
     xml.open('POST', url, true);
@@ -54,7 +53,8 @@ function postComment(imageId) {
     }
     let form = document.getElementById('formElement' + imageId);
     form.addEventListener("submit", (event) => {
-        event.preventDefault(); // Prevents the submit button from doing what it would normally do, which is submitting the form.
+        // The below prevents the submit button from doing what it would normally do, which is submitting the form.
+        event.preventDefault();
         sendAsXML(form, imageId)
     });
 }

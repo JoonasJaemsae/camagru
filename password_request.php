@@ -56,7 +56,7 @@ if (isset($_POST['pwRequestSubmit'])) {
         <div class="logo">Camagru</div>
         <form action="password_request.php" method="POST" class="form">
             <div class="form__input-group">
-                <input type="text" class="form__input" name="pwRequestEmail" autofocus placeholder="Email address" required>
+                <input type="email" class="form__input" name="pwRequestEmail" autofocus placeholder="Email address" required>
             </div>
             <button class="form__button" type="submit" name="pwRequestSubmit">Request a new password</button>
         </form>
