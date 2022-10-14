@@ -22,11 +22,7 @@ body#index {
 }
 
 body#gradient {
-    /* background-image: linear-gradient(to bottom right, rgb(251, 248, 224), rgb(229, 191, 103)); */
     background-image: linear-gradient(to bottom right, rgb(248, 242, 200), rgb(232, 220, 192));
-    /* background-image: linear-gradient(to bottom right, rgb(244, 242, 234), rgb(232, 220, 192)); */
-    /* background-image: linear-gradient(to bottom right, rgb(248, 242, 200), rgb(237, 207, 135)); */
-    /* background-image: linear-gradient(to bottom right, rgb(182, 224, 222), rgb(232, 216, 180)); */
     background-attachment: fixed;
 }
 
@@ -756,14 +752,14 @@ h1 {
 
 .settingsBoxLeftSide > div {
     width: 20vw;
-    height: 350px;
+    height: 375px;
     padding: 1em;
     border-bottom: solid 1px gainsboro;
     border-right: solid 1px gainsboro;
 }
 
 .settingsBoxLeftSide > div:first-child {
-    height: 550px;
+    height: 650px;
 }
 
 .settingsBoxLeftSide > div:last-child {
@@ -780,12 +776,12 @@ h1 {
 }
 
 .settingsBoxRightSide > div:first-child {
-    height: 550px;
+    height: 650px;
 }
 
 .settingsBoxRightSide > div {
     width: 50vw;
-    height: 350px;
+    height: 375px;
     padding: 1em;
     border-bottom: solid 1px gainsboro;
 }

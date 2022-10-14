@@ -13,13 +13,9 @@ function adjustLikeStatus(likeId, likerId) {
         likes = parseInt(document.getElementById('likeAmount' + imageId).innerHTML.replace("Likes: ", ""));
         likes++;
         document.getElementById('likeAmount' + imageId).innerHTML = "Likes: " + (likes);
-
         let xmlLikeNotification = new XMLHttpRequest();
         var urlLikeNotification = './like_notification.php';
         xmlLikeNotification.open('POST', urlLikeNotification, true);
-        xmlLikeNotification.onload = function () {
-            console.log("PHP Response: ", this.response);
-        }
         xmlLikeNotification.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlLikeNotification.send('likedImage=' + imageId);
     } else if (likeIcon.src.match("heartfull32.png")) {
@@ -31,9 +27,6 @@ function adjustLikeStatus(likeId, likerId) {
     let xml = new XMLHttpRequest();
     var url = './likemanager.php';
     xml.open('POST', url, true);
-    xml.onload = function () {
-        console.log("PHP Response: ", this.response);
-    }
     xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xml.send('likedImage=' + imageId);
 }
@@ -73,7 +66,6 @@ function toggleNotifications(destValue) {
     var url = './toggle_notifications.php';
     xml.open('POST', url, true);
     xml.onload = function () {
-        console.log("PHP Response: ", this.response);
         document.location.reload();
     }
     xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -86,7 +78,6 @@ function confirmDelete(image_id) {
         var url = './delete_image.php';
         xml.open('POST', url, true);
         xml.onload = function () {
-            console.log("PHP Response: ", this.response);
             document.location.reload();
         }
         xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');

@@ -205,7 +205,7 @@ if (isset($_SESSION['loginPersist'])) {
                     <div class="subBoxLeft" style="font: 500 1rem 'Quicksand', sans-serif;">Change your password</div>
                     <div class="subBoxLeft" style="font: 500 1rem 'Quicksand', sans-serif;">Change your username</div>
                     <div class="subBoxLeft" style="font: 500 1rem 'Quicksand', sans-serif;">Change your email address</div>
-                    <div class="subBoxLeft" style="font: 500 1rem 'Quicksand', sans-serif;">Toggle notifications</div>
+                    <div class="subBoxLeft" style="font: 500 1rem 'Quicksand', sans-serif;">Toggle email alerts</div>
                 </div>
                 <div class="settingsBoxRightSide">
                     <div class="subBoxRight2" style="font: 500 1rem 'Quicksand', sans-serif;">
@@ -297,7 +297,7 @@ if (isset($_SESSION['loginPersist'])) {
                     </div>
                     <div class="subBoxRight2" style="font: 500 1rem 'Quicksand', sans-serif;">
                         <div id="notifDescr">
-                            By having this set to ON, you will receive notifications in your email when someone likes your pictures.
+                            By having this set to ON, you will receive notifications in your email when someone likes or comments on your pictures.
                             Currently set to <?php echo getNotifStatusAsText($dbConn); ?>
                         </div>
                         <?php if (checkUsersNotificationsPref($dbConn) == true) { ?>

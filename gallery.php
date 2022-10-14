@@ -40,11 +40,6 @@ if ($_SESSION['loginSuccess'] === TRUE) {
 </head>
 <?php
 
-if ($_GET['page'] < 0 || $_GET['page'] > $number_of_pages) {
-    header("Location: ./gallery.php?page=1");
-}
-
-if (isset($_SESSION['loginPersist'])) {
 ?>
 
     <body id="gradient">
@@ -136,7 +131,5 @@ if (isset($_SESSION['loginPersist'])) {
 
 </html>
 <?php
-
-}
 
 ?>

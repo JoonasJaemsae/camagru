@@ -31,7 +31,7 @@ async function startWebCam() {
         video.srcObject = stream;
         window.stream = stream;
     } catch (error) {
-        console.log(error.toString());
+        alert("Please allow camera access!");
     }
 }
 
@@ -91,6 +91,9 @@ document.getElementById('upload').onclick = function (e) {
 }
 document.getElementById('upload').onchange,
     document.getElementById('upload').oninput = function (e) {
+        if (this.files[0].type != 'image/png' && this.files[0].type != 'image/jpg' && this.files[0].type != 'image/jpeg') {
+            document.location.reload();
+        }
         var img = new Image();
         img.onload = draw;
         img.onerror = failed;
