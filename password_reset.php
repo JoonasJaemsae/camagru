@@ -1,9 +1,5 @@
 <?php
 
-ini_set('display_errors', 'On');
-ini_set('html_errors', 0);
-error_reporting(-1);
-
 session_start();
 
 include_once './config/new_conn.php';
@@ -94,11 +90,6 @@ if ($reset_link_url == '' && !isset($_POST['newPwResetSubmit'])) {
         $link_is_active_bool = 1;
     }
 }
-
-// echo '$message: ' . $message . '<br>';
-// echo '$_SESSION["passwordResetSuccessful"]: ' . $_SESSION['passwordResetSuccessful'] . '<br>';
-// echo '$reset_link_url: ' . $reset_link_url . '<br>';
-// echo '$link_is_active_bool: ' . $link_is_active_bool . '<br>';
 
 ?>
 

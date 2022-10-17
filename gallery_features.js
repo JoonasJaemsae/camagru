@@ -35,6 +35,14 @@ function postComment(imageId) {
     function sendAsXML(form, imageId) {
         let formData = new FormData(form);
         let content = formData.get('comment');
+        if (content == '') {
+            alert("Your comment cannot be empty.");
+            document.location.reload();
+        }
+        if (content.length > 160) {
+            alert("Your comment was too long! Maximum comment size is 160 characters.");
+            document.location.reload();
+        }
         let xmlComment = new XMLHttpRequest();
         var urlComment = './post_comment.php';
         xmlComment.open('POST', urlComment, true);

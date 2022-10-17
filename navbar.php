@@ -1,3 +1,16 @@
+<?php
+
+if ((!isset($_SESSION['loginSuccess']) || !isset($_SESSION['loginPersist'])
+    || !isset($_SESSION['logged_in_user_id']))
+    || ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE)
+) {
+    $_SESSION['logged_in_user_id'] = '';
+    $_SESSION["username"] = '';
+}
+
+?>
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>

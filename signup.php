@@ -2,25 +2,27 @@
 
 session_start();
 
-ini_set('display_errors', 'On');
-ini_set('html_errors', 0);
-error_reporting(-1);
-
 include_once './config/new_conn.php';
 require 'email_functions.php';
-// ob_start();
 
+if (!isset($_SESSION['loginSuccess']) || !isset($_SESSION['loginPersist'])) {
+    $_SESSION['loginSuccess'] = FALSE;
+    $_SESSION['loginPersist'] = FALSE;
+    $_SESSION['logged_in_user_id'] = '';
+}
+if (!isset($_SESSION['signupSuccess'])) {
+    $_SESSION['signupSuccess'] = FALSE;
+}
 if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
     header('Location: gallery.php');
     return;
 }
-if ($_SESSION['signupSuccess'] == TRUE) {    // Comparing to true with === produces a warning message sometimes for some reason.
+if ($_SESSION['signupSuccess'] == TRUE) {
     header("Location: signup_success.php");
     return;
 }
 
-function checkPasswords($password, $passwordAgain)
-{
+function checkPasswords($password, $passwordAgain) {
     if ($password === $passwordAgain)
         return TRUE;
     else
@@ -68,7 +70,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['signupErrorMessage'] = 'The passwords you entered did not match each other. Please try again!';
     } else if (!checkEmailStrength($email)) {
         $_SESSION['signupErrorMessage'] = 'Your email address is not a valid one. Please try again.';
-    } else if ($stmt->rowCount() > 0) {    // $user['username'] is not FALSE if it was found with the SQL query i.e. it exist in the database.
+    } else if ($stmt->rowCount() > 0) {
         $_SESSION['signupErrorMessage'] = 'This username is not available. Please try another one.';
     } else {
         $_SESSION['signupSuccess'] = TRUE;
@@ -87,6 +89,7 @@ if (isset($_POST['submit'])) {
 
 ?>
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -98,7 +101,6 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body id="index">
-    <!-- If id is index, then background will be image. With signup it's linear gradient. -->
     <?php
     $message = isset($_SESSION['signupErrorMessage']) ? $_SESSION['signupErrorMessage'] : FALSE;
     ?>
@@ -128,7 +130,8 @@ if (isset($_POST['submit'])) {
             <?php
             if ($message != FALSE) {
                 echo $message;
-                $_SESSION['signupErrorMessage'] = FALSE; // This is to make it so that the message doesn't show up again on reloading the page.
+                // The below is to make it so that the message doesn't show up again on reloading the page.
+                $_SESSION['signupErrorMessage'] = FALSE;
             }
             ?>
         </div>

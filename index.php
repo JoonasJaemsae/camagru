@@ -1,9 +1,5 @@
 <?php
 
-ini_set('display_errors', 'On');
-ini_set('html_errors', 0);
-error_reporting(-1);
-
 require_once './config/setup.php';
 
 session_start();
@@ -31,8 +27,6 @@ if (!isset($_SESSION['emailChangeSuccessMessage'])) {
 	$_SESSION['emailChangeSuccessMessage'] = FALSE;
 }
 $_SESSION['signupSuccessPersist'] = FALSE;
-// ^ If you want to make it so that the user cannot return to the signup success page after returning to login screen.
-// Currently the back button will return the user to the signup page, though. Not sure if that's good either.
 
 if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
 	header('Location: gallery.php');
@@ -73,13 +67,15 @@ if (isset($_POST['login'])) {
 }
 
 ?>
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Camagru</title>
 	<link rel="stylesheet" href="./style.css">
-
 </head>
 
 <body id="index">

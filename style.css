@@ -13,8 +13,8 @@ body#gradient {
 
 body#index {
     display: flex;
-    background: url(./assets/img/pexels-adonyi-gabor-1416848_lesslightness.jpg) no-repeat center center fixed;
-    background-size: cover;
+    background-image: linear-gradient(to bottom right, rgb(248, 242, 200), rgb(232, 220, 192));
+    background-attachment: fixed;
     align-items: center;
     justify-content: center;
     margin: 0;
@@ -68,11 +68,6 @@ h1 {
 .loginBox {
     height: 400px;
     max-height: 400px;
-    /* box-shadow: 50 50 400px rgba(0, 0, 0, 0.2); */
-    /* font-family: 'Quicksand', sans-serif; */
-    /* padding: 25px 50px 40px 50px; */
-    /* 234, 224, 224 on harmaa box */
-    /* 195, 190, 190 on border */
 }
 
 .accountCreationBox {
@@ -82,7 +77,7 @@ h1 {
 
 .loginBox,
 .accountCreationBox {
-    border: 1px solid rgb(255, 255, 255); /* This doesn't do much but is also harmless. */
+    border: 1px solid rgb(255, 255, 255);
     width: 300px;
     max-width: 300px;
     margin: 1rem;
@@ -305,7 +300,7 @@ h1 {
 }
 
 .nav__welcomeText {
-    font-size: min(max(10px, 2vw), 18px);
+    font-size: min(max(6px, 1.5vw), 18px);
 }
 
 #snap {
@@ -466,8 +461,6 @@ h1 {
     min-height: 240px;
     position: absolute;
 	z-index: 3; /* Determines if the layer is on top or below. */
-    /* background-color: greenyellow; */
-    /* The above is to keep track of where the canvas is. */
 }
 
 #stickerPreview2 {
@@ -479,12 +472,9 @@ h1 {
     min-height: 240px;
 	position: absolute;
 	z-index: 3; /* Determines if the layer is on top or below. */
-    /* background-color: greenyellow; */
-    /* The above is to keep track of where the canvas is. */
 }
 
 #lockedPreview1 {
-    /* Dimensions must be changed to 28 and 21, respectively. */
     width: 28vw;
 	height: 21vw;
 	max-width: 640px;
@@ -493,12 +483,9 @@ h1 {
     min-height: 240px;
 	position: absolute;
 	z-index: 2; /* Determines if the layer is on top or below. */
-    /* background-color: greenyellow; */
-    /* The above is to keep track of where the canvas is. */
 }
 
 #lockedPreview2 {
-    /* Dimensions must be changed to 28 and 21, respectively. */
     width: 28vw;
 	height: 21vw;
 	max-width: 640px;
@@ -507,12 +494,9 @@ h1 {
     min-height: 240px;
 	position: absolute;
 	z-index: 2; /* Determines if the layer is on top or below. */
-    /* background-color: greenyellow; */
-    /* The above is to keep track of where the canvas is. */
 }
 
 #lockedPreview3 {
-    /* Dimensions must be changed to 28 and 21, respectively. */
     width: 28vw;
 	height: 21vw;
 	max-width: 640px;
@@ -521,14 +505,9 @@ h1 {
     min-height: 240px;
 	position: absolute;
 	z-index: 2; /* Determines if the layer is on top or below. */
-    /* background-color: greenyellow; */
-    /* The above is to keep track of where the canvas is. */
 }
 
 .stickerBarArea {
-    /* width: 65vw;
-    height: 10vw; */
-    /* max-height: 150px; */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -551,7 +530,6 @@ h1 {
 }
 
 .stickerSlot {
-    /* width: 10vw; */
     background-color: white;
     border: 1px solid coral;
 }
@@ -678,7 +656,6 @@ h1 {
 .heartEmptyIcon {
     width: 32px;
     height: 32px;
-    /* background: url('./icons/heartempty32.png'); */
 }
 
 .heartFullIcon {
@@ -691,6 +668,7 @@ h1 {
     border-top: 1px solid gainsboro;
     padding-top: 10px;
     padding-bottom: 10px;
+    overflow-wrap: break-word;
 }
 
 .commentElement > div:first-child {

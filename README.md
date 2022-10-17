@@ -1,3 +1,0 @@
-# camagru
-
-Coming later!

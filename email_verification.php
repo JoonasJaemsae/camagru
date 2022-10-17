@@ -4,8 +4,11 @@ session_start();
 
 include_once './config/new_conn.php';
 
+$verifCode = '';
 $message = '';
-$verifCode = $_GET['verifCode'];
+if (isset($_GET['verifCode'])) {
+    $verifCode = $_GET['verifCode'];
+}
 
 if ($verifCode == '') {
     $message = '<p style="color: red;">This page is for verifying your email address. The verification url you tried to access is not a valid one.</p>';

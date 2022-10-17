@@ -9,6 +9,7 @@ if (!isset($_POST['image_id'])) {
     return;
 }
 
+
 function sendCommentNotification($agent, $image_id, $dbConn)
 {
     $sql = "SELECT images.user_id as userid, email, username, notifications
@@ -70,19 +71,22 @@ function sendCommentNotification($agent, $image_id, $dbConn)
     }
 }
 
-$agent = $_SESSION['logged_in_user_id'];
-
 if (isset($_POST['image_id']) && isset($_POST['content'])) {
-    $image_id = $_POST['image_id'];
-    $content = $_POST['content'];
-
-    $sql = "USE `joonasja_camagru`";
-    $dbConn->exec($sql);
-    $sql2 = "INSERT INTO `comments` (`user_id`, `image_id`, `content`)
+    if (isset($_SESSION['logged_in_user_id']) && $_SESSION['logged_in_user_id'] !== '') {
+        $agent = $_SESSION['logged_in_user_id'];
+        $image_id = $_POST['image_id'];
+        $content = $_POST['content'];
+        if (strlen($content) > 160 || strlen($content) == 0) {
+            return;
+        }
+        $sql = "USE `joonasja_camagru`";
+        $dbConn->exec($sql);
+        $sql2 = "INSERT INTO `comments` (`user_id`, `image_id`, `content`)
         VALUES (?, ?, ?);
         ";
-    $stmt = $dbConn->prepare($sql2);
-    $stmt->execute([$agent, $image_id, $content]);
-    sendCommentNotification($agent, $image_id, $dbConn);
-    return;
+        $stmt = $dbConn->prepare($sql2);
+        $stmt->execute([$agent, $image_id, $content]);
+        sendCommentNotification($agent, $image_id, $dbConn);
+        return;
+    }
 }

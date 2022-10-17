@@ -1,9 +1,5 @@
 <?php
 
-ini_set('display_errors', 'On');
-ini_set('html_errors', 0);
-error_reporting(-1);
-
 include_once './config/new_conn.php';
 require 'email_functions.php';
 
@@ -39,16 +35,17 @@ if (isset($_POST['pwRequestSubmit'])) {
     return;
 }
 
-// SELECT * FROM password_requests INNER JOIN users ON password_requests.email = users.email WHERE reset_link_url = '932800c2d3ce98a01465f153ab4ee9e293475b7ab6dbc54a23e0ccd9c1c4ee3771666c54e9f70b5c21e5b46bae71648a1b818e40ffdfd5cab413c28540d9c636';
-
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Camagru - Request a password reset</title>
     <link rel="stylesheet" href="./style.css">
-
 </head>
 
 <body id="index">

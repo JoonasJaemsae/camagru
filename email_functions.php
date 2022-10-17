@@ -41,7 +41,7 @@ function checkEmailStrength($email)
    if (!preg_match("/^[^@]*@[^@]*$/", $email)) {
       return FALSE;
    }
-   // Check for a certain pattern: at least one char before and after '@', and the string must end with 2 or 3 alphabetical characters (.fi, .com, .net, etc.).
+   // Check for a certain pattern: there must be at least one char before and after '@', and the string must end with a period and 2 or 3 alphabetical characters (i.e. .fi, .com, .net, etc.).
    if (!preg_match("/^.+@.+\.[a-z]{2,3}$/i", $email)) {
       return FALSE;
    }

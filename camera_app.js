@@ -19,6 +19,7 @@ let currentX = 0;
 let currentY = 0;
 var positionX = 0;
 var positionY = 0;
+let scaleX, scaleY;
 var finalPositionX = 0;
 var finalPositionY = 0;
 var stickerArray = '';
@@ -58,9 +59,18 @@ save.addEventListener('click', function () {
     var url = './save_image.php';
     xml.open('POST', url, true);
     xml.onload = function () {
-        alert("Image saved successfully!");
-        appendPhoto(this.response);
+        if (this.response == "ImageError") {
+            alert("The file you tried to upload is not an image or would produce a completely black image! No image was created.");
+            document.location.reload();
+        } else if (this.response == "StickerError") {
+            alert("Invalid sticker data was sent through to the server! No image was created.");
+            document.location.reload();
+        } else {
+            alert("Image saved successfully!");
+            prependPhoto(this.response);
+        }
     }
+    // stickerArray = 'kissakala,roska,'
     xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xml.send('new_image=' + image_data_url + '&stickerData=' + stickerArray);
 });
@@ -71,7 +81,7 @@ function emptyCanvas() {
     lockedPreview1.getContext('2d').clearRect(0, 0, lockedPreview1.width, lockedPreview1.height);
     lockedPreview2.getContext('2d').clearRect(0, 0, lockedPreview2.width, lockedPreview2.height);
     lockedPreview3.getContext('2d').clearRect(0, 0, lockedPreview3.width, lockedPreview3.height);
-    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); // Reflect on this one still.
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
     selected = '';
     stickerArray = '';
 }
@@ -91,7 +101,7 @@ document.getElementById('upload').onclick = function (e) {
 }
 document.getElementById('upload').onchange,
     document.getElementById('upload').oninput = function (e) {
-        if (this.files[0].type != 'image/png' && this.files[0].type != 'image/jpg' && this.files[0].type != 'image/jpeg') {
+        if (this.files[0] == undefined || (this.files[0].type != 'image/png' && this.files[0].type != 'image/jpg' && this.files[0].type != 'image/jpeg')) {
             document.location.reload();
         }
         var img = new Image();
@@ -108,7 +118,6 @@ document.getElementById('upload').onchange,
     };
 function draw() {
     save.disabled = false;
-    // var canvas = document.getElementById('canvas');
     canvas.width = 640;
     canvas.height = 480;
 
@@ -188,6 +197,9 @@ function drawSticker(sticker, hori_offset, vert_offset, flag) {
 }
 
 preview1.onmousedown = (e) => {
+    if (scaleX  === undefined || scaleY === undefined) {
+        return
+    }
     final_width = selected.width * scaleX;
     final_height = selected.height * scaleY;
     if (e.layerX <= (currentX + final_width / 2) &&
@@ -241,14 +253,14 @@ function adjustParamsOnResize(selected, preview1, preview2) {
     drawSticker(selected, currentX, currentY, "move");
 }
 
-function appendPhoto(savedImage) {
+function prependPhoto(savedImage) {
 
     let display = document.getElementById('photoDisplayBar');
     let add = document.createElement('img');
 
     add.id = 'barPhoto';
     add.src = savedImage;
-    display.appendChild(add);
+    display.prepend(add);
 }
 
 startWebCam();

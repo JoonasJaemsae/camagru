@@ -10,16 +10,26 @@ if (!isset($_POST['destValue'])) {
 }
 
 $agent = $_SESSION['logged_in_user_id'];
-$iconToChangeInto = $_POST['destValue'];
+$destValue = $_POST['destValue'];
 
 $sql = "USE `joonasja_camagru`";
 $dbConn->exec($sql);
 
+$sql = "SELECT notifications FROM users WHERE id=?;";
+$stmt = $dbConn->prepare($sql);
+$stmt->execute([$agent]);
+$notif = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($notif['notifications'] === 0) {
+    $destValue = 1;
+} else if ($notif['notifications'] === 1) {
+    $destValue = 0;
+}
+
 $sql = "UPDATE users SET notifications=? WHERE id=?";
 $stmt = $dbConn->prepare($sql);
-$stmt->execute([$iconToChangeInto, $agent]);
-if ($iconToChangeInto === 1) {
+$stmt->execute([$destValue, $agent]);
+if ($destValue === 1) {
     echo "Changed to ON.";
-} else if ($iconToChangeInto === 0) {
+} else if ($destValue === 0) {
     echo "Changed to OFF.";
 }

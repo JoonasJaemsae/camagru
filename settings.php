@@ -1,9 +1,5 @@
 <?php
 
-ini_set('display_errors', 'On');
-ini_set('html_errors', 0);
-error_reporting(-1);
-
 session_start();
 
 include_once './config/new_conn.php';
@@ -11,12 +7,10 @@ require 'gallery_functions.php';
 require 'email_functions.php';
 
 if ((!isset($_SESSION['loginSuccess']) || !isset($_SESSION['loginPersist']))
-    || ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE)
-) {
+    || ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE)) {
     header("Location: index.php");
     exit();
 }
-
 if (!isset($_SESSION['usernameChangeErrorMessage'])) {
     $_SESSION['usernameChangeErrorMessage'] = FALSE;
 }
@@ -41,10 +35,10 @@ if (isset($_POST['submitPwChange'])) {
     $newPw = $_POST['newPw'];
     if (!checkPasswordStrength($newPw)) {
         $_SESSION['pwChangeErrorMessage'] = 'Please enter a stronger password. Your password should be between 8 and 30 characters and contain at least three of the following:' . '<br>'
-        . '- a lowercase alphabetic character.' . '<br>'
-        . '- an uppercase alphabetic character.' . '<br>'
-        . '- a numeric character.' . '<br>'
-        . '- a special character such as "!" or "#".';
+            . '- a lowercase alphabetic character.' . '<br>'
+            . '- an uppercase alphabetic character.' . '<br>'
+            . '- a numeric character.' . '<br>'
+            . '- a special character such as "!" or "#".';
         header('Location: settings.php');
         return;
     }
@@ -179,143 +173,134 @@ if (isset($_POST['submitEmailChange'])) {
 
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Camagru - Adjust your settings and preferences</title>
-
-    <style>
-        <?php include "style.css"; ?>
-    </style>
+    <link rel="stylesheet" href="./style.css">
 </head>
-<?php
 
-if (isset($_SESSION['loginPersist'])) {
-?>
+<body id="gradient" style="display: flex; flex-direction: column;">
+    <?php
 
-    <body id="gradient" style="display: flex; flex-direction: column;">
-        <?php
+    include_once 'navbar.php';
 
-        include_once 'navbar.php';
-
-        ?>
-        <div class="settingsArea">
-            <div class="settingsBox">
-                <div class="settingsBoxLeftSide">
-                    <div class="subBoxLeft" style="font: 500 1rem 'Quicksand', sans-serif;">Change your password</div>
-                    <div class="subBoxLeft" style="font: 500 1rem 'Quicksand', sans-serif;">Change your username</div>
-                    <div class="subBoxLeft" style="font: 500 1rem 'Quicksand', sans-serif;">Change your email address</div>
-                    <div class="subBoxLeft" style="font: 500 1rem 'Quicksand', sans-serif;">Toggle email alerts</div>
+    ?>
+    <div class="settingsArea">
+        <div class="settingsBox">
+            <div class="settingsBoxLeftSide">
+                <div class="subBoxLeft" style="font: 500 1rem 'Quicksand', sans-serif;">Change your password</div>
+                <div class="subBoxLeft" style="font: 500 1rem 'Quicksand', sans-serif;">Change your username</div>
+                <div class="subBoxLeft" style="font: 500 1rem 'Quicksand', sans-serif;">Change your email address</div>
+                <div class="subBoxLeft" style="font: 500 1rem 'Quicksand', sans-serif;">Toggle email alerts</div>
+            </div>
+            <div class="settingsBoxRightSide">
+                <div class="subBoxRight2" style="font: 500 1rem 'Quicksand', sans-serif;">
+                    Input your new password twice and your old one to confirm submission.
+                    <form action="settings.php" method="POST" class="form">
+                        <div class="form__input-group" style>
+                            <input type="password" class="form__input" name="oldPw" style="margin-top: 25px;" placeholder="Old password" required>
+                        </div>
+                        <div class="form__input-group">
+                            <input type="password" class="form__input" name="newPw" placeholder="New password" required>
+                        </div>
+                        <div class="form__input-group">
+                            <input type="password" class="form__input" name="newPwAgain" placeholder="New password again" required>
+                        </div>
+                        <button class="form__button" type="submit" name="submitPwChange">Confirm</button>
+                    </form>
+                    <div class="errorMessageBox">
+                        <span class="errorText">
+                            <?php
+                            echo $_SESSION['pwChangeErrorMessage'] . '<br>';
+                            $_SESSION['pwChangeErrorMessage'] = FALSE;
+                            ?>
+                        </span>
+                    </div>
+                    <div class="successMessageBox">
+                        <span class="successText">
+                            <?php
+                            echo $_SESSION['pwChangeSuccessMessage'] . '<br>';
+                            $_SESSION['pwChangeSuccessMessage'] = FALSE;
+                            ?>
+                        </span>
+                    </div>
                 </div>
-                <div class="settingsBoxRightSide">
-                    <div class="subBoxRight2" style="font: 500 1rem 'Quicksand', sans-serif;">
-                        Input your new password twice and your old one to confirm submission.
-                        <form action="settings.php" method="POST" class="form">
-                            <div class="form__input-group" style>
-                                <input type="password" class="form__input" name="oldPw" style="margin-top: 25px;" placeholder="Old password" required>
-                            </div>
-                            <div class="form__input-group">
-                                <input type="password" class="form__input" name="newPw" placeholder="New password" required>
-                            </div>
-                            <div class="form__input-group">
-                                <input type="password" class="form__input" name="newPwAgain" placeholder="New password again" required>
-                            </div>
-                            <button class="form__button" type="submit" name="submitPwChange">Confirm</button>
-                        </form>
-                        <div class="errorMessageBox">
-                            <span class="errorText">
-                                <?php
-                                echo $_SESSION['pwChangeErrorMessage'] . '<br>';
-                                $_SESSION['pwChangeErrorMessage'] = FALSE;
-                                ?>
-                            </span>
+                <div class="subBoxRight2" style="font: 500 1rem 'Quicksand', sans-serif;">
+                    Enter your desired username and your password for confirmation.
+                    <form action="settings.php" method="POST" class="form">
+                        <div class="form__input-group">
+                            <input type="text" class="form__input" name="newUsername" style="margin-top: 25px;" placeholder="New username" required>
                         </div>
-                        <div class="successMessageBox">
-                            <span class="successText">
-                                <?php
-                                echo $_SESSION['pwChangeSuccessMessage'] . '<br>';
-                                $_SESSION['pwChangeSuccessMessage'] = FALSE;
-                                ?>
-                            </span>
+                        <div class="form__input-group" style>
+                            <input type="password" class="form__input" name="pwForUsername" placeholder="Password" required>
                         </div>
+                        <button class="form__button" type="submit" name="submitUsernameChange">Confirm</button>
+                    </form>
+                    <div class="errorMessageBox" ;>
+                        <span class="errorText">
+                            <?php
+                            echo $_SESSION['usernameChangeErrorMessage'] . '<br>';
+                            $_SESSION['usernameChangeErrorMessage'] = FALSE;
+                            ?>
+                        </span>
                     </div>
-                    <div class="subBoxRight2" style="font: 500 1rem 'Quicksand', sans-serif;">
-                        Enter your desired username and your password for confirmation.
-                        <form action="settings.php" method="POST" class="form">
-                            <div class="form__input-group">
-                                <input type="text" class="form__input" name="newUsername" style="margin-top: 25px;" placeholder="New username" required>
-                            </div>
-                            <div class="form__input-group" style>
-                                <input type="password" class="form__input" name="pwForUsername" placeholder="Password" required>
-                            </div>
-                            <button class="form__button" type="submit" name="submitUsernameChange">Confirm</button>
-                        </form>
-                        <div class="errorMessageBox" ;>
-                            <span class="errorText">
-                                <?php
-                                echo $_SESSION['usernameChangeErrorMessage'] . '<br>';
-                                $_SESSION['usernameChangeErrorMessage'] = FALSE;
-                                ?>
-                            </span>
-                        </div>
-                        <div class="successMessageBox" ;>
-                            <span class="successText">
-                                <?php
-                                echo $_SESSION['usernameChangeSuccessMessage'] . '<br>';
-                                $_SESSION['usernameChangeSuccessMessage'] = FALSE;
-                                ?>
-                            </span>
-                        </div>
+                    <div class="successMessageBox" ;>
+                        <span class="successText">
+                            <?php
+                            echo $_SESSION['usernameChangeSuccessMessage'] . '<br>';
+                            $_SESSION['usernameChangeSuccessMessage'] = FALSE;
+                            ?>
+                        </span>
                     </div>
-                    <div class="subBoxRight2" style="font: 500 1rem 'Quicksand', sans-serif;">
-                        Enter your new email address and your password. You will need to verify your new email address in order to be able to log in again.
-                        <form action="settings.php" method="POST" class="form">
-                            <div class="form__input-group">
-                                <input type="email" class="form__input" name="newEmail" style="margin-top: 15px;" placeholder="New email" required>
-                            </div>
-                            <div class="form__input-group" style>
-                                <input type="password" class="form__input" name="pwForEmail" placeholder="Password" required>
-                            </div>
-                            <button class="form__button" type="submit" name="submitEmailChange">Confirm</button>
-                        </form>
-                        <div class="errorMessageBox" ;>
-                            <span class="errorText">
-                                <?php
-                                echo $_SESSION['emailChangeErrorMessage'] . '<br>';
-                                $_SESSION['emailChangeErrorMessage'] = FALSE;
-                                ?>
-                            </span>
+                </div>
+                <div class="subBoxRight2" style="font: 500 1rem 'Quicksand', sans-serif;">
+                    Enter your new email address and your password. You will need to verify your new email address in order to be able to log in again.
+                    <form action="settings.php" method="POST" class="form">
+                        <div class="form__input-group">
+                            <input type="email" class="form__input" name="newEmail" style="margin-top: 15px;" placeholder="New email" required>
                         </div>
-                        <div class="successMessageBox" ;>
-                            <span class="successText">
-                                <?php
-                                echo $_SESSION['emailChangeSuccessMessage'] . '<br>';
-                                $_SESSION['emailChangeSuccessMessage'] = FALSE;
-                                ?>
-                            </span>
+                        <div class="form__input-group" style>
+                            <input type="password" class="form__input" name="pwForEmail" placeholder="Password" required>
                         </div>
+                        <button class="form__button" type="submit" name="submitEmailChange">Confirm</button>
+                    </form>
+                    <div class="errorMessageBox" ;>
+                        <span class="errorText">
+                            <?php
+                            echo $_SESSION['emailChangeErrorMessage'] . '<br>';
+                            $_SESSION['emailChangeErrorMessage'] = FALSE;
+                            ?>
+                        </span>
                     </div>
-                    <div class="subBoxRight2" style="font: 500 1rem 'Quicksand', sans-serif;">
-                        <div id="notifDescr">
-                            By having this set to ON, you will receive notifications in your email when someone likes or comments on your pictures.
-                            Currently set to <?php echo getNotifStatusAsText($dbConn); ?>
-                        </div>
-                        <?php if (checkUsersNotificationsPref($dbConn) == true) { ?>
-                            <img class="notifIcon" id="notifIcon" src="./icons/yes32.png" style="margin-top: 25px;" title="Toggle notifications on or off" onclick="toggleNotifications(0)"></img>
-                        <?php } else { ?>
-                            <img class="notifIcon" id="notifIcon" src="./icons/no32.png" style="margin-top: 25px;" title="Toggle notifications on or off" onclick="toggleNotifications(1)"></img>
-                        <?php } ?>
+                    <div class="successMessageBox" ;>
+                        <span class="successText">
+                            <?php
+                            echo $_SESSION['emailChangeSuccessMessage'] . '<br>';
+                            $_SESSION['emailChangeSuccessMessage'] = FALSE;
+                            ?>
+                        </span>
                     </div>
+                </div>
+                <div class="subBoxRight2" style="font: 500 1rem 'Quicksand', sans-serif;">
+                    <div id="notifDescr">
+                        By having this set to ON, you will receive notifications in your email when someone likes or comments on your pictures.
+                        Currently set to <?php echo getNotifStatusAsText($dbConn); ?>
+                    </div>
+                    <?php if (checkUsersNotificationsPref($dbConn) == true) { ?>
+                        <img class="notifIcon" id="notifIcon" src="./icons/yes32.png" style="margin-top: 25px;" title="Toggle notifications on or off" onclick="toggleNotifications(0)"></img>
+                    <?php } else { ?>
+                        <img class="notifIcon" id="notifIcon" src="./icons/no32.png" style="margin-top: 25px;" title="Toggle notifications on or off" onclick="toggleNotifications(1)"></img>
+                    <?php } ?>
                 </div>
             </div>
         </div>
-        <script src="gallery_features.js"></script>
-    </body>
+    </div>
+    <script src="gallery_features.js"></script>
+</body>
 
 </html>
-
-<?php
-
-}
-
-?>
