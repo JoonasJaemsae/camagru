@@ -31,6 +31,11 @@ if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
 $reset_link_url = $_GET['reset_url'];
 
 if (isset($_POST['newPwResetSubmit'])) {
+    if (!isset($_POST['newPwReset']) || !isset($_POST['newPwResetAgain'])) {
+        $_SESSION['pwResetErrorMessage'] = "Please fill in all the required fields!";
+        header("Location: password_reset.php");
+        return;
+    }
     $newPw = $_POST['newPwReset'];
     $newPwAgain = $_POST['newPwResetAgain'];
     if ($newPw != $newPwAgain) {

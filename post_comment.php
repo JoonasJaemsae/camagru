@@ -75,7 +75,11 @@ if (isset($_POST['image_id']) && isset($_POST['content'])) {
     if (isset($_SESSION['logged_in_user_id']) && $_SESSION['logged_in_user_id'] !== '') {
         $agent = $_SESSION['logged_in_user_id'];
         $image_id = $_POST['image_id'];
-        $content = $_POST['content'];
+        $content = trim($_POST['content']);
+        // Let us check if there's nothing left in the comment anymore after trim, in which case the comment was just whitespaces.
+        if ($content == '') {
+            return;
+        }
         if (strlen($content) > 160 || strlen($content) == 0) {
             return;
         }

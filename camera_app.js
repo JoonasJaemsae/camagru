@@ -70,7 +70,6 @@ save.addEventListener('click', function () {
             prependPhoto(this.response);
         }
     }
-    // stickerArray = 'kissakala,roska,'
     xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xml.send('new_image=' + image_data_url + '&stickerData=' + stickerArray);
 });
@@ -197,20 +196,22 @@ function drawSticker(sticker, hori_offset, vert_offset, flag) {
 }
 
 preview1.onmousedown = (e) => {
-    if (scaleX  === undefined || scaleY === undefined) {
-        return
-    }
-    final_width = selected.width * scaleX;
-    final_height = selected.height * scaleY;
-    if (e.layerX <= (currentX + final_width / 2) &&
-        e.layerX >= (currentX - final_width / 2) &&
-        e.layerY <= (currentY + final_height / 2) &&
-        e.layerY >= (currentY - final_height / 2)) {
-        draggable = true;
-    } else {
-        currentX = e.layerX;
-        currentY = e.layerY;
-        drawSticker(selected, currentX, currentY, "move");
+    if (selected != '') {
+        if (scaleX  === undefined || scaleY === undefined) {
+            return
+        }
+        final_width = selected.width * scaleX;
+        final_height = selected.height * scaleY;
+        if (e.layerX <= (currentX + final_width / 2) &&
+            e.layerX >= (currentX - final_width / 2) &&
+            e.layerY <= (currentY + final_height / 2) &&
+            e.layerY >= (currentY - final_height / 2)) {
+            draggable = true;
+        } else {
+            currentX = e.layerX;
+            currentY = e.layerY;
+            drawSticker(selected, currentX, currentY, "move");
+        }
     }
 }
 

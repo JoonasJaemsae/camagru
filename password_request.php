@@ -23,6 +23,11 @@ if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
 }
 
 if (isset($_POST['pwRequestSubmit'])) {
+    if (!isset($_POST['pwRequestEmail'])) {
+        $_SESSION['pwRequestErrorMessage'] = "Please fill in the required field!";
+        header("Location: password_request.php");
+        return;
+    }
     $email = $_POST['pwRequestEmail'];
     if (!checkEmailStrength($email)) {
         $_SESSION['pwRequestErrorMessage'] = 'Your email address is not a valid one. Please try again.';

@@ -43,6 +43,8 @@ function postComment(imageId) {
             alert("Your comment was too long! Maximum comment size is 160 characters.");
             document.location.reload();
         }
+        // We need to replace all instances of ampersand with '%26' in order for XML to recognize them.
+        sanitizedContent = content.replace(/&/g, "%26");
         let xmlComment = new XMLHttpRequest();
         var urlComment = './post_comment.php';
         xmlComment.open('POST', urlComment, true);
@@ -50,7 +52,7 @@ function postComment(imageId) {
             document.location.reload();
         }
         xmlComment.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xmlComment.send('image_id=' + imageId + '&content=' + content);
+        xmlComment.send('image_id=' + imageId + '&content=' + sanitizedContent);
     }
     let form = document.getElementById('formElement' + imageId);
     form.addEventListener("submit", (event) => {

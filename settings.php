@@ -7,7 +7,8 @@ require 'gallery_functions.php';
 require 'email_functions.php';
 
 if ((!isset($_SESSION['loginSuccess']) || !isset($_SESSION['loginPersist']))
-    || ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE)) {
+    || ($_SESSION['loginSuccess'] === FALSE && $_SESSION['loginPersist'] === FALSE)
+) {
     header("Location: index.php");
     exit();
 }
@@ -31,6 +32,14 @@ if (!isset($_SESSION['emailChangeSuccessMessage'])) {
 }
 
 if (isset($_POST['submitPwChange'])) {
+    if (
+        !isset($_POST['oldPw']) || !isset($_POST['newPw'])
+        || !isset($_POST['newPwAgain'])
+    ) {
+        $_SESSION['pwChangeErrorMessage'] = "Please fill in all the required fields!";
+        header("Location: settings.php");
+        return;
+    }
     $oldPw = $_POST['oldPw'];
     $newPw = $_POST['newPw'];
     if (!checkPasswordStrength($newPw)) {
@@ -77,6 +86,11 @@ if (isset($_POST['submitPwChange'])) {
 }
 
 if (isset($_POST['submitUsernameChange'])) {
+    if (!isset($_POST['newUsername']) || !isset($_POST['pwForUsername'])) {
+        $_SESSION['usernameChangeErrorMessage'] = "Please fill in all the required fields!";
+        header("Location: settings.php");
+        return;
+    }
     $newUsername = $_POST['newUsername'];
     $pwForUsernameChange = $_POST['pwForUsername'];
     $username = $_SESSION['username'];
@@ -123,6 +137,11 @@ if (isset($_POST['submitUsernameChange'])) {
 }
 
 if (isset($_POST['submitEmailChange'])) {
+    if (!isset($_POST['newEmail']) || !isset($_POST['pwForEmail'])) {
+        $_SESSION['emailChangeErrorMessage'] = "Please fill in all the required fields!";
+        header("Location: settings.php");
+        return;
+    }
     $newEmail = $_POST['newEmail'];
     if (!checkEmailStrength($newEmail)) {
         $_SESSION['emailChangeErrorMessage'] = 'Your email address is not a valid one. Please try again.';

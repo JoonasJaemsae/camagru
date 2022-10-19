@@ -34,10 +34,15 @@ if ($_SESSION['loginSuccess'] === TRUE || $_SESSION['loginPersist'] === TRUE) {
 }
 
 if (isset($_POST['login'])) {
-	$_SESSION['login'] = $_POST['login'];
-	$_SESSION['username'] = $_POST['username'];
-	$password = hash('whirlpool', $_POST['password']);
 
+	if (!isset($_POST['username']) || !isset($_POST['password'])) {
+        $_SESSION['loginErrorMessage'] = "Please fill in all the required fields!";
+        header("Location: index.php");
+        return;
+    }
+	$_SESSION['username'] = $_POST['username'];
+
+	$password = hash('whirlpool', $_POST['password']);
 	$sql = "SELECT * FROM users WHERE username=:username AND password=:password;";
 	$stmt = $dbConn->prepare($sql);
 	$stmt->execute(

@@ -33,9 +33,14 @@ if (isset($_POST['submit'])) {
     $_SESSION['submit'] = $_POST['submit'];
     $_SESSION['signupSuccess'] = FALSE;
 
+    if (!isset($_POST['username']) || !isset($_POST['password'])
+    || !isset($_POST['passwordAgain']) || !isset($_POST['email'])) {
+        $_SESSION['signupErrorMessage'] = "Please fill in all the required fields!";
+        header("Location: signup.php");
+        return;
+    }
+
     $_SESSION['username'] = $_POST['username'];
-    $_SESSION['password'] = $_POST['password'];
-    $_SESSION['passwordAgain'] = $_POST['passwordAgain'];
     $_SESSION['email'] = $_POST['email'];
 
     $username = $_POST['username'];
