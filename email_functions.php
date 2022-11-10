@@ -94,7 +94,6 @@ function generateRandomString2($scope, $dbConn)
 
 function sendVerificationEmail($email, $verifCode, $dbConn)
 {
-    echo "Made it to the function.";
     $to = $email;
 
     $sql = "USE `joonasja_camagru`";
@@ -123,7 +122,7 @@ function sendVerificationEmail($email, $verifCode, $dbConn)
 
     // Sending email
     if (mail($to, $subject, $message, $headers)) {
-        echo 'Your mail has been sent successfully.';
+        return;
     } else {
         echo 'Unable to send email. Please try again.';
     }
@@ -151,7 +150,6 @@ function createNewPasswordRequest($email, $reset_link_url, $dbConn)
 
 function sendPasswordResetEmail($email, $reset_link_url, $dbConn)
 {
-    echo "Made it to the function.";
     $to = $email;
 
     $sql = "USE `joonasja_camagru`";
@@ -193,7 +191,7 @@ function sendPasswordResetEmail($email, $reset_link_url, $dbConn)
 
     // Sending email. These will need to be removed!! Not sure where this will appear. 
     if (mail($to, $subject, $message, $headers)) {
-        echo 'Your mail has been sent successfully.';
+        return;
     } else {
         echo 'Unable to send email. Please try again.';
     }
