@@ -35,14 +35,29 @@ function validateStickerSrc($stickerSrc)
     if ($arr[1] == 'confettirev.png') {
         $sticker = 'confettirev.png';
     }
-    if ($arr[1] == 'kanagawawave.png') {
-        $sticker = 'kanagawawave.png';
+    if ($arr[1] == 'rainbow.png') {
+        $sticker = 'rainbow.png';
+    }
+    if ($arr[1] == 'salmon.png') {
+        $sticker = 'salmon.png';
+    }
+    if ($arr[1] == 'stars.png') {
+        $sticker = 'stars.png';
+    }
+    if ($arr[1] == 'chicken.png') {
+        $sticker = 'chicken.png';
+    }
+    if ($arr[1] == 'sakura.png') {
+        $sticker = 'sakura.png';
     }
     if ($arr[1] == 'balloons3.png') {
         $sticker = 'balloons3.png';
     }
     if ($arr[1] == 'balloons5.png') {
         $sticker = 'balloons5.png';
+    }
+    if ($arr[1] == 'propelhat.png') {
+        $sticker = 'propelhat.png';
     }
     if ($arr[1] == 'blackhat.png') {
         $sticker = 'blackhat.png';
@@ -55,6 +70,9 @@ function validateStickerSrc($stickerSrc)
     }
     if ($arr[1] == 'halloweenhat.png') {
         $sticker = 'halloweenhat.png';
+    }
+    if ($arr[1] == 'groucho.png') {
+        $sticker = 'groucho.png';
     }
     if ($arr[1] == 'birdbrown.png') {
         $sticker = 'birdbrown.png';

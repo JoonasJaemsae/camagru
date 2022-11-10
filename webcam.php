@@ -83,13 +83,19 @@ if ((!isset($_SESSION['loginSuccess']) || !isset($_SESSION['loginPersist']))
                 <img class="sticker" id="42.png" width="128" height="78" , src="stickers/42.png" onclick="drawSticker(this, 0, 0, 'new')">
                 <img class="sticker" id="confetti.png" width="128" height="131" src="stickers/confetti.png" onclick="drawSticker(this, 0, 0, 'new')">
                 <img class="sticker" id="confettirev.png" width="128" height="131" src="stickers/confettirev.png" onclick="drawSticker(this, 0, 0, 'new')">
-                <img class="sticker" id="kanagawawave.png" width="640" height="480" src="stickers/kanagawawave.png" onclick="drawSticker(this, 0, 0, 'new')">
+                <img class="sticker" id="rainbow.png" width="640" height="480" src="stickers/rainbow.png" onclick="drawSticker(this, 0, 0, 'new')">
+                <img class="sticker" id="salmon.png" width="640" height="480" src="stickers/salmon.png" onclick="drawSticker(this, 0, 0, 'new')">
+                <img class="sticker" id="stars.png" width="640" height="480" src="stickers/stars.png" onclick="drawSticker(this, 0, 0, 'new')">
+                <img class="sticker" id="chicken.png" width="640" height="480" src="stickers/chicken.png" onclick="drawSticker(this, 0, 0, 'new')">
+                <img class="sticker" id="sakura.png" width="640" height="480" src="stickers/sakura.png" onclick="drawSticker(this, 0, 0, 'new')">
                 <img class="sticker" id="balloons3.png" width="128" height="146" src="stickers/balloons3.png" onclick="drawSticker(this, 0, 0, 'new')">
                 <img class="sticker" id="balloons5.png" width="128" height="114" src="stickers/balloons5.png" onclick="drawSticker(this, 0, 0, 'new')">
+                <img class="sticker" id="propelhat.png" width="640" height="480" src="stickers/propelhat.png" onclick="drawSticker(this, 0, 0, 'new')">
                 <img class="sticker" id="blackhat.png" width="128" height="105" src="stickers/blackhat.png" onclick="drawSticker(this, 0, 0, 'new')">
                 <img class="sticker" id="policehat.png" width="128" height="79" src="stickers/policehat.png" onclick="drawSticker(this, 0, 0, 'new')">
                 <img class="sticker" id="grayhat.png" width="128" height="117" src="stickers/grayhat.png" onclick="drawSticker(this, 0, 0, 'new')">
                 <img class="sticker" id="halloweenhat.png" width="137" height="117" src="stickers/halloweenhat.png" onclick="drawSticker(this, 0, 0, 'new')">
+                <img class="sticker" id="groucho.png" width="137" height="117" src="stickers/groucho.png" onclick="drawSticker(this, 0, 0, 'new')">
                 <img class="sticker" id="birdbrown.png" width="128" height="120" src="stickers/birdbrown.png" onclick="drawSticker(this, 0, 0, 'new')">
                 <img class="sticker" id="birdpurple.png" width="128" height="93" src="stickers/birdpurple.png" onclick="drawSticker(this, 0, 0, 'new')">
                 <img class="sticker" id="birdwhite.png" width="128" height="120" src="stickers/birdwhite.png" onclick="drawSticker(this, 0, 0, 'new')">
